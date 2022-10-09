@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vula/views/calendar_view.dart';
+import 'package:vula/views/home_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'home_page',
       routes: {
-        'home_page': (context) => const CalendarView(),
+        'home_page': (context) => const HomeView(),
       },
     );
   }
