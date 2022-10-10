@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vula/views/history_view.dart';
 import 'package:vula/views/home_view.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home_page',
       routes: {
         'home_page': (context) => const HomeView(),
+        'history_page': (context) => const HistoryView(),
       },
     );
   }
