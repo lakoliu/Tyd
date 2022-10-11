@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:vula/views/home_view.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -47,46 +48,50 @@ class _HistoryViewState extends State<HistoryView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 50.0),
-                    Row(
-                      children: [
-                        const Text(
-                          'Period',
-                          style: TextStyle(
-                            fontSize: 20.0,
+                    if (!pmsSwitch) ...[
+                      Row(
+                        children: [
+                          const Text(
+                            'Period',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            ),
                           ),
-                        ),
-                        Switch(
-                          activeColor: Colors.pink[300],
-                          value: periodSwitch,
-                          onChanged: (bool value) {
-                            setState(() {
-                              // TODO Add "Are you sure" dialog if switching off because all information will be deleted?
-                              periodSwitch = value;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          'PMS',
-                          style: TextStyle(
-                            fontSize: 20.0,
+                          Switch(
+                            activeColor: Colors.pink[300],
+                            value: periodSwitch,
+                            onChanged: (bool value) {
+                              setState(() {
+                                // TODO Add "Are you sure" dialog if switching off because all information will be deleted?
+                                periodSwitch = value;
+                              });
+                            },
                           ),
-                        ),
-                        Switch(
-                          activeColor: Colors.pink[300],
-                          value: pmsSwitch,
-                          onChanged: (bool value) {
-                            setState(() {
-                              // TODO Add "Are you sure" dialog if switching off because all information will be deleted?
-                              pmsSwitch = value;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
+                    if (!periodSwitch) ...[
+                      Row(
+                        children: [
+                          const Text(
+                            'PMS',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          Switch(
+                            activeColor: Colors.pink[300],
+                            value: pmsSwitch,
+                            onChanged: (bool value) {
+                              setState(() {
+                                // TODO Add "Are you sure" dialog if switching off because all information will be deleted?
+                                pmsSwitch = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                     if (periodSwitch) ...[
                       const SizedBox(height: 20.0,),
                       const Text('Strength'),
@@ -166,6 +171,37 @@ class _HistoryViewState extends State<HistoryView> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: 'Calendar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timer),
+            label: 'Tampon Timer',
+          ),
+        ],
+        currentIndex: 1,
+        selectedItemColor: Colors.pink[300],
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeView()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HistoryView()),
+            );
+          }
+        },
       ),
     );
   }
