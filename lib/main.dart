@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:vula/views/history_view.dart';
 import 'package:vula/views/home_view.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:vula/day_data.dart';
 
-void main() {
+
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(DayDataAdapter());
+  var dateBox = await Hive.openBox('date_box');
   runApp(const MyApp());
 }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 import 'package:vula/views/history_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -13,8 +12,6 @@ class _HomeViewState extends State<HomeView> {
   var whatDay = 18;
   var avgCycleDays = 28;
   var period = false;
-
-  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +45,9 @@ class _HomeViewState extends State<HomeView> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 10.0,),
+              const SizedBox(
+                height: 10.0,
+              ),
               Container(
                 padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
@@ -63,7 +62,9 @@ class _HomeViewState extends State<HomeView> {
                         fontStyle: FontStyle.italic,
                       ),
                     ),
-                    const SizedBox(height: 10.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                     const Text(
                       'Your average cycle: 28 days',
                       style: TextStyle(
@@ -74,18 +75,20 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
               ),
-              const SizedBox(height: 30.0,),
+              const SizedBox(
+                height: 30.0,
+              ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HistoryView()),
+                    MaterialPageRoute(
+                        builder: (context) => const HistoryView()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)
-                  ),
+                      borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.all(12.0),
                 ),
                 child: Text(
@@ -95,7 +98,9 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 50.0,), // To push everything up a little. TODO Necessary?
+              const SizedBox(
+                height: 50.0,
+              ), // To push everything up a little. TODO Necessary?
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,
               //   children: [
@@ -126,9 +131,14 @@ class _HomeViewState extends State<HomeView> {
             icon: Icon(Icons.timer),
             label: 'Tampon Timer',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Statistics',
+          ),
         ],
         currentIndex: 0,
         selectedItemColor: Colors.pink[300],
+        unselectedItemColor: Colors.grey[600],
         onTap: (index) {
           if (index == 1) {
             Navigator.push(
@@ -137,33 +147,6 @@ class _HomeViewState extends State<HomeView> {
             );
           }
         },
-      ),
-    );
-  }
-}
-
-class _IndicatorExample extends StatelessWidget {
-  const _IndicatorExample({Key? key, required this.number}) : super(key: key);
-
-  final String number;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.fromBorderSide(
-          BorderSide(
-            color: Colors.black.withOpacity(0.2), // Red for period days, black for other days (or dark gray), and light gray for future days. (Green for days where you have the most energy?)
-            width: 4,
-          ),
-        ),
-      ),
-      child: Center(
-        child: Text(
-          number,
-          style: const TextStyle(fontSize: 15),
-        ),
       ),
     );
   }
