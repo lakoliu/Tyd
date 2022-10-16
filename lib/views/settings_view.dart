@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:vula/views/components/bottom_nav_bar.dart';
 
 import 'history_view.dart';
 import 'stats_view.dart';
@@ -72,42 +73,7 @@ class _SettingsViewState extends State<SettingsView> {
               ],
             ),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month),
-                label: 'Calendar',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.timer),
-                label: 'Tampon Timer',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.bar_chart),
-                label: 'Statistics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-            ],
-            currentIndex: 4,
-            onTap: (index) {
-              if (index == 1) {
-                Navigator.pushNamed(context, 'historyView');
-              } else if (index == 2) {
-
-              } else if (index == 3) {
-                Navigator.pushNamed(context, 'statsView');
-              } else if (index == 0) {
-                Navigator.pushNamed(context, 'homeView');
-              }
-            },
-          ),
+          bottomNavigationBar: bottomNavBar(context, 4)
         );
       },
     );

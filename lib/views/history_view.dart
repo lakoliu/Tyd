@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:vula/views/components/bottom_nav_bar.dart';
 import 'package:vula/views/home_view.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:vula/helpers/constants.dart';
@@ -391,40 +392,7 @@ class _HistoryViewState extends State<HistoryView> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer),
-            label: 'Tampon Timer',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Statistics',
-          ),
-        ],
-        currentIndex: 1,
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
-            );
-          } else if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HistoryView()),
-            );
-          }
-        },
-      ),
+      bottomNavigationBar: bottomNavBar(context, 1)
     );
   }
 }

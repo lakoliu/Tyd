@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:vula/views/components/bottom_nav_bar.dart';
 import 'package:vula/views/settings_view.dart';
 import 'package:vula/views/stats_view.dart';
 import '../views/history_view.dart';
@@ -211,53 +212,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer),
-            label: 'Tampon Timer',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Statistics',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HistoryView()),
-            );
-          } else if (index == 2) {
-
-          } else if (index == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const StatsView()),
-            );
-          } else if (index == 4) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const SettingsView()),
-            );
-          }
-        },
-      ),
+      bottomNavigationBar: bottomNavBar(context, 0)
     );
   }
 }
