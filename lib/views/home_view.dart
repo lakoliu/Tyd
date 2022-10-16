@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:vula/views/history_view.dart';
+import 'package:intl/intl.dart';
+import 'package:vula/views/settings_view.dart';
+import 'package:vula/views/stats_view.dart';
+import '../views/history_view.dart';
+import 'package:hive/hive.dart';
+import '../helpers/update_stats.dart';
+import '../day_data.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -9,9 +16,56 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  var whatDay = 18;
+  var appBox = Hive.box('app_box');
+  var dateBox = Hive.box('date_box');
+
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  var currDate = DateTime.now();
+  DayData currDayData = DayData();
+
   var avgCycleDays = 28;
-  var period = false;
+
+  int daysSinceStart() {
+    var startDate = appBox.get('latestStartDate');
+    if (startDate != null) {
+      var dayDifference = currDate.difference(startDate).inDays + 1;
+      return dayDifference;
+    } else {
+      return 0;
+    }
+  }
+
+  String getNextPeriodText() {
+    var averageCycle = appBox.get('averageCycle');
+    var daysUntilPeriod = averageCycle - daysSinceStart();
+
+    if (daysUntilPeriod < 1) {
+      return 'You can expect your period any day now';
+    } else {
+      var dayText = daysUntilPeriod == 1 ? 'day' : 'days';
+      return '~$daysUntilPeriod $dayText until your next period';
+    }
+  }
+
+  String getCycleText() {
+    var averageCycle = appBox.get('averageCycle');
+    var dayText = averageCycle == 1 ? 'day' : 'days';
+    return 'Your average cycle: $averageCycle $dayText';
+  }
+
+  void updateDayData() {
+    dateBox.put(formatter.format(currDate), currDayData);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    var savedDayData = dateBox.get(formatter.format(currDate));
+    if (savedDayData != null) {
+      currDayData = savedDayData;
+    }
+    updateStats();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +73,8 @@ class _HomeViewState extends State<HomeView> {
       body: SafeArea(
         child: Center(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // const SizedBox(height: 10.0),
-              // const SizedBox(height: 30.0),
               const Text(
                 'DAY',
                 style: TextStyle(
@@ -31,88 +82,131 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               Text(
-                whatDay.toString(),
+                daysSinceStart().toString(),
                 // Change color to red if on period
                 style: const TextStyle(
                   fontSize: 120.0,
                 ),
               ),
               // TODO Don't show if currently on period
-              Text(
-                '~ ${avgCycleDays - whatDay} days until your next period',
-                style: const TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
+              if (appBox.get('averageCycle') != null && (dateBox.get(formatter.format(currDate)) == null || !dateBox.get(formatter.format(currDate)).period)) ...[
+                Text(
+                  getNextPeriodText(),
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+              ],
+              if (appBox.get('lastPeriod') != null || appBox.get('averageCycle') != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: Column(
+                    children: [
+                      if (appBox.get('lastPeriod') != null) ...[
+                        Text(
+                          'Last period: ${appBox.get('lastPeriod')}',
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      if (appBox.get('averageCycle') != null) ...[
+                        Text(
+                          getCycleText(),
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
               const SizedBox(
                 height: 10.0,
               ),
-              Container(
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Column(
+              // TODO if not PMS
+              if (!currDayData.pms) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Last period: Mar 8 - Mar 14',
+                      'Period',
                       style: TextStyle(
-                        fontSize: 15.0,
-                        fontStyle: FontStyle.italic,
+                        fontSize: 20.0,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    const Text(
-                      'Your average cycle: 28 days',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontStyle: FontStyle.italic,
-                      ),
+                    Switch(
+                      activeColor: appBox.get('accentColor') ?? Colors.pink[300],
+                      value: currDayData.period,
+                      onChanged: (bool value) {
+                        setState(() {
+                          currDayData.period = value;
+                        });
+                        updateDayData();
+                        if (value) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HistoryView()
+                            ),
+                          );
+                        } else {
+                          updateStats();
+                        }
+                      },
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HistoryView()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                  padding: const EdgeInsets.all(12.0),
+              ],
+              if (!currDayData.period && !currDayData.pms) ...[
+                const SizedBox(height: 10.0,),
+              ],
+              if (!currDayData.period) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'PMS',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    Switch(
+                      activeColor: appBox.get('accentColor') ?? Colors.pink[300],
+                      value: currDayData.pms,
+                      onChanged: (bool value) {
+                        setState(() {
+                          currDayData.pms = value;
+                        });
+                        updateDayData();
+                        if (value) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HistoryView()),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                child: Text(
-                  period ? 'Stop Period' : 'Start Period',
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
+              ],
               const SizedBox(
                 height: 50.0,
               ), // To push everything up a little. TODO Necessary?
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     const Text(
-              //       'PMS',
-              //       style: TextStyle(
-              //         fontSize: 20.0,
-              //       ),
-              //     ),
-              //     Switch(value: false, onChanged: (value) {})
-              //   ],
-              // ),
             ],
           ),
         ),
@@ -135,15 +229,31 @@ class _HomeViewState extends State<HomeView> {
             icon: Icon(Icons.bar_chart),
             label: 'Statistics',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
         currentIndex: 0,
-        selectedItemColor: Colors.pink[300],
-        unselectedItemColor: Colors.grey[600],
         onTap: (index) {
           if (index == 1) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const HistoryView()),
+            );
+          } else if (index == 2) {
+
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const StatsView()),
+            );
+          } else if (index == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const SettingsView()),
             );
           }
         },

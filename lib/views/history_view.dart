@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:vula/views/home_view.dart';
 import 'package:filter_list/filter_list.dart';
-import 'package:vula/helpers/period_symptoms.dart';
 import 'package:vula/helpers/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:vula/day_data.dart';
@@ -17,6 +16,7 @@ class HistoryView extends StatefulWidget {
 
 class _HistoryViewState extends State<HistoryView> {
   var dateBox = Hive.box('date_box');
+  var appBox = Hive.box('app_box');
 
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   var currDate = DateTime.now();
@@ -56,16 +56,16 @@ class _HistoryViewState extends State<HistoryView> {
       themeData: FilterListThemeData(
         context,
         choiceChipTheme: ChoiceChipThemeData(
-          selectedBackgroundColor: Colors.pink[300],
+          selectedBackgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
           backgroundColor: Colors.grey[200],
         ),
         controlButtonBarTheme: ControlButtonBarThemeData(
           context,
           controlButtonTheme: ControlButtonThemeData(
             textStyle: TextStyle(
-              color: Colors.pink[300],
+              color: appBox.get('accentColor') ?? Colors.pink[300],
             ),
-            primaryButtonBackgroundColor: Colors.pink[300],
+            primaryButtonBackgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
           ),
         ),
       ),
@@ -125,7 +125,7 @@ class _HistoryViewState extends State<HistoryView> {
                 dayColor: Colors
                     .grey, // TODO set today to primary color and period days to red
                 activeDayColor: Colors.white,
-                activeBackgroundDayColor: Colors.pink[300],
+                activeBackgroundDayColor: appBox.get('accentColor') ?? Colors.pink[300],
                 dotsColor: const Color(0xFF333A47),
                 locale: 'en_ISO', // TODO Set to user's locale
               ),
@@ -145,7 +145,7 @@ class _HistoryViewState extends State<HistoryView> {
                             ),
                           ),
                           Switch(
-                            activeColor: Colors.pink[300],
+                            activeColor: appBox.get('accentColor') ?? Colors.pink[300],
                             value: currDayData.period,
                             onChanged: (bool value) {
                               setState(() {
@@ -167,7 +167,7 @@ class _HistoryViewState extends State<HistoryView> {
                             ),
                           ),
                           Switch(
-                            activeColor: Colors.pink[300],
+                            activeColor: appBox.get('accentColor') ?? Colors.pink[300],
                             value: currDayData.pms,
                             onChanged: (bool value) {
                               setState(() {
@@ -246,7 +246,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: Colors.pink[300],
+                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
                             ),
                           ], // for
                         ],
@@ -280,7 +280,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: Colors.pink[300],
+                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
                             ),
                           ], // for
                         ],
@@ -330,7 +330,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: Colors.pink[300],
+                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
                             ),
                           ], // for
                         ],
@@ -364,7 +364,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: Colors.pink[300],
+                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
                             ),
                           ], // for
                         ],
@@ -411,8 +411,6 @@ class _HistoryViewState extends State<HistoryView> {
           ),
         ],
         currentIndex: 1,
-        selectedItemColor: Colors.pink[300],
-        unselectedItemColor: Colors.grey[600],
         onTap: (index) {
           if (index == 0) {
             Navigator.push(
