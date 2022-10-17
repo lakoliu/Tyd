@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       builder: (context, box, widget) {
         return MaterialApp(
           title: 'Vula',
+          themeMode: Hive.box('app_box').get('darkMode', defaultValue: false) ? ThemeMode.dark : ThemeMode.light,
           theme: ThemeData(
             primaryColor: Hive.box('app_box').get('accentColor') ?? Colors.pink[300],
             appBarTheme: AppBarTheme(
@@ -41,8 +42,20 @@ class MyApp extends StatelessWidget {
             bottomNavigationBarTheme: BottomNavigationBarThemeData(
               selectedItemColor: Hive.box('app_box').get('accentColor') ?? Colors.pink[300],
               unselectedItemColor: Colors.grey[600],
-            )
+            ),
           ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primaryColor: Hive.box('app_box').get('accentColor') ?? Colors.pink[300],
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              selectedItemColor: Hive.box('app_box').get('accentColor') ?? Colors.pink[300],
+              unselectedItemColor: Colors.white,
+              backgroundColor: Colors.grey[800],
+            ),
+          ),
+          // ThemeData.dark().copyWith(
+          //   colorScheme: const ColorScheme.dark().copyWith(primary: Colors.pink[300]),
+          // ),
           initialRoute: 'homeView',
           routes: {
             'homeView': (context) => const HomeView(),

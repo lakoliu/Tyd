@@ -3,8 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
 
-import 'history_view.dart';
-import 'stats_view.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -29,6 +27,13 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           body: SafeArea(
             child: SettingsList(
+              lightTheme: const SettingsThemeData(
+                titleTextColor: Colors.black,
+              ),
+              darkTheme: SettingsThemeData(
+                settingsListBackground: Colors.grey[850],
+                titleTextColor: Colors.white,
+              ),
               sections: [
                 SettingsSection(
                   title: const Text('Appearance'),
@@ -39,7 +44,8 @@ class _SettingsViewState extends State<SettingsView> {
                           appBox.put('darkMode', value);
                         });
                       },
-                      initialValue: appBox.get('darkMode') ?? false,
+                      initialValue: appBox.get('darkMode', defaultValue: false),
+                      activeSwitchColor: Theme.of(context).primaryColor,
                       leading: const Icon(Icons.dark_mode),
                       title: const Text('Dark Mode'),
                     ),
@@ -77,6 +83,5 @@ class _SettingsViewState extends State<SettingsView> {
         );
       },
     );
-
   }
 }

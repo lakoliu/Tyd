@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
-import 'package:vula/views/home_view.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:vula/helpers/constants.dart';
 import 'package:intl/intl.dart';
@@ -57,16 +57,16 @@ class _HistoryViewState extends State<HistoryView> {
       themeData: FilterListThemeData(
         context,
         choiceChipTheme: ChoiceChipThemeData(
-          selectedBackgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
+          selectedBackgroundColor: Theme.of(context).primaryColor,
           backgroundColor: Colors.grey[200],
         ),
         controlButtonBarTheme: ControlButtonBarThemeData(
           context,
           controlButtonTheme: ControlButtonThemeData(
             textStyle: TextStyle(
-              color: appBox.get('accentColor') ?? Colors.pink[300],
+              color: Theme.of(context).primaryColor,
             ),
-            primaryButtonBackgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
+            primaryButtonBackgroundColor: Theme.of(context).primaryColor,
           ),
         ),
       ),
@@ -101,14 +101,13 @@ class _HistoryViewState extends State<HistoryView> {
       body: SafeArea(
         child: SingleChildScrollView(
           reverse: true,
-          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               // TODO set initial scroll position to show other dates and months
               CalendarTimeline(
                 initialDate: currDate,
-                firstDate: DateTime(2015, 1,
-                    1), // TODO Should be earlier if an earlier date is saved in database
+                // TODO Should be earlier if an earlier date is saved in database
+                firstDate: DateTime(2015, 1, 1),
                 lastDate: DateTime.now(),
                 onDateSelected: (date) {
                   currDate = date;
@@ -120,13 +119,13 @@ class _HistoryViewState extends State<HistoryView> {
                       currDayData = DayData();
                     }
                   });
-                }, // TODO add date and dayData to local vars
+                },
                 leftMargin: 20,
                 monthColor: Colors.grey,
-                dayColor: Colors
-                    .grey, // TODO set today to primary color and period days to red
+                // TODO set today to primary color and period days to red
+                dayColor: Colors.grey,
                 activeDayColor: Colors.white,
-                activeBackgroundDayColor: appBox.get('accentColor') ?? Colors.pink[300],
+                activeBackgroundDayColor: Theme.of(context).primaryColor,
                 dotsColor: const Color(0xFF333A47),
                 locale: 'en_ISO', // TODO Set to user's locale
               ),
@@ -135,7 +134,7 @@ class _HistoryViewState extends State<HistoryView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 50.0),
+                    const SizedBox(height: 10.0),
                     if (!currDayData.pms) ...[
                       Row(
                         children: [
@@ -146,7 +145,7 @@ class _HistoryViewState extends State<HistoryView> {
                             ),
                           ),
                           Switch(
-                            activeColor: appBox.get('accentColor') ?? Colors.pink[300],
+                            activeColor: Theme.of(context).primaryColor,
                             value: currDayData.period,
                             onChanged: (bool value) {
                               setState(() {
@@ -168,7 +167,7 @@ class _HistoryViewState extends State<HistoryView> {
                             ),
                           ),
                           Switch(
-                            activeColor: appBox.get('accentColor') ?? Colors.pink[300],
+                            activeColor: Theme.of(context).primaryColor,
                             value: currDayData.pms,
                             onChanged: (bool value) {
                               setState(() {
@@ -234,7 +233,6 @@ class _HistoryViewState extends State<HistoryView> {
                         ],
                       ),
                       // TODO add for loop to show all period symptoms as pill-shaped objects
-                      // TODO Use an enum to make each symptom align with a number? Or just store as a list of strings.
                       Wrap(
                         spacing: 8.0,
                         runSpacing: -4.0,
@@ -247,7 +245,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                           ], // for
                         ],
@@ -281,7 +279,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                           ], // for
                         ],
@@ -331,7 +329,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                           ], // for
                         ],
@@ -365,7 +363,7 @@ class _HistoryViewState extends State<HistoryView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              backgroundColor: appBox.get('accentColor') ?? Colors.pink[300],
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                           ], // for
                         ],
@@ -392,7 +390,7 @@ class _HistoryViewState extends State<HistoryView> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(context, 1)
+      bottomNavigationBar: bottomNavBar(context, 1),
     );
   }
 }

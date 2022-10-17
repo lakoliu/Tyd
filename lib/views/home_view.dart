@@ -85,8 +85,9 @@ class _HomeViewState extends State<HomeView> {
               Text(
                 daysSinceStart().toString(),
                 // Change color to red if on period
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 120.0,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               // TODO Don't show if currently on period
@@ -150,7 +151,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     Switch(
-                      activeColor: appBox.get('accentColor') ?? Colors.pink[300],
+                      activeColor: Theme.of(context).primaryColor,
                       value: currDayData.period,
                       onChanged: (bool value) {
                         setState(() {
@@ -186,7 +187,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                     Switch(
-                      activeColor: appBox.get('accentColor') ?? Colors.pink[300],
+                      activeColor: Theme.of(context).primaryColor,
                       value: currDayData.pms,
                       onChanged: (bool value) {
                         setState(() {

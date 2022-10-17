@@ -40,45 +40,82 @@ class _AccentColorViewState extends State<AccentColorView> {
                 });
               },
             ),
-            ListTile(
-              title: Text(
-                'Blue',
-                style: TextStyle(
-                  color: Colors.blue[800],
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
+            if (!appBox.get('darkMode', defaultValue: false)) ...[
+              ListTile(
+                title: Text(
+                  'Blue',
+                  style: TextStyle(
+                    color: Colors.blue[800],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
                 ),
+                leading: appBox.get('accentColorName') == 'Blue' ? Icon(Icons.check, color: Colors.blue[800]) : null,
+                onTap: () {
+                  setState(() {
+                    appBox.put('accentColor', Colors.blue[800]);
+                    appBox.put('accentColorName', 'Blue');
+                  });
+                },
               ),
-              leading: appBox.get('accentColorName') == 'Blue' ? Icon(Icons.check, color: Colors.blue[800]) : null,
-              onTap: () {
-                setState(() {
-                  appBox.put('accentColor', Colors.blue[800]);
-                  appBox.put('accentColorName', 'Blue');
-                });
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Green',
-                style: TextStyle(
-                  color: Colors.green[800],
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
+              ListTile(
+                title: Text(
+                  'Green',
+                  style: TextStyle(
+                    color: Colors.green[800],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
                 ),
+                leading: appBox.get('accentColorName') == 'Green' ? Icon(Icons.check, color: Colors.green[800]) : null,
+                onTap: () {
+                  setState(() {
+                    appBox.put('accentColor', Colors.green[800]);
+                    appBox.put('accentColorName', 'Green');
+                  });
+                },
               ),
-              leading: appBox.get('accentColorName') == 'Green' ? Icon(Icons.check, color: Colors.green[800]) : null,
-              onTap: () {
-                setState(() {
-                  appBox.put('accentColor', Colors.green[800]);
-                  appBox.put('accentColorName', 'Green');
-                });
-              },
-            ),
+            ] else ...[
+              ListTile(
+                title: const Text(
+                  'Teal',
+                  style: TextStyle(
+                    color: Colors.tealAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                ),
+                leading: appBox.get('accentColorName') == 'Teal' ? const Icon(Icons.check, color: Colors.tealAccent) : null,
+                onTap: () {
+                  setState(() {
+                    appBox.put('accentColor', Colors.tealAccent);
+                    appBox.put('accentColorName', 'Teal');
+                  });
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  'Purple',
+                  style: TextStyle(
+                    color: Colors.purpleAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                ),
+                leading: appBox.get('accentColorName') == 'Purple' ? const Icon(Icons.check, color: Colors.purpleAccent) : null,
+                onTap: () {
+                  setState(() {
+                    appBox.put('accentColor', Colors.purpleAccent);
+                    appBox.put('accentColorName', 'Purple');
+                  });
+                },
+              ),
+            ],
             ListTile(
               title: Text(
                 'Custom',
                 style: TextStyle(
-                  color: appBox.get('accentColorName') == 'Custom' ? appBox.get('accentColor') ?? Colors.black : Colors.black,
+                  color: appBox.get('accentColorName') == 'Custom' ? appBox.get('accentColor') ?? Colors.black : null,
                   fontWeight: FontWeight.bold,
                   fontSize: 25.0,
                 ),
@@ -91,19 +128,6 @@ class _AccentColorViewState extends State<AccentColorView> {
                     return AlertDialog(
                       titlePadding: const EdgeInsets.all(0),
                       contentPadding: const EdgeInsets.all(0),
-                      // content: SingleChildScrollView(
-                      //   child: MaterialPicker(
-                      //     pickerColor: appBox.get('accentColor') ?? Colors.pink[300],
-                      //     onColorChanged: (color) {
-                      //       setState(() {
-                      //         appBox.put('accentColor', color);
-                      //         appBox.put('accentColorName', 'Custom');
-                      //       });
-                      //     },
-                      //     enableLabel: true,
-                      //     portraitOnly: false,
-                      //   ),
-                      // ),
                       content: SingleChildScrollView(
                         child: ColorPicker(
                           pickerColor: appBox.get('accentColor') ?? Colors.pink[300],

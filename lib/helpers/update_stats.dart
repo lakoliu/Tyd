@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:vula/day_data.dart';
 import 'package:collection/collection.dart';
 
-
 void updateStats() {
   var appBox = Hive.box('app_box');
   var dateBox = Hive.box('date_box');
@@ -16,7 +15,6 @@ void updateStats() {
   // First, check if we are currently on period.
   DayData? todaysData = dateBox.get(todayFormatted);
   var onPeriod = false;
-  var skippedFirst = false;
   if (todaysData != null && todaysData.period) {
     onPeriod = true;
   }

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
-import '../history_view.dart';
-import '../settings_view.dart';
-import '../stats_view.dart';
 
 Widget bottomNavBar(BuildContext context, int navIndex) {
   return BottomNavigationBar(
+    type: BottomNavigationBarType.fixed,
+    showUnselectedLabels: false,
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
