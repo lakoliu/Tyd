@@ -58,7 +58,7 @@ class _HistoryViewState extends State<HistoryView> {
         context,
         choiceChipTheme: ChoiceChipThemeData(
           selectedBackgroundColor: Theme.of(context).primaryColor,
-          backgroundColor: Colors.grey[200],
+          backgroundColor: appBox.get('darkMode', defaultValue: false) ? Colors.grey[700] : Colors.grey[200],
         ),
         controlButtonBarTheme: ControlButtonBarThemeData(
           context,
@@ -189,6 +189,9 @@ class _HistoryViewState extends State<HistoryView> {
                           Slider(
                             value: currDayData.bleeding,
                             divisions: 10,
+                            thumbColor: Theme.of(context).primaryColor,
+                            activeColor: Theme.of(context).primaryColor,
+                            inactiveColor: Theme.of(context).primaryColorLight,
                             onChanged: (value) {
                               setState(() {
                                 currDayData.bleeding = value;
@@ -205,6 +208,9 @@ class _HistoryViewState extends State<HistoryView> {
                           Slider(
                             value: currDayData.pain,
                             divisions: 10,
+                            thumbColor: Theme.of(context).primaryColor,
+                            activeColor: Theme.of(context).primaryColor,
+                            inactiveColor: Theme.of(context).primaryColorLight,
                             onChanged: (value) {
                               setState(() {
                                 currDayData.pain = value;
@@ -223,10 +229,11 @@ class _HistoryViewState extends State<HistoryView> {
                                 listData: periodSymptoms + userAddedPeriodSymps,
                                 selectedList: currDayData.periodSymptoms,
                                 dataField: 'periodSymptoms'),
-                            child: const Text(
+                            child: Text(
                               '+/-',
                               style: TextStyle(
                                 fontSize: 20.0,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
@@ -258,10 +265,11 @@ class _HistoryViewState extends State<HistoryView> {
                                 listData: medicines + userAddedMedicines,
                                 selectedList: currDayData.periodMedsTaken,
                                 dataField: 'periodMedication'),
-                            child: const Text(
+                            child: Text(
                               '+/-',
                               style: TextStyle(
                                 fontSize: 20.0,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
@@ -308,10 +316,11 @@ class _HistoryViewState extends State<HistoryView> {
                                 listData: pmsSymptoms,
                                 selectedList: currDayData.pmsSymptoms,
                                 dataField: 'pmsSymptoms'),
-                            child: const Text(
+                            child: Text(
                               '+/-',
                               style: TextStyle(
                                 fontSize: 20.0,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
@@ -342,10 +351,11 @@ class _HistoryViewState extends State<HistoryView> {
                                 listData: medicines + userAddedMedicines,
                                 selectedList: currDayData.pmsMedsTaken,
                                 dataField: 'pmsMedication'),
-                            child: const Text(
+                            child: Text(
                               '+/-',
                               style: TextStyle(
                                 fontSize: 20.0,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),

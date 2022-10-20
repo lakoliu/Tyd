@@ -15,7 +15,7 @@ Widget bottomNavBar(BuildContext context, int navIndex) {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.timer),
-        label: 'Tampon Timer',
+        label: 'Timer',
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.bar_chart),
@@ -34,7 +34,7 @@ Widget bottomNavBar(BuildContext context, int navIndex) {
         } else if (index == 1) {
           Navigator.pushNamed(context, 'historyView');
         } else if (index == 2) {
-          // Navigator.pushNamed(context, 'timerView');
+          Navigator.pushNamed(context, 'timerView');
         } else if (index == 3) {
           Navigator.pushNamed(context, 'statsView');
         } else if (index == 4) {
