@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vula/helpers/database_initializers.dart';
+import 'package:vula/timer_data.dart';
 import 'package:vula/views/history_view.dart';
 import 'package:vula/views/home_view.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,6 +16,7 @@ import 'views/sub_settings/accent_color_view.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DayDataAdapter());
+  Hive.registerAdapter(TimerDataAdapter());
   Hive.registerAdapter(ColorAdapter());
   var dateBox = await Hive.openBox('date_box');
   var appBox = await Hive.openBox('app_box');
@@ -28,7 +30,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var appBox = Hive.box('app_box');
     return ValueListenableBuilder(
       valueListenable: Hive.box('app_box').listenable(),
       builder: (context, box, widget) {

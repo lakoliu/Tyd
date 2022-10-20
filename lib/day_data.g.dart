@@ -30,13 +30,15 @@ class DayDataAdapter extends TypeAdapter<DayData> {
           fields[7] == null ? [] : (fields[7] as List).cast<String>()
       ..pmsMedsTaken =
           fields[8] == null ? [] : (fields[8] as List).cast<String>()
-      ..pmsNotes = fields[9] == null ? '' : fields[9] as String;
+      ..pmsNotes = fields[9] == null ? '' : fields[9] as String
+      ..timerData =
+          fields[10] == null ? [] : (fields[10] as List).cast<TimerData>();
   }
 
   @override
   void write(BinaryWriter writer, DayData obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.period)
       ..writeByte(1)
@@ -56,7 +58,9 @@ class DayDataAdapter extends TypeAdapter<DayData> {
       ..writeByte(8)
       ..write(obj.pmsMedsTaken)
       ..writeByte(9)
-      ..write(obj.pmsNotes);
+      ..write(obj.pmsNotes)
+      ..writeByte(10)
+      ..write(obj.timerData);
   }
 
   @override

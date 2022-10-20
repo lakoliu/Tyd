@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:vula/timer_data.dart';
 
 part 'day_data.g.dart';
 
@@ -34,4 +35,7 @@ class DayData extends HiveObject {
 
   @HiveField(9, defaultValue: '')
   var pmsNotes = '';
+
+  @HiveField(10, defaultValue: [])
+  List<TimerData> timerData = [];
 }

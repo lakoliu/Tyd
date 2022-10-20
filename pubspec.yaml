@@ -22,6 +22,7 @@ dependencies:
   collection: ^1.16.0
   stop_watch_timer: ^2.0.0
   swatch_generator: ^0.1.0
+  expandable_datatable: ^0.0.6
 
 dev_dependencies:
   flutter_test:

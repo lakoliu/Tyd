@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:swatch_generator/swatch_generator.dart';
 
+import '../day_data.dart';
+import '../timer_data.dart';
 import '../views/components/bottom_nav_bar.dart';
 
 class TimerView extends StatefulWidget {
@@ -15,27 +17,36 @@ class TimerView extends StatefulWidget {
 
 class _TimerViewState extends State<TimerView> {
   var appBox = Hive.box('app_box');
+  var dateBox = Hive.box('date_box');
+
   final _stopWatchTimer = StopWatchTimer();
+  final DateFormat timeFormatter = DateFormat.jm();
+  final String currDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  final TableRow rowSpacer = const TableRow(children: [
+    SizedBox(
+      height: 15,
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    SizedBox(
+      height: 15,
+    ),
+  ]);
+
+  var currDayData = DayData();
   var _radioSelected = 1;
+  var typeSelected = 'Tampon';
   late DateTime startTime;
   late DateTime stopTime;
+  var timerMinutes = 4.0 * 60.0;
 
-  // TODO Temporary (replace with saved values)
-  var timerMinutes = 1;
-
-  void startStop({DateTime? startingTime}) {
-    if (_stopWatchTimer.isRunning) {
-      setState(() {
-        _stopWatchTimer.onStopTimer();
-        _stopWatchTimer.onResetTimer();
-      });
-    } else {
-      _stopWatchTimer.clearPresetTime();
-      setState(() {
-        _stopWatchTimer.onStartTimer();
-      });
-    }
-  }
 
   void startTimer(DateTime startingTime) {
     if (!_stopWatchTimer.isRunning) {
@@ -48,6 +59,10 @@ class _TimerViewState extends State<TimerView> {
     }
   }
 
+  void updateDayData() {
+    dateBox.put(currDate, currDayData);
+  }
+
   void stopTimer(DateTime stoppingTime) {
     if (_stopWatchTimer.isRunning) {
       setState(() {
@@ -56,6 +71,10 @@ class _TimerViewState extends State<TimerView> {
       _stopWatchTimer.clearPresetTime();
       _stopWatchTimer.onResetTimer();
       stopTime = stoppingTime;
+      setState(() {
+        currDayData.timerData.add(TimerData(typeSelected, startTime, stopTime, '-'));
+      });
+      updateDayData();
     }
   }
   
@@ -64,12 +83,12 @@ class _TimerViewState extends State<TimerView> {
     return DateTime(now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
   }
 
-  void showCustomTimePicker(BuildContext context) async {
+  void showCustomTimePicker(BuildContext context, String startOrStop) async {
     TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      confirmText: 'START',
-      helpText: 'SELECT START TIME',
+      confirmText: startOrStop,
+      helpText: 'SELECT $startOrStop TIME',
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -83,15 +102,26 @@ class _TimerViewState extends State<TimerView> {
         );
       },
     );
-    if (selectedTime != null) {
-      startTimer(toDateTime(selectedTime));
+    if (startOrStop == 'START') {
+      if (selectedTime != null) {
+        startTimer(toDateTime(selectedTime));
+      }
+    } else {
+      if (selectedTime != null) {
+        stopTimer(toDateTime(selectedTime));
+      }
     }
   }
-
 
   @override
   void initState() {
     super.initState();
+    timerMinutes = appBox.get('tamponTimer');
+    if (dateBox.get(currDate) != null) {
+      setState(() {
+        currDayData = dateBox.get(currDate);
+      });
+    }
   }
 
   @override
@@ -128,9 +158,11 @@ class _TimerViewState extends State<TimerView> {
                     activeColor: Theme.of(context).primaryColor,
                     groupValue: _radioSelected,
                     value: 1,
-                    onChanged: (int? value) {
+                    onChanged: _stopWatchTimer.isRunning ? null : (int? value) {
                       setState(() {
                         _radioSelected = value!;
+                        typeSelected = 'Tampon';
+                        timerMinutes = appBox.get('tamponTimer');
                       });
                     },
                   ),
@@ -139,9 +171,11 @@ class _TimerViewState extends State<TimerView> {
                     activeColor: Theme.of(context).primaryColor,
                     groupValue: _radioSelected,
                     value: 2,
-                    onChanged: (int? value) {
+                    onChanged: _stopWatchTimer.isRunning ? null : (int? value) {
                       setState(() {
                         _radioSelected = value!;
+                        typeSelected = 'Pad';
+                        timerMinutes = appBox.get('padTimer');
                       });
                     },
                   ),
@@ -150,9 +184,11 @@ class _TimerViewState extends State<TimerView> {
                     activeColor: Theme.of(context).primaryColor,
                     groupValue: _radioSelected,
                     value: 3,
-                    onChanged: (int? value) {
+                    onChanged: _stopWatchTimer.isRunning ? null : (int? value) {
                       setState(() {
                         _radioSelected = value!;
+                        typeSelected = 'Cup';
+                        timerMinutes = appBox.get('cupTimer');
                       });
                     },
                   ),
@@ -175,7 +211,7 @@ class _TimerViewState extends State<TimerView> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor
                   ),
-                  onPressed: () => stopTimer(DateTime.now()),
+                  onPressed: () => showCustomTimePicker(context, 'STOP'),
                   child: const Text('Stop'),
                 ),
               ] else ...[
@@ -183,11 +219,89 @@ class _TimerViewState extends State<TimerView> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor
                   ),
-                  onPressed: () => showCustomTimePicker(context),
+                  onPressed: () => showCustomTimePicker(context, 'START'),
                   child: const Text('Start'),
                 ),
               ],
-
+              const SizedBox(height: 20.0,),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    columnWidths: const {
+                      0: FractionColumnWidth(.2),
+                      1: FractionColumnWidth(.15),
+                      2: FractionColumnWidth(.25),
+                      3: FractionColumnWidth(.25),
+                      4: FractionColumnWidth(.1)
+                    },
+                    children: [
+                      const TableRow(
+                        children: [
+                          Text(
+                            'Type',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Size',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Start',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Stop',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Edit',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      rowSpacer,
+                      for (var historyItem in currDayData.timerData) ...[
+                        // rowSpacer,
+                        TableRow(
+                          children: [
+                            Text(
+                              historyItem.type,
+                            ),
+                            Text(
+                              historyItem.size,
+                            ),
+                            Text(
+                              timeFormatter.format(historyItem.startTime),
+                            ),
+                            Text(
+                              timeFormatter.format(historyItem.stopTime),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.edit, size: 20.0,),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
+                  ),
+                  // child: Column(
+                  //   children: getAllRows(),
+                  // ),
+                )
+              ),
+              // TODO Show a toast notification that you will be notified in X hours to change your X
             ],
           ),
         ),
@@ -196,3 +310,4 @@ class _TimerViewState extends State<TimerView> {
     );
   }
 }
+
