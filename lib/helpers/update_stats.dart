@@ -163,49 +163,105 @@ void updateSecondaryStats() {
   var datesChronological = dateBox.keys.toList();
   datesChronological.sort((a,b) => b.compareTo(a));
 
-  // Calculate average period length
+  // Calculate number of dates tracked (starting date until today)
+  var firstDay = DateTime.parse(datesChronological.reversed.first);
+  var numDaysTracked = DateTime.now().difference(firstDay);
+  appBox.put('totalDaysTracked', numDaysTracked.inDays);
+
+  // Calculate average period length AND average bleeding by day
   bool? lastWasPeriod;
   List<int> periodIntervals = [];
   var counter = 0;
   var lastDate = '';
   var lastParsed = DateTime.now();
   var daysBetween = 0;
+  // List<double> bleedingByDay = [];
+  List<List<double>> bleedingByDay = [];
   for (var date in datesChronological.reversed) {
     DayData dayData = dateBox.get(date);
     var parsedDate = DateTime.parse(date);
 
-    if(lastDate.isNotEmpty) {
+    if (lastDate.isNotEmpty) {
       lastParsed = DateTime.parse(lastDate);
       daysBetween = parsedDate.difference(lastParsed).inDays;
     }
 
     if (dayData.period) {
       if (lastWasPeriod == null || !lastWasPeriod) {
+        // bleedingByDay.add(dayData.bleeding);
         counter ++;
         lastWasPeriod = true;
       } else if (lastWasPeriod && daysBetween == 1) {
+        // bleedingByDay.add(dayData.bleeding);
         counter ++;
         lastWasPeriod = true;
       } else if (lastWasPeriod && daysBetween !=1) {
+        // allBleedingData.add(bleedingByDay);
+        // bleedingByDay = [];
         periodIntervals.add(counter);
         counter = 1;
         lastWasPeriod = true;
       }
     } else {
       if (lastWasPeriod ?? false) {
+        // allBleedingData.add(bleedingByDay);
+        // bleedingByDay = [];
         periodIntervals.add(counter);
         counter = 0;
       }
       lastWasPeriod = false;
     }
     lastDate = date;
+
+    // Organize bleeding into days
+    if (counter > 0) {
+      if (bleedingByDay.asMap().containsKey(counter-1)) {
+        bleedingByDay[counter-1].add(dayData.bleeding);
+      } else {
+        List<double> newPeriodDay = [dayData.bleeding];
+        bleedingByDay.add(newPeriodDay);
+      }
+    }
   }
   if (periodIntervals.isNotEmpty) {
+    // Get longest period length for average bleeding stats
+    // TODO technically, this could be removed and I could use the length of averageBleedingByDay instead
+    periodIntervals.sort();
+    appBox.put('longestPeriod', periodIntervals.last);
+
     var averageCycle = periodIntervals.sum / periodIntervals.length;
     appBox.put('averagePeriod', averageCycle.round());
   } else {
+    appBox.put('longestPeriod', null);
     appBox.put('averagePeriod', null);
+  }
+  if (bleedingByDay.isNotEmpty) {
+    Map<int, double> averageBleedingByDay = {};
+    for (var i = 0; i < bleedingByDay.length; i++) {
+      var averageBleeding = bleedingByDay[i].sum / bleedingByDay[i].length;
+      averageBleedingByDay[i+1] = averageBleeding;
+    }
+    appBox.put('averageBleedingByDay', averageBleedingByDay);
   }
 
 
+  // Organize each day's bleeding on period days into a list. Save that list to another list
+  // at end of period and start a new list.
+
+  // Calculate total period days
+  var numPeriodDays = 0;
+  for (var date in datesChronological) {
+    DayData dayData = dateBox.get(date);
+
+    if (dayData.period) {
+      numPeriodDays++;
+    }
+  }
+  appBox.put('totalPeriodDays', numPeriodDays);
+
+  // // Avgerage bleeding by day
+  // for (var date in datesChronological) {
+  //
+  // }
+  
 }

@@ -16,6 +16,8 @@ class StatsView extends StatefulWidget {
 class _StatsViewState extends State<StatsView> {
   var appBox = Hive.box('app_box');
 
+  var selectedPeriodDay = 1;
+
   Widget printUnknown() {
     return const Text(
       'unknown',
@@ -34,7 +36,7 @@ class _StatsViewState extends State<StatsView> {
   @override
   void initState() {
     super.initState();
-    print('INITTED!');
+    updateSecondaryStats();
   }
 
   @override
@@ -106,6 +108,100 @@ class _StatsViewState extends State<StatsView> {
                   if (appBox.get('averageCycle') != null) ...[
                     Text(
                       printWithDays(appBox.get('averageCycle')),
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ] else ...[
+                    printUnknown()
+                  ],
+                ],
+              ),
+              if (appBox.get('longestPeriod') != null) ...[
+                Row(
+                  children: [
+                    const Text(
+                      'Avg. bleeding on day',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 10.0,),
+                    DropdownButton(
+                      value: selectedPeriodDay,
+                      items: List<int>.generate(appBox.get('longestPeriod'), (k) => k + 1)
+                          .map<DropdownMenuItem<int>>((int value) {
+                        return DropdownMenuItem<int>(
+                          value: value,
+                          child: Text(value.toString()),
+                        );
+                      }).toList(), // TODO one item for every day of longest period
+                      onChanged: (int? value) {
+                        if (value != null) {
+                          setState(() {
+                            selectedPeriodDay = value;
+                          });
+                        }
+                      },
+                    ),
+                    const Text(
+                      ':',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 7.0,),
+                    if (appBox.get('averageBleedingByDay') != null) ...[
+                      Text(
+                        (appBox.get('averageBleedingByDay')[selectedPeriodDay] * 10).toStringAsFixed(1),
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ] else ...[
+                      printUnknown()
+                    ],
+                  ],
+                ),
+              ] else ...[
+                const SizedBox(height: 15.0,),
+              ],
+              Row(
+                children: [
+                  const Text(
+                    'Total period days: ',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (appBox.get('totalPeriodDays') != null) ...[
+                    Text(
+                      printWithDays(appBox.get('totalPeriodDays')),
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ] else ...[
+                    printUnknown()
+                  ],
+                ],
+              ),
+              const SizedBox(height: 15.0,),
+              Row(
+                children: [
+                  const Text(
+                    'Total days tracked: ',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (appBox.get('totalDaysTracked') != null) ...[
+                    Text(
+                      printWithDays(appBox.get('totalDaysTracked')),
                       style: const TextStyle(
                         fontSize: 20.0,
                       ),
