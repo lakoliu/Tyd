@@ -23,6 +23,11 @@ dependencies:
   stop_watch_timer: ^2.0.0
   swatch_generator: ^0.1.0
   expandable_datatable: ^0.0.6
+  flutter_local_notifications: ^12.0.2
+  flutter_native_splash: ^2.2.8
+  flutter_native_timezone: ^2.0.0
+  timezone: ^0.9.0
+  flutter_spinbox: ^0.10.0
 
 dev_dependencies:
   flutter_test:

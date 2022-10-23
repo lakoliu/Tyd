@@ -64,7 +64,7 @@ class _StatsViewState extends State<StatsView> {
                   ],
                 ],
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(height: 15.0,),
               Row(
                 children: [
                   const Text(
@@ -86,7 +86,7 @@ class _StatsViewState extends State<StatsView> {
                   ],
                 ],
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(height: 15.0,),
               Row(
                 children: [
                   const Text(

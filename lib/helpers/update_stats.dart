@@ -94,7 +94,7 @@ void updateStats() {
 
   // Format the 'Last Period' string
   if (appBox.get('lastStartDate') != null && appBox.get('lastEndDate') != null) {
-    final DateFormat monthDayFormatter = DateFormat('MMM dd');
+    final DateFormat monthDayFormatter = DateFormat('MMM d');
     var lastStart = monthDayFormatter.format(appBox.get('lastStartDate'));
     var lastEnd = monthDayFormatter.format(appBox.get('lastEndDate'));
     if (lastStart == lastEnd) {

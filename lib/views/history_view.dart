@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:vula/day_data.dart';
 import 'package:hive/hive.dart';
 
+import '../helpers/update_stats.dart';
+
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
 
@@ -26,8 +28,6 @@ class _HistoryViewState extends State<HistoryView> {
   // TODO TEMPORARY
   var periodSwitch = false;
   var pmsSwitch = false;
-  List<String> userAddedPeriodSymps = ['User', 'Added'];
-  List<String> userAddedMedicines = ['User', 'Added'];
 
   @override
   void initState() {
@@ -152,6 +152,7 @@ class _HistoryViewState extends State<HistoryView> {
                                 currDayData.period = value;
                               });
                               updateDayData();
+                              updateStats();
                             },
                           ),
                         ],
@@ -226,7 +227,7 @@ class _HistoryViewState extends State<HistoryView> {
                           const Text('Symptoms'),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
-                                listData: periodSymptoms + userAddedPeriodSymps,
+                                listData: periodSymptoms,
                                 selectedList: currDayData.periodSymptoms,
                                 dataField: 'periodSymptoms'),
                             child: Text(
@@ -262,7 +263,7 @@ class _HistoryViewState extends State<HistoryView> {
                           const Text('Medication Taken'),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
-                                listData: medicines + userAddedMedicines,
+                                listData: medicines,
                                 selectedList: currDayData.periodMedsTaken,
                                 dataField: 'periodMedication'),
                             child: Text(
@@ -348,7 +349,7 @@ class _HistoryViewState extends State<HistoryView> {
                           const Text('Medication Taken'),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
-                                listData: medicines + userAddedMedicines,
+                                listData: medicines,
                                 selectedList: currDayData.pmsMedsTaken,
                                 dataField: 'pmsMedication'),
                             child: Text(

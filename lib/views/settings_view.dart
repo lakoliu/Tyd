@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
+import 'package:vula/helpers/constants.dart';
 
 
 class SettingsView extends StatefulWidget {
@@ -13,6 +14,19 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   var appBox = Hive.box('app_box');
+
+  void resetAllSettings() {
+    appBox.put('darkMode', false);
+    appBox.put('accentColorName', 'Pink');
+    appBox.put('accentColor', Colors.pink[300]);
+    appBox.put('tamponTimer', 4.0);
+    appBox.put('padTimer', 4.0);
+    appBox.put('cupTimer', 4.0);
+    appBox.put('tamponSizes', tamponSizes);
+    appBox.put('periodSymptoms', periodSymptoms);
+    appBox.put('pmsSymptoms', pmsSymptoms);
+    appBox.put('medicines', medicines);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,19 +74,81 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                 ),
                 SettingsSection(
-                  title: const Text('Symptoms & Meds'),
+                  title: const Text('Symptoms, Meds, Etc.'),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('Add Period Symptoms'),
+                      title: const Text('Period Symptoms'),
+                      onPressed: (context) => Navigator.pushNamed(context, 'periodSymptomsView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('Add PMS Symptoms'),
+                      title: const Text('PMS Symptoms'),
+                      onPressed: (context) => Navigator.pushNamed(context, 'pmsSymptomsView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medication),
-                      title: const Text('Add Medicines'),
+                      title: const Text('Medicines'),
+                      onPressed: (context) => Navigator.pushNamed(context, 'medicinesView'),
+                    ),
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.photo_size_select_small),
+                      title: const Text('Tampon Sizes'),
+                      value: Text(
+                          appBox.get('tamponSizes').skip(1).join(', '),
+                      ),
+                      onPressed: (context) => Navigator.pushNamed(context, 'tamponSizeView'),
+                    ),
+                  ],
+                ),
+                SettingsSection(
+                  title: const Text('Times'),
+                  tiles: [
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.timer),
+                      title: const Text('Intervals'),
+                      value: const Text('Tampons, pads, cups, and underwear'),
+                      onPressed: (context) => Navigator.pushNamed(context, 'intervalsView'),
+                    ),
+                  ],
+                ),
+                SettingsSection(
+                  title: const Text('Reset'),
+                  tiles: [
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.lock_reset),
+                      title: const Text('Reset All Settings'),
+                      onPressed: (context) {
+                        var deleteAllText = '';
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Are you sure?'),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text('This will erase all of your custom settings. Type "DELETE" to continue.'),
+                                  TextField(
+                                    textCapitalization: TextCapitalization.characters,
+                                    onChanged: (value) => deleteAllText = value,
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => deleteAllText == 'DELETE' ? resetAllSettings() : {},
+                                  child: const Text('Delete'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     ),
                   ],
                 ),

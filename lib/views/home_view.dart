@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
-import 'package:vula/views/settings_view.dart';
-import 'package:vula/views/stats_view.dart';
 import '../views/history_view.dart';
 import 'package:hive/hive.dart';
 import '../helpers/update_stats.dart';
@@ -158,6 +156,7 @@ class _HomeViewState extends State<HomeView> {
                           currDayData.period = value;
                         });
                         updateDayData();
+                        updateStats();
                         if (value) {
                           Navigator.push(
                             context,
@@ -165,8 +164,6 @@ class _HomeViewState extends State<HomeView> {
                                 builder: (context) => const HistoryView()
                             ),
                           );
-                        } else {
-                          updateStats();
                         }
                       },
                     ),
