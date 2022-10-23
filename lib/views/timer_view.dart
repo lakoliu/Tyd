@@ -100,14 +100,16 @@ class _TimerViewState extends State<TimerView> {
   void notificationTimerSnack() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     var verb = typeSelected == 'Cup' ? 'empty' : 'change';
-    var timerHours = timerMinutes / 60;
-    var noun = timerHours == 1.0 ? 'hour' : 'hours';
-    // TODO Change this to "You will be notified at 6:53 p.m. to change...
-    var snackBar = SnackBar(
-      content: Text(
-          'You will be notified in ${timerHours.toString().replaceAll(regex, '')} $noun to $verb your ${typeSelected.toLowerCase()}.'),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    var notifyDateTime = startTime.add(Duration(minutes: timerMinutes.toInt()));
+
+    if (DateTime.now().isBefore(notifyDateTime)) {
+      var notifyTime = timeFormatter.format(notifyDateTime);
+      var snackBar = SnackBar(
+        content: Text(
+            'You will be notified at $notifyTime to $verb your ${typeSelected.toLowerCase()}.'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   void showCustomTimePicker(BuildContext context, String startOrStop) async {
