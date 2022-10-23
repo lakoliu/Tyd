@@ -30,15 +30,15 @@ Widget bottomNavBar(BuildContext context, int navIndex) {
     onTap: (index) {
       if (index != navIndex) {
         if (index == 0) {
-          Navigator.pushNamed(context, 'homeView');
+          Navigator.pushReplacementNamed(context, 'homeView');
         } else if (index == 1) {
-          Navigator.pushNamed(context, 'historyView');
+          Navigator.pushReplacementNamed(context, 'historyView');
         } else if (index == 2) {
-          Navigator.pushNamed(context, 'timerView');
+          Navigator.pushReplacementNamed(context, 'timerView');
         } else if (index == 3) {
-          Navigator.pushNamed(context, 'statsView');
+          Navigator.pushReplacementNamed(context, 'statsView');
         } else if (index == 4) {
-          Navigator.pushNamed(context, 'settingsView');
+          Navigator.pushReplacementNamed(context, 'settingsView');
         }
       }
     },

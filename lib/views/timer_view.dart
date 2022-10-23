@@ -24,7 +24,6 @@ class _TimerViewState extends State<TimerView> {
   final _stopWatchTimer = StopWatchTimer();
   final DateFormat timeFormatter = DateFormat.jm();
   final String currDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  final RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
   final TableRow rowSpacer = const TableRow(children: [
     SizedBox(
       height: 15,

@@ -158,12 +158,7 @@ class _HomeViewState extends State<HomeView> {
                         updateDayData();
                         updateStats();
                         if (value) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HistoryView()
-                            ),
-                          );
+                          Navigator.pushReplacementNamed(context, 'historyView');
                         }
                       },
                     ),
@@ -192,11 +187,7 @@ class _HomeViewState extends State<HomeView> {
                         });
                         updateDayData();
                         if (value) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HistoryView()),
-                          );
+                          Navigator.pushReplacementNamed(context, 'historyView');
                         }
                       },
                     ),

@@ -36,7 +36,7 @@ class _SettingsViewState extends State<SettingsView> {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              'Statistics',
+              'Settings',
             ),
           ),
           body: SafeArea(

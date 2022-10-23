@@ -152,12 +152,24 @@ void updateStats() {
   } else {
     appBox.put('averageCycle', null);
   }
+}
+
+void updateSecondaryStats() {
+  var appBox = Hive.box('app_box');
+  var dateBox = Hive.box('date_box');
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final todayFormatted = formatter.format(DateTime.now());
+
+  var datesChronological = dateBox.keys.toList();
+  datesChronological.sort((a,b) => b.compareTo(a));
 
   // Calculate average period length
   bool? lastWasPeriod;
   List<int> periodIntervals = [];
   var counter = 0;
-  lastDate = '';
+  var lastDate = '';
+  var lastParsed = DateTime.now();
+  var daysBetween = 0;
   for (var date in datesChronological.reversed) {
     DayData dayData = dateBox.get(date);
     var parsedDate = DateTime.parse(date);
@@ -194,5 +206,6 @@ void updateStats() {
   } else {
     appBox.put('averagePeriod', null);
   }
+
 
 }
