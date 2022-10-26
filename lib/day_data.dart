@@ -38,4 +38,20 @@ class DayData extends HiveObject {
 
   @HiveField(10, defaultValue: [])
   List<TimerData> timerData = [];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'period': period,
+      'pms': pms,
+      'bleeding': bleeding,
+      'pain': pain,
+      'periodSymptoms': periodSymptoms,
+      'periodMedsTaken': periodMedsTaken,
+      'periodNotes': periodNotes,
+      'pmsSymptoms': pmsSymptoms,
+      'pmsMedsTaken': pmsMedsTaken,
+      'pmsNotes': pmsNotes,
+      'timerData': timerData,
+    };
+  }
 }

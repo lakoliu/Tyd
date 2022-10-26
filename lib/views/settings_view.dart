@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:vula/helpers/export_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:vula/helpers/import_helper.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
 import 'package:vula/helpers/constants.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 
 
 class SettingsView extends StatefulWidget {
@@ -14,6 +18,9 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   var appBox = Hive.box('app_box');
+  PlatformFile? _selectedFile;
+  String? _selectedFileName;
+
 
   void resetAllSettings() {
     appBox.put('darkMode', false);
@@ -26,6 +33,23 @@ class _SettingsViewState extends State<SettingsView> {
     appBox.put('periodSymptoms', periodSymptoms);
     appBox.put('pmsSymptoms', pmsSymptoms);
     appBox.put('medicines', medicines);
+  }
+
+  void pickAFile(void Function(void Function()) newState) async {
+    PlatformFile? pickedFile;
+    try {
+      pickedFile = (await FilePicker.platform.pickFiles(
+        type: FileType.any,
+        // allowedExtensions: ['json', 'cluedata'],
+      ))?.files.single;
+    } catch (e) {
+      pickedFile = null;
+    }
+
+    newState(() {
+      _selectedFile = pickedFile;
+      _selectedFileName = _selectedFile?.name;
+    });
   }
 
   @override
@@ -110,6 +134,80 @@ class _SettingsViewState extends State<SettingsView> {
                       value: const Text('Tampons, pads, cups, and underwear'),
                       onPressed: (context) => Navigator.pushNamed(context, 'intervalsView'),
                     ),
+                  ],
+                ),
+                SettingsSection(
+                  title: const Text('Saved Data'),
+                  tiles: [
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.import_export),
+                      title: const Text('Import Data'),
+                      value: const Text('Import data from XXX or another app'),
+                      onPressed: (context) {
+                        _selectedFile = null;
+                        _selectedFileName = null;
+                        // TODO give state to dialog, then pass that state to pickAFile to update
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(builder: (context, newSetState) {
+                              return AlertDialog(
+                                title: const Text('Import A File'),
+                                content: Row(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        pickAFile(newSetState);
+                                      },
+                                      child: const Text('Browse'),
+                                    ),
+                                    const SizedBox(width: 5.0,),
+                                    Expanded(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Flexible(
+                                            child: Text(
+                                              _selectedFileName?.split(path.extension(_selectedFileName!))[0] ?? 'No file selected',
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          Text(
+                                            path.extension(_selectedFileName ?? ''),
+                                            // style: Theme.of(context).textTheme.caption,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // TODO button should be disabled while _selectedFile is null
+                                      if (_selectedFile != null) {
+                                        ImportHelper.getJsonData(context, _selectedFile!);
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: const Text('Import'),
+                                  ),
+                                ],
+                              );
+                            });
+                          }
+                        );
+                      }
+                    ),
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.import_export),
+                      title: const Text('Back Up Data'),
+                      onPressed: (context) => ExportHelper.exportSavedData(context),
+                    ),
+                    // TODO Add option to delete all data
                   ],
                 ),
                 SettingsSection(

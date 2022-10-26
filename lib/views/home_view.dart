@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:vula/helpers/import_helper.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
-import '../views/history_view.dart';
 import 'package:hive/hive.dart';
 import '../helpers/update_stats.dart';
 import '../day_data.dart';

@@ -227,6 +227,7 @@ class _HistoryViewState extends State<HistoryView> {
                           const Text('Symptoms'),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
+                              // TODO change to appBox.get('periodSymptoms')
                                 listData: periodSymptoms,
                                 selectedList: currDayData.periodSymptoms,
                                 dataField: 'periodSymptoms'),
