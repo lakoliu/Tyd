@@ -19,6 +19,7 @@ class _HomeViewState extends State<HomeView> {
   var dateBox = Hive.box('date_box');
 
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final DateFormat monthDayFormatter = DateFormat('MMM d');
   var currDate = DateTime.now();
   DayData currDayData = DayData();
 
@@ -49,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
   String getCycleText() {
     var averageCycle = appBox.get('averageCycle');
     var dayText = averageCycle == 1 ? 'day' : 'days';
-    return 'Your average cycle: $averageCycle $dayText';
+    return '$averageCycle $dayText';
   }
 
   void updateDayData() {
@@ -109,25 +110,71 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   child: Column(
                     children: [
-                      if (appBox.get('lastPeriod') != null) ...[
-                        Text(
-                          'Last period: ${appBox.get('lastPeriod')}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            fontStyle: FontStyle.italic,
+                      if (currDayData.period) ...[
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Period started: ',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              monthDayFormatter.format(appBox.get('latestStartDate')),
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                      ] else ...[
+                        if (appBox.get('lastPeriod') != null) ...[
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text(
+                                'Last period: ',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                    fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                appBox.get('lastPeriod'),
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ],
                           ),
+                        ],
+                        const SizedBox(
+                          height: 10.0,
                         ),
                       ],
-                      const SizedBox(
-                        height: 10.0,
-                      ),
                       if (appBox.get('averageCycle') != null) ...[
-                        Text(
-                          getCycleText(),
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            fontStyle: FontStyle.italic,
-                          ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Your average cycle: ',
+                              style:  TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              getCycleText(),
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ],
