@@ -3,6 +3,7 @@ import 'package:vula/helpers/export_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:vula/helpers/import_helper.dart';
+import 'package:vula/helpers/update_stats.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
 import 'package:vula/helpers/constants.dart';
 import 'package:file_picker/file_picker.dart';
@@ -18,6 +19,7 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   var appBox = Hive.box('app_box');
+  var dateBox = Hive.box('date_box');
   PlatformFile? _selectedFile;
   String? _selectedFileName;
 
@@ -33,6 +35,10 @@ class _SettingsViewState extends State<SettingsView> {
     appBox.put('periodSymptoms', periodSymptoms);
     appBox.put('pmsSymptoms', pmsSymptoms);
     appBox.put('medicines', medicines);
+  }
+  
+  void eraseAllDateBoxData() {
+    dateBox.clear();
   }
 
   void pickAFile(void Function(void Function()) newState) async {
@@ -140,13 +146,12 @@ class _SettingsViewState extends State<SettingsView> {
                   title: const Text('Saved Data'),
                   tiles: [
                     SettingsTile.navigation(
-                      leading: const Icon(Icons.import_export),
+                      leading: const Icon(Icons.download),
                       title: const Text('Import Data'),
                       value: const Text('Import data from XXX or another app'),
                       onPressed: (context) {
                         _selectedFile = null;
                         _selectedFileName = null;
-                        // TODO give state to dialog, then pass that state to pickAFile to update
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -186,8 +191,7 @@ class _SettingsViewState extends State<SettingsView> {
                                     child: const Text('Cancel'),
                                   ),
                                   TextButton(
-                                    onPressed: () {
-                                      // TODO button should be disabled while _selectedFile is null
+                                    onPressed: _selectedFile == null ? null : () {
                                       if (_selectedFile != null) {
                                         ImportHelper.getJsonData(context, _selectedFile!);
                                         Navigator.pop(context);
@@ -203,11 +207,55 @@ class _SettingsViewState extends State<SettingsView> {
                       }
                     ),
                     SettingsTile.navigation(
-                      leading: const Icon(Icons.import_export),
+                      leading: const Icon(Icons.upload),
                       title: const Text('Back Up Data'),
                       onPressed: (context) => ExportHelper.exportSavedData(context),
                     ),
-                    // TODO Add option to delete all data
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.delete_forever),
+                      title: const Text('Delete All Data'),
+                      onPressed: (context) {
+                        var deleteAllText = '';
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(builder: (context, newSetState) {
+                              return AlertDialog(
+                                title: const Text('Are you sure?'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('This will erase ALL of the data you have recorded. Type "DELETE" to continue.'),
+                                    TextField(
+                                      textCapitalization: TextCapitalization.characters,
+                                      onChanged: (value) {
+                                        newSetState(() {
+                                          deleteAllText = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: deleteAllText != 'DELETE' ? null : () {
+                                      eraseAllDateBoxData();
+                                      updateStats();
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('DELETE'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('CANCEL'),
+                                  ),
+                                ],
+                              );
+                            });
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
                 SettingsSection(
@@ -221,29 +269,38 @@ class _SettingsViewState extends State<SettingsView> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Are you sure?'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text('This will erase all of your custom settings. Type "DELETE" to continue.'),
-                                  TextField(
-                                    textCapitalization: TextCapitalization.characters,
-                                    onChanged: (value) => deleteAllText = value,
+                            return StatefulBuilder(builder: (context, newSetState) {
+                              return AlertDialog(
+                                title: const Text('Are you sure?'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('This will erase all of your custom settings. Type "DELETE" to continue.'),
+                                    TextField(
+                                      textCapitalization: TextCapitalization.characters,
+                                      onChanged: (value) {
+                                        newSetState(() {
+                                          deleteAllText = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: deleteAllText != 'DELETE' ? null : () {
+                                      resetAllSettings();
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('DELETE'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('CANCEL'),
                                   ),
                                 ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => deleteAllText == 'DELETE' ? resetAllSettings() : {},
-                                  child: const Text('Delete'),
-                                ),
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('Cancel'),
-                                ),
-                              ],
-                            );
+                              );
+                            });
                           },
                         );
                       }

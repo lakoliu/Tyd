@@ -75,7 +75,6 @@ class _HistoryViewState extends State<HistoryView> {
         setState(() {
           switch (dataField) {
             case 'periodSymptoms': currDayData.periodSymptoms = selectedList; break;
-            case 'periodMedication': currDayData.periodMedsTaken = selectedList; break;
             case 'pmsSymptoms': currDayData.pmsSymptoms = selectedList; break;
             case 'pmsMedication': currDayData.pmsMedsTaken = selectedList; break;
           }
@@ -224,8 +223,7 @@ class _HistoryViewState extends State<HistoryView> {
                           const Text('Symptoms'),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
-                              // TODO change to appBox.get('periodSymptoms')
-                                listData: periodSymptoms,
+                                listData: appBox.get('periodSymptoms'),
                                 selectedList: currDayData.periodSymptoms,
                                 dataField: 'periodSymptoms'),
                             child: Text(
@@ -238,7 +236,6 @@ class _HistoryViewState extends State<HistoryView> {
                           ),
                         ],
                       ),
-                      // TODO add for loop to show all period symptoms as pill-shaped objects
                       Wrap(
                         spacing: 8.0,
                         runSpacing: -4.0,
@@ -256,27 +253,15 @@ class _HistoryViewState extends State<HistoryView> {
                           ], // for
                         ],
                       ),
-                      Row(
-                        children: [
-                          const Text('Medication Taken'),
-                          TextButton(
-                            onPressed: () => {},
-                            child: Text(
-                              '+',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      for (var i = 0; i < numMedRows; i++) ...[  // TODO switch to length of saved data list and add one, which should make the + button obsolete
+                      const SizedBox(height: 15.0,),
+                      const Text('Medication Taken'),
+                      for (var i = 0; i < currDayData.periodMedsTaken.length + 1; i++) ...[
                         Row(
                           children: [
                             DropdownButtonHideUnderline(
                               child: DropdownButton(
                                 hint: const Text('Medication'),
+                                value: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][0] : null,
                                 items: appBox.get('medicines')
                                     .map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
@@ -286,18 +271,26 @@ class _HistoryViewState extends State<HistoryView> {
                                 }).toList(),
                                 onChanged: (value) {
                                   setState(() {
-                                    // TODO
+                                    if (currDayData.periodMedsTaken.asMap().containsKey(i)) {
+                                      currDayData.periodMedsTaken[i][0] = value.toString();
+                                    } else {
+                                      currDayData.periodMedsTaken.add([value.toString(), '', '']);
+                                    }
+                                    updateDayData();
                                   });
                                 },
                               ),
                             ),
                             const SizedBox(width: 10.0,),
-                            // TODO disable textfields if medication has not been selected
                             Expanded(
-                              child: TextField(
-                                enabled: false,
+                              child: TextFormField(
+                                initialValue: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][1] : null,
+                                enabled: currDayData.periodMedsTaken.asMap().containsKey(i),
                                 onChanged: (value) {
-
+                                  setState(() {
+                                    currDayData.periodMedsTaken[i][1] = value.toString();
+                                  });
+                                  updateDayData();
                                 },
                                 decoration: const InputDecoration.collapsed(
                                   hintText: 'Time',
@@ -306,10 +299,14 @@ class _HistoryViewState extends State<HistoryView> {
                             ),
                             const SizedBox(width: 10.0,),
                             Expanded(
-                              child: TextField(
-                                enabled: false,
+                              child: TextFormField(
+                                initialValue: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][2] : null,
+                                enabled: currDayData.periodMedsTaken.asMap().containsKey(i),
                                 onChanged: (value) {
-
+                                  setState(() {
+                                    currDayData.periodMedsTaken[i][2] = value.toString();
+                                  });
+                                  updateDayData();
                                 },
                                 decoration: const InputDecoration.collapsed(
                                   hintText: 'Dose',

@@ -20,7 +20,7 @@ class _StatsViewState extends State<StatsView> {
 
   Widget printUnknown() {
     return const Text(
-      'unknown',
+      'Not enough data',
       style: TextStyle(
         fontSize: 20.0,
         fontStyle: FontStyle.italic,

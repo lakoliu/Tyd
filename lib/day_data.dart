@@ -22,8 +22,7 @@ class DayData extends HiveObject {
   List<String> periodSymptoms = [];
 
   @HiveField(5, defaultValue: [])
-  // TODO create data
-  List<Map<>> periodMedsTaken = [];
+  List<List<String>> periodMedsTaken = [];
 
   @HiveField(6, defaultValue: '')
   var periodNotes = '';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:vula/helpers/import_helper.dart';
 import 'package:vula/views/components/bottom_nav_bar.dart';
 import 'package:hive/hive.dart';
 import '../helpers/update_stats.dart';
@@ -89,7 +88,6 @@ class _HomeViewState extends State<HomeView> {
                   color: Theme.of(context).primaryColor,
                 ),
               ),
-              // TODO Don't show if currently on period
               if (appBox.get('averageCycle') != null && (dateBox.get(formatter.format(currDate)) == null || !dateBox.get(formatter.format(currDate)).period)) ...[
                 Text(
                   getNextPeriodText(),
@@ -129,9 +127,11 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
+                        if (appBox.get('averageCycle') != null) ...[
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
                       ] else ...[
                         if (appBox.get('lastPeriod') != null) ...[
                           Row(
@@ -153,9 +153,11 @@ class _HomeViewState extends State<HomeView> {
                             ],
                           ),
                         ],
-                        const SizedBox(
-                          height: 10.0,
-                        ),
+                        if (appBox.get('averageCycle') != null) ...[
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
                       ],
                       if (appBox.get('averageCycle') != null) ...[
                         Row(
@@ -184,7 +186,6 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: 10.0,
               ),
-              // TODO if not PMS
               if (!currDayData.pms) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -243,7 +244,7 @@ class _HomeViewState extends State<HomeView> {
               ],
               const SizedBox(
                 height: 50.0,
-              ), // To push everything up a little. TODO Necessary?
+              ), // To push everything up a little.
             ],
           ),
         ),
