@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:swatch_generator/swatch_generator.dart';
-import 'package:vula/helpers/constants.dart';
 
 import '../day_data.dart';
 import '../helpers/notification_service.dart';
@@ -175,6 +174,14 @@ class _TimerViewState extends State<TimerView> {
     }
   }
 
+  List<String> getSanitaryList() {
+    List<String> sanitaryList = [];
+    for (var sanitaryItem in appBox.get('sanitaryTypes').keys) {
+      sanitaryList.add(sanitaryItem.toString());
+    }
+    return sanitaryList;
+  }
+
   Widget showHistoryEditDialog(BuildContext context, int i) {
     return StatefulBuilder(builder: (context, newSetState) {
       return AlertDialog(
@@ -198,8 +205,7 @@ class _TimerViewState extends State<TimerView> {
                     DropdownButton(
                       isExpanded: true,
                       value: historyList[i].type,
-                      items: appBox.get('sanitaryTypes')
-                          .keys
+                      items: getSanitaryList()
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -449,7 +455,7 @@ class _TimerViewState extends State<TimerView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      onChanged: (String? value) {
+                      onChanged: _stopWatchTimer.isRunning ? null : (String? value) {
                         if (value != null) {
                           setState(() {
                             sizeSelected = value;

@@ -258,29 +258,42 @@ class _HistoryViewState extends State<HistoryView> {
                       for (var i = 0; i < currDayData.periodMedsTaken.length + 1; i++) ...[
                         Row(
                           children: [
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                hint: const Text('Medication'),
-                                value: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][0] : null,
-                                items: appBox.get('medicines')
-                                    .map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (currDayData.periodMedsTaken.asMap().containsKey(i)) {
-                                      currDayData.periodMedsTaken[i][0] = value.toString();
-                                    } else {
-                                      currDayData.periodMedsTaken.add([value.toString(), '', '']);
-                                    }
-                                    updateDayData();
-                                  });
-                                },
+                            if (currDayData.periodMedsTaken.asMap().containsKey(i) && !appBox.get('medicines').contains(currDayData.periodMedsTaken[i][0])) ...[
+                              Expanded(
+                                child: TextFormField(
+                                  initialValue: currDayData.periodMedsTaken[i][0],
+                                  enabled: false,
+                                  onChanged: null,
+                                  decoration: const InputDecoration(
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ] else ...[
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  hint: const Text('Medication'),
+                                  value: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][0] : null,
+                                  items: appBox.get('medicines')
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (currDayData.periodMedsTaken.asMap().containsKey(i)) {
+                                        currDayData.periodMedsTaken[i][0] = value.toString();
+                                      } else {
+                                        currDayData.periodMedsTaken.add([value.toString(), '', '']);
+                                      }
+                                      updateDayData();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
                             const SizedBox(width: 10.0,),
                             Expanded(
                               child: TextFormField(

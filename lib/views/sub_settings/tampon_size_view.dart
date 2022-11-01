@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
+import 'package:vula/day_data.dart';
 
 class TamponSizeView extends StatefulWidget {
   const TamponSizeView({Key? key}) : super(key: key);
@@ -10,6 +12,8 @@ class TamponSizeView extends StatefulWidget {
 
 class _TamponSizeViewState extends State<TamponSizeView> {
   var appBox = Hive.box('app_box');
+  var dateBox = Hive.box('date_box');
+  final String currDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   var addSizeText = '';
   var sizeList = [];
 
@@ -23,6 +27,20 @@ class _TamponSizeViewState extends State<TamponSizeView> {
       content: Text('Size cannot be blank.'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  bool sizeUsedToday(String selectedSize) {
+    if (dateBox.get(currDate) != null) {
+      DayData currDayData = dateBox.get(currDate);
+      var historyList = currDayData.timerData;
+      for (var listItem in historyList) {
+        if (listItem.size == selectedSize) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -61,6 +79,7 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                       return AlertDialog(
                         title: const Text('Edit Size'),
                         content: TextFormField(
+                          enabled: !sizeUsedToday(sizeList[i]),
                           initialValue: currSizeName,
                           textCapitalization: TextCapitalization.words,
                           onChanged: (value) {
@@ -80,9 +99,27 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                             child: const Text("DELETE"),
                             onPressed:  () {
                               setState(() {
-                                Navigator.pop(context);
-                                sizeList.removeAt(i);
-                                saveSizes();
+                                if (!sizeUsedToday(sizeList[i])) {
+                                  Navigator.pop(context);
+                                  sizeList.removeAt(i);
+                                  saveSizes();
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Can\'t Delete'),
+                                        content: const Text('This size is being used in today\'s tampon timer.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(context),
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               });
                               addSizeText = '';
                             },
