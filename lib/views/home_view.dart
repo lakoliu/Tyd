@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:vula/views/components/bottom_nav_bar.dart';
+import 'package:tyd/views/components/bottom_nav_bar.dart';
 import 'package:hive/hive.dart';
 import '../helpers/update_stats.dart';
 import '../day_data.dart';
@@ -249,7 +249,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(context, 0)
+      bottomNavigationBar: bottomNavBar(context, 0),
     );
   }
 }

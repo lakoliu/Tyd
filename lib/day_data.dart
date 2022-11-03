@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:vula/timer_data.dart';
+import 'package:tyd/timer_data.dart';
 
 part 'day_data.g.dart';
 

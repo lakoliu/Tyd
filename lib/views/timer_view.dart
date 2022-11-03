@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:swatch_generator/swatch_generator.dart';
+import 'package:tyd/helpers/stopwatch_helper.dart';
 
 import '../day_data.dart';
 import '../helpers/notification_service.dart';
@@ -20,7 +21,10 @@ class _TimerViewState extends State<TimerView> {
   var appBox = Hive.box('app_box');
   var dateBox = Hive.box('date_box');
 
-  final _stopWatchTimer = StopWatchTimer();
+  // TODO Other values such as startTime, etc. need to persist between pages.
+
+  final StopwatchHelper stopwatchHelper = StopwatchHelper();
+  final _stopWatchTimer = StopwatchHelper().stopWatchTimer;
   final DateFormat timeFormatter = DateFormat.jm();
   final String currDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   final TableRow rowSpacer = const TableRow(children: [
@@ -42,10 +46,6 @@ class _TimerViewState extends State<TimerView> {
   ]);
 
   var currDayData = DayData();
-  var _radioSelected = 1;
-  var typeSelected = 'Tampon';
-  var sizeSelected = '-';
-  late DateTime startTime;
   late DateTime stopTime;
   var timerMinutes = 4.0 * 60.0;
   List<TimerData> historyList = [];
@@ -62,7 +62,7 @@ class _TimerViewState extends State<TimerView> {
 
   void startTimer(DateTime startingTime) {
     if (!_stopWatchTimer.isRunning) {
-      startTime = startingTime;
+      stopwatchHelper.startTime = startingTime;
       var timeDifference = DateTime.now().difference(startingTime).inMinutes;
       _stopWatchTimer.setPresetMinuteTime(timeDifference);
       // TODO NotificationService().showTimedSanitaryChangeReminder(typeSelected, startTime.add(const Duration(minutes: 240)));
@@ -83,7 +83,7 @@ class _TimerViewState extends State<TimerView> {
       stopTime = stoppingTime;
       // TODO NotificationService().cancelPendingNotifications();
       setState(() {
-        historyList.add(TimerData(typeSelected, startTime, stopTime, sizeSelected));
+        historyList.add(TimerData(stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime, stopwatchHelper.sizeSelected));
       });
       saveHistoryList();
     }
@@ -97,14 +97,14 @@ class _TimerViewState extends State<TimerView> {
 
   void notificationTimerSnack() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    var verb = typeSelected == 'Cup' ? 'empty' : 'change';
-    var notifyDateTime = startTime.add(Duration(minutes: timerMinutes.toInt()));
+    var verb = stopwatchHelper.typeSelected == 'Cup' ? 'empty' : 'change';
+    var notifyDateTime = stopwatchHelper.startTime.add(Duration(minutes: timerMinutes.toInt()));
 
     if (DateTime.now().isBefore(notifyDateTime)) {
       var notifyTime = timeFormatter.format(notifyDateTime);
       var snackBar = SnackBar(
         content: Text(
-            'You will be notified at $notifyTime to $verb your ${typeSelected.toLowerCase()}.'),
+            'You will be notified at $notifyTime to $verb your ${stopwatchHelper.typeSelected.toLowerCase()}.'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
@@ -376,14 +376,14 @@ class _TimerViewState extends State<TimerView> {
                 children: [
                   Radio(
                     activeColor: Theme.of(context).primaryColor,
-                    groupValue: _radioSelected,
+                    groupValue: stopwatchHelper.radioSelected,
                     value: 1,
                     onChanged: _stopWatchTimer.isRunning
                         ? null
                         : (int? value) {
                             setState(() {
-                              _radioSelected = value!;
-                              typeSelected = 'Tampon';
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Tampon';
                               timerMinutes = appBox.get('sanitaryTypes')['Tampon'] * 60;
                             });
                           },
@@ -391,15 +391,15 @@ class _TimerViewState extends State<TimerView> {
                   const Text('Tampon'),
                   Radio(
                     activeColor: Theme.of(context).primaryColor,
-                    groupValue: _radioSelected,
+                    groupValue: stopwatchHelper.radioSelected,
                     value: 2,
                     onChanged: _stopWatchTimer.isRunning
                         ? null
                         : (int? value) {
                             setState(() {
-                              _radioSelected = value!;
-                              typeSelected = 'Pad';
-                              sizeSelected = '-';
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Pad';
+                              stopwatchHelper.sizeSelected = '-';
                               timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
                             });
                           },
@@ -407,15 +407,15 @@ class _TimerViewState extends State<TimerView> {
                   const Text('Pad'),
                   Radio(
                     activeColor: Theme.of(context).primaryColor,
-                    groupValue: _radioSelected,
+                    groupValue: stopwatchHelper.radioSelected,
                     value: 3,
                     onChanged: _stopWatchTimer.isRunning
                         ? null
                         : (int? value) {
                             setState(() {
-                              _radioSelected = value!;
-                              typeSelected = 'Cup';
-                              sizeSelected = '-';
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Cup';
+                              stopwatchHelper.sizeSelected = '-';
                               timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
                             });
                           },
@@ -423,15 +423,15 @@ class _TimerViewState extends State<TimerView> {
                   const Text('Cup'),
                   Radio(
                     activeColor: Theme.of(context).primaryColor,
-                    groupValue: _radioSelected,
+                    groupValue: stopwatchHelper.radioSelected,
                     value: 4,
                     onChanged: _stopWatchTimer.isRunning
                         ? null
                         : (int? value) {
                       setState(() {
-                        _radioSelected = value!;
-                        typeSelected = 'Underwear';
-                        sizeSelected = '-';
+                        stopwatchHelper.radioSelected = value!;
+                        stopwatchHelper.typeSelected = 'Underwear';
+                        stopwatchHelper.sizeSelected = '-';
                         timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
                       });
                     },
@@ -440,14 +440,14 @@ class _TimerViewState extends State<TimerView> {
                 ],
               ),
               // const Text('Test'),
-              if (_radioSelected == 1) ...[
+              if (stopwatchHelper.radioSelected == 1) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('Size'),
                     const SizedBox(width: 15.0,),
                     DropdownButton(
-                      value: sizeSelected,
+                      value: stopwatchHelper.sizeSelected,
                       items: appBox.get('tamponSizes')
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
@@ -458,7 +458,7 @@ class _TimerViewState extends State<TimerView> {
                       onChanged: _stopWatchTimer.isRunning ? null : (String? value) {
                         if (value != null) {
                           setState(() {
-                            sizeSelected = value;
+                            stopwatchHelper.sizeSelected = value;
                           });
                         }
                       },
@@ -581,9 +581,6 @@ class _TimerViewState extends State<TimerView> {
                       ],
                     ],
                   ),
-                  // child: Column(
-                  //   children: getAllRows(),
-                  // ),
                 ),
               ),
             ],

@@ -1,6 +1,6 @@
-# Mois
+# tyd
 
-Period tracker.
+Period tracker
 
 ## Getting Started
 

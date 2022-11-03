@@ -1,4 +1,4 @@
-name: vula
+name: tyd
 description: Period tracker.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

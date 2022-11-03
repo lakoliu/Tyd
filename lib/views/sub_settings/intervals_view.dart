@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
-import 'package:vula/helpers/update_stats.dart';
+import 'package:tyd/helpers/update_stats.dart';
 
 
 class IntervalsView extends StatefulWidget {

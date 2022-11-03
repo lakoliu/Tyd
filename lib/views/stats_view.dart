@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:vula/helpers/update_stats.dart';
-import 'package:vula/views/components/bottom_nav_bar.dart';
-import 'package:vula/views/home_view.dart';
+import 'package:tyd/helpers/update_stats.dart';
+import 'package:tyd/views/components/bottom_nav_bar.dart';
+import 'package:tyd/views/home_view.dart';
 
 import 'history_view.dart';
 
@@ -215,7 +215,7 @@ class _StatsViewState extends State<StatsView> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(context, 3)
+      bottomNavigationBar: bottomNavBar(context, 3),
     );
   }
 }

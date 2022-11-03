@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:vula/views/components/bottom_nav_bar.dart';
+import 'package:tyd/views/components/bottom_nav_bar.dart';
 import 'package:filter_list/filter_list.dart';
-import 'package:vula/helpers/constants.dart';
+import 'package:tyd/helpers/constants.dart';
 import 'package:intl/intl.dart';
-import 'package:vula/day_data.dart';
+import 'package:tyd/day_data.dart';
 import 'package:hive/hive.dart';
 
 import '../helpers/update_stats.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:vula/day_data.dart';
+import 'package:tyd/day_data.dart';
 
 class TamponSizeView extends StatefulWidget {
   const TamponSizeView({Key? key}) : super(key: key);

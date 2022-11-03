@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:vula/day_data.dart';
+import 'package:tyd/day_data.dart';
 import 'package:collection/collection.dart';
 
 void resetAllStats() {

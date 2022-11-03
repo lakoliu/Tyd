@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.livaliva.vula">
+    package="com.lakoliu.tyd">
    <application
-        android:label="vula"
+        android:label="tyd"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

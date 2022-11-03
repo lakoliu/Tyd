@@ -1,4 +1,4 @@
-package com.livaliva.vula
+package com.lakoliu.tyd
 
 import io.flutter.embedding.android.FlutterActivity
 

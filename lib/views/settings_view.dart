@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:vula/helpers/export_helper.dart';
+import 'package:tyd/helpers/export_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:vula/helpers/import_helper.dart';
-import 'package:vula/helpers/update_stats.dart';
-import 'package:vula/views/components/bottom_nav_bar.dart';
-import 'package:vula/helpers/constants.dart';
+import 'package:tyd/helpers/import_helper.dart';
+import 'package:tyd/helpers/update_stats.dart';
+import 'package:tyd/views/components/bottom_nav_bar.dart';
+import 'package:tyd/helpers/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 
@@ -26,8 +26,8 @@ class _SettingsViewState extends State<SettingsView> {
 
   void resetAllSettings() {
     appBox.put('darkMode', false);
-    appBox.put('accentColorName', 'Pink');
-    appBox.put('accentColor', Colors.pink[300]);
+    appBox.put('accentColorName', 'Green');
+    appBox.put('accentColor', const Color(0xFF225500));
     appBox.put('tamponTimer', 4.0);
     appBox.put('padTimer', 4.0);
     appBox.put('cupTimer', 4.0);
@@ -97,7 +97,7 @@ class _SettingsViewState extends State<SettingsView> {
                       leading: const Icon(Icons.color_lens),
                       title: const Text('Accent Color'),
                       value: Text(
-                          appBox.get('accentColorName') ?? 'Pink'
+                          appBox.get('accentColorName') ?? 'Green'
                       ),
                       onPressed: (context) => Navigator.pushNamed(context, 'accentColorView'),
                     ),
@@ -310,7 +310,7 @@ class _SettingsViewState extends State<SettingsView> {
               ],
             ),
           ),
-          bottomNavigationBar: bottomNavBar(context, 4)
+          bottomNavigationBar: bottomNavBar(context, 4),
         );
       },
     );
