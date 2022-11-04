@@ -134,7 +134,6 @@ class _MedicinesViewState extends State<MedicinesView> {
                 ),
               ),
               onTap: () {
-                // TODO AlertDialog popup with entry box and Save or Cancel options
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

@@ -134,7 +134,6 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                 ),
               ),
               onTap: () {
-                // TODO AlertDialog popup with entry box and Save or Cancel options
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

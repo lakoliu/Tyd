@@ -8,7 +8,6 @@ import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import '../day_data.dart';
 import '../timer_data.dart';
 
-// TODO Change all XXX to name
 
 class ImportHelper {
 
@@ -43,7 +42,7 @@ class ImportHelper {
     }
 
     try {
-      if (importedJson?['environment']?['application_id'] == 'com.livaliva.XXX') {
+      if (importedJson?['environment']?['application_id'] == 'com.livaliva.tyd') {
 
         for (var item in importedJson['data']) {
           var date = item['date'];
@@ -73,7 +72,7 @@ class ImportHelper {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Bleeding data will change'),
-              content: const Text('Because Clue uses "light", "medium", and "heavy" options for bleeding while XXX uses a scale from 1-10, your bleeding data from Clue will be changed to 3, 6, and 9 respectively. Do you want to continue?'),
+              content: const Text('Because Clue uses "light", "medium", and "heavy" options for bleeding while Tyd uses a scale from 1-10, your bleeding data from Clue will be changed to 3, 6, and 9 respectively. Do you want to continue?'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),

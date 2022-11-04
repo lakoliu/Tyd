@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -45,7 +44,7 @@ class NotificationService {
 
   void showSanitaryChangeReminder(String sanitaryItem) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails('pt-timer', 'sanitary',
+    AndroidNotificationDetails('tyd-timer', 'Tampon timer',
         channelDescription: 'Tampon timer',
         importance: Importance.max,
         priority: Priority.high,
@@ -53,7 +52,7 @@ class NotificationService {
     const NotificationDetails platformChannelSpecifics =
     NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, 'It\s time!', 'Time to change your ${sanitaryItem.toLowerCase()}.', platformChannelSpecifics,
+        0, 'It\'s time!', 'Time to change your ${sanitaryItem.toLowerCase()}.', platformChannelSpecifics,
         payload: 'item x');
   }
 
@@ -61,7 +60,7 @@ class NotificationService {
     final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
-    print('Logged for: ${tz.TZDateTime.from(showTime, tz.local)}');
+    // print('Logged for: ${tz.TZDateTime.from(showTime, tz.local)}');
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
@@ -70,8 +69,13 @@ class NotificationService {
         tz.TZDateTime.from(showTime, tz.local),
         const NotificationDetails(
             android: AndroidNotificationDetails(
-                'pt-timer', 'sanitary',
-                channelDescription: 'Tampon Timer')),
+                'tyd-timer', 'Tampon timer',
+                channelDescription: 'Tampon Timer',
+                importance: Importance.max,
+                priority: Priority.max,
+                ticker: 'Time to change!',
+            ),
+        ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime);

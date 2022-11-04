@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -20,8 +21,8 @@ class TimerView extends StatefulWidget {
 class _TimerViewState extends State<TimerView> {
   var appBox = Hive.box('app_box');
   var dateBox = Hive.box('date_box');
-
-  // TODO Other values such as startTime, etc. need to persist between pages.
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   final StopwatchHelper stopwatchHelper = StopwatchHelper();
   final _stopWatchTimer = StopwatchHelper().stopWatchTimer;
@@ -65,7 +66,7 @@ class _TimerViewState extends State<TimerView> {
       stopwatchHelper.startTime = startingTime;
       var timeDifference = DateTime.now().difference(startingTime).inMinutes;
       _stopWatchTimer.setPresetMinuteTime(timeDifference);
-      // TODO NotificationService().showTimedSanitaryChangeReminder(typeSelected, startTime.add(const Duration(minutes: 240)));
+
       setState(() {
         _stopWatchTimer.onStartTimer();
       });
@@ -81,7 +82,7 @@ class _TimerViewState extends State<TimerView> {
       _stopWatchTimer.clearPresetTime();
       _stopWatchTimer.onResetTimer();
       stopTime = stoppingTime;
-      // TODO NotificationService().cancelPendingNotifications();
+      NotificationService().cancelPendingNotifications();
       setState(() {
         historyList.add(TimerData(stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime, stopwatchHelper.sizeSelected));
       });
@@ -107,6 +108,11 @@ class _TimerViewState extends State<TimerView> {
             'You will be notified at $notifyTime to $verb your ${stopwatchHelper.typeSelected.toLowerCase()}.'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
+
+      NotificationService().showTimedSanitaryChangeReminder(stopwatchHelper.typeSelected, notifyDateTime);
     }
   }
 

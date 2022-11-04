@@ -118,7 +118,6 @@ class _HistoryViewState extends State<HistoryView> {
                 },
                 leftMargin: 20,
                 monthColor: Colors.grey,
-                // TODO set today to primary color and period days to red
                 dayColor: Colors.grey,
                 activeDayColor: Colors.white,
                 activeBackgroundDayColor: Theme.of(context).primaryColor,

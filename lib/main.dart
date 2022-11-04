@@ -26,7 +26,7 @@ void main() async {
   Hive.registerAdapter(ColorAdapter());
   var dateBox = await Hive.openBox('date_box');
   var appBox = await Hive.openBox('app_box');
-  // await NotificationService().init();
+  await NotificationService().init();
   initializeDatabase();
   runApp(const MyApp());
 }

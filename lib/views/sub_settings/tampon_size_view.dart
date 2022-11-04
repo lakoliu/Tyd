@@ -171,7 +171,6 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                 ),
               ),
               onTap: () {
-                // TODO AlertDialog popup with entry box and Save or Cancel options
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

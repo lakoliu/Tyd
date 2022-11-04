@@ -136,7 +136,7 @@ class _StatsViewState extends State<StatsView> {
                           value: value,
                           child: Text(value.toString()),
                         );
-                      }).toList(), // TODO one item for every day of longest period
+                      }).toList(),
                       onChanged: (int? value) {
                         if (value != null) {
                           setState(() {

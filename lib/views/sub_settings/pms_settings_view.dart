@@ -134,7 +134,6 @@ class _PmsSymptomsViewState extends State<PmsSymptomsView> {
                 ),
               ),
               onTap: () {
-                // TODO AlertDialog popup with entry box and Save or Cancel options
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

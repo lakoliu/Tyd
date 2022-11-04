@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:share_plus/share_plus.dart';
 
-// TODO Change all XXX to name
 
 class ExportHelper {
 
@@ -35,8 +33,8 @@ class ExportHelper {
 
       var jsonSettings = '"settings": {$jsonMedicines,$jsonPeriodSymptoms,$jsonPmsSymptoms,$jsonSanitaryTypes,$jsonTamponSizes}';
 
-      exportedFile = await exportedFile.writeAsString('{"data":$jsonDateList,$jsonSettings,"environment":{"application_id":"com.livaliva.XXX"}}');
-      Share.shareXFiles([XFile(exportedFile.path)], text:'XXX Backup');
+      exportedFile = await exportedFile.writeAsString('{"data":$jsonDateList,$jsonSettings,"environment":{"application_id":"com.livaliva.tyd"}}');
+      Share.shareXFiles([XFile(exportedFile.path)], text:'Tyd Backup');
     } catch (e) {
       showDialog(
         context: context,
