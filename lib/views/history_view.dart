@@ -39,6 +39,22 @@ class _HistoryViewState extends State<HistoryView> {
     dateBox.put(formatter.format(currDate), currDayData);
   }
 
+  DateTime getFirstCalendarDate() {
+    DateTime? earliestDate = appBox.get('earliestDate');
+    if (earliestDate != null) {
+      // If the earliest date was within the last year, add a year of runway
+      // Otherwise, add two months of runway
+      if (DateTime.now().difference(earliestDate).inDays < 365) {
+        return earliestDate.add(const Duration(days: -365));
+      } else {
+        return earliestDate.add(const Duration(days: -60));
+      }
+    } else {
+      // If there is no earliest date, just start one year earlier.
+      return DateTime.now().add(const Duration(days: -365));
+    }
+  }
+
   void openAddRemoveDialog(
       {required List<String> listData,
       required List<String> selectedList,
@@ -99,11 +115,9 @@ class _HistoryViewState extends State<HistoryView> {
           reverse: true,
           child: Column(
             children: [
-              // TODO set initial scroll position to show other dates and months
               CalendarTimeline(
                 initialDate: currDate,
-                // TODO Should be earlier if an earlier date is saved in database
-                firstDate: DateTime(2015, 1, 1),
+                firstDate: getFirstCalendarDate(),
                 lastDate: DateTime.now(),
                 onDateSelected: (date) {
                   currDate = date;

@@ -72,7 +72,7 @@ class ImportHelper {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Bleeding data will change'),
-              content: const Text('Because Clue uses "light", "medium", and "heavy" options for bleeding while Tyd uses a scale from 1-10, your bleeding data from Clue will be changed to 3, 6, and 9 respectively. Do you want to continue?'),
+              content: const Text('Because Clue uses "light", "medium", and "heavy" options for bleeding while Tyd uses a scale from 1-10, your bleeding data from Clue will be changed to 3, 6, and 9, respectively. Do you want to continue?'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),

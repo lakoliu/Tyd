@@ -354,6 +354,7 @@ class _TimerViewState extends State<TimerView> {
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: historyList.isEmpty ? MainAxisAlignment.center : MainAxisAlignment.start,
             children: [
               const SizedBox(
                 height: 20.0,
@@ -506,89 +507,91 @@ class _TimerViewState extends State<TimerView> {
               const SizedBox(
                 height: 20.0,
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Table(
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    columnWidths: const {
-                      0: FractionColumnWidth(.2),
-                      1: FractionColumnWidth(.15),
-                      2: FractionColumnWidth(.25),
-                      3: FractionColumnWidth(.25),
-                      4: FractionColumnWidth(.1)
-                    },
-                    children: [
-                      const TableRow(
-                        children: [
-                          Text(
-                            'Type',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Size',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Start',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Stop',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Edit',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      rowSpacer,
-                      for (var i = 0; i < historyList.length; i++) ...[
-                        // rowSpacer,
-                        TableRow(
+              if (historyList.isNotEmpty) ...[
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Table(
+                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                      columnWidths: const {
+                        0: FractionColumnWidth(.2),
+                        1: FractionColumnWidth(.15),
+                        2: FractionColumnWidth(.25),
+                        3: FractionColumnWidth(.25),
+                        4: FractionColumnWidth(.1)
+                      },
+                      children: [
+                        const TableRow(
                           children: [
                             Text(
-                              historyList[i].type,
+                              'Type',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Text(
-                              historyList[i].size,
+                              'Size',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Text(
-                              timeFormatter.format(historyList[i].startTime),
+                              'Start',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Text(
-                              timeFormatter.format(historyList[i].stopTime),
+                              'Stop',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return showHistoryEditDialog(context, i);
-                                    });
-                              },
-                              icon: const Icon(
-                                Icons.edit,
-                                size: 20.0,
+                            Text(
+                              'Edit',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
+                        rowSpacer,
+                        for (var i = 0; i < historyList.length; i++) ...[
+                          // rowSpacer,
+                          TableRow(
+                            children: [
+                              Text(
+                                historyList[i].type,
+                              ),
+                              Text(
+                                historyList[i].size,
+                              ),
+                              Text(
+                                timeFormatter.format(historyList[i].startTime),
+                              ),
+                              Text(
+                                timeFormatter.format(historyList[i].stopTime),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return showHistoryEditDialog(context, i);
+                                      });
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  size: 20.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),

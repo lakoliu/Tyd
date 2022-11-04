@@ -148,7 +148,7 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.download),
                       title: const Text('Import Data'),
-                      value: const Text('Import data from Tyd or another app'),
+                      value: const Text('Import data from Tyd or Clue'),
                       onPressed: (context) {
                         _selectedFile = null;
                         _selectedFileName = null;

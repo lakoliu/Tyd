@@ -29,6 +29,8 @@ void updateStats() {
   if (datesChronological.isNotEmpty) {
     datesChronological.sort((a,b) => b.compareTo(a));
 
+    appBox.put('earliestDate', DateTime.parse(datesChronological.last));
+
     // First, check if we are currently on period.
     DayData? todaysData = dateBox.get(todayFormatted);
     var onPeriod = false;
@@ -183,8 +185,6 @@ void updateStats() {
 void updateSecondaryStats() {
   var dateBox = Hive.box('date_box');
   var appBox = Hive.box('app_box');
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
-  final todayFormatted = formatter.format(DateTime.now());
 
   var datesChronological = dateBox.keys.toList();
   if (datesChronological.isNotEmpty) {
@@ -252,7 +252,6 @@ void updateSecondaryStats() {
     }
     if (periodIntervals.isNotEmpty) {
       // Get longest period length for average bleeding stats
-      // TODO technically, this could be removed and I could use the length of averageBleedingByDay instead
       periodIntervals.sort();
       appBox.put('longestPeriod', periodIntervals.last);
 
