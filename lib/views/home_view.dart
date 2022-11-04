@@ -186,62 +186,119 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: 10.0,
               ),
-              if (!currDayData.pms) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Period',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    Switch(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: currDayData.period,
-                      onChanged: (bool value) {
-                        setState(() {
-                          currDayData.period = value;
-                        });
-                        updateDayData();
-                        updateStats();
-                        if (value) {
-                          Navigator.pushReplacementNamed(context, 'historyView');
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ],
-              if (!currDayData.period && !currDayData.pms) ...[
-                const SizedBox(height: 10.0,),
-              ],
-              if (!currDayData.period) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'PMS',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    Switch(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: currDayData.pms,
-                      onChanged: (bool value) {
-                        setState(() {
-                          currDayData.pms = value;
-                        });
-                        updateDayData();
-                        if (value) {
-                          Navigator.pushReplacementNamed(context, 'historyView');
-                        }
-                      },
+              Table(
+                defaultColumnWidth: const FixedColumnWidth(70),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: [
+                  if (!currDayData.pms) ...[
+                    TableRow(
+                      children: [
+                        const Text(
+                          'Period',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Switch(
+                          activeColor: Theme.of(context).primaryColor,
+                          value: currDayData.period,
+                          onChanged: (bool value) {
+                            setState(() {
+                              currDayData.period = value;
+                            });
+                            updateDayData();
+                            updateStats();
+                            if (value) {
+                              Navigator.pushReplacementNamed(context, 'historyView');
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
+                  if (!currDayData.period) ...[
+                    TableRow(
+                      children: [
+                        const Text(
+                          'PMS',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Switch(
+                          activeColor: Theme.of(context).primaryColor,
+                          value: currDayData.pms,
+                          onChanged: (bool value) {
+                            setState(() {
+                              currDayData.pms = value;
+                            });
+                            updateDayData();
+                            if (value) {
+                              Navigator.pushReplacementNamed(context, 'historyView');
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+              // if (!currDayData.pms) ...[
+              //   Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       const Text(
+              //         'Period',
+              //         style: TextStyle(
+              //           fontSize: 20.0,
+              //         ),
+              //       ),
+              //       Switch(
+              //         activeColor: Theme.of(context).primaryColor,
+              //         value: currDayData.period,
+              //         onChanged: (bool value) {
+              //           setState(() {
+              //             currDayData.period = value;
+              //           });
+              //           updateDayData();
+              //           updateStats();
+              //           if (value) {
+              //             Navigator.pushReplacementNamed(context, 'historyView');
+              //           }
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ],
+              // if (!currDayData.period && !currDayData.pms) ...[
+              //   const SizedBox(height: 10.0,),
+              // ],
+              // if (!currDayData.period) ...[
+              //   Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       const Text(
+              //         'PMS',
+              //         style: TextStyle(
+              //           fontSize: 20.0,
+              //         ),
+              //       ),
+              //       Switch(
+              //         activeColor: Theme.of(context).primaryColor,
+              //         value: currDayData.pms,
+              //         onChanged: (bool value) {
+              //           setState(() {
+              //             currDayData.pms = value;
+              //           });
+              //           updateDayData();
+              //           if (value) {
+              //             Navigator.pushReplacementNamed(context, 'historyView');
+              //           }
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ],
               const SizedBox(
                 height: 50.0,
               ), // To push everything up a little.
