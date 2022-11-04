@@ -122,7 +122,7 @@ class _HistoryViewState extends State<HistoryView> {
                 activeDayColor: Colors.white,
                 activeBackgroundDayColor: Theme.of(context).primaryColor,
                 dotsColor: const Color(0xFF333A47),
-                locale: 'en_ISO', // TODO Set to user's locale
+                locale: Intl.getCurrentLocale(),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
