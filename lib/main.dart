@@ -1,9 +1,11 @@
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tyd/helpers/database_initializers.dart';
+import 'package:tyd/l10n/l10n.dart';
 import 'package:tyd/timer_data.dart';
 import 'package:tyd/views/history_view.dart';
 import 'package:tyd/views/home_view.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tyd/day_data.dart';
 import 'package:tyd/views/settings_view.dart';
 import 'package:tyd/views/stats_view.dart';
@@ -12,6 +14,7 @@ import 'package:tyd/views/sub_settings/medicines_view.dart';
 import 'package:tyd/views/sub_settings/period_symptoms_view.dart';
 import 'package:tyd/views/sub_settings/pms_settings_view.dart';
 import 'package:tyd/views/sub_settings/tampon_size_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'helpers/color_adapter.dart';
 import 'helpers/notification_service.dart';
@@ -169,6 +172,13 @@ class MyApp extends StatelessWidget {
                 )
             ),
           ),
+          supportedLocales: L10n.allLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
           initialRoute: 'homeView',
           routes: {
             'homeView': (context) => const HomeView(),

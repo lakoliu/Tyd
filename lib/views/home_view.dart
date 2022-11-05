@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
 import 'package:hive/hive.dart';
@@ -40,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
     var daysUntilPeriod = averageCycle - daysSinceStart();
 
     if (daysUntilPeriod < 1) {
-      return 'You can expect your period any day now';
+      return AppLocalizations.of(context)!.anyDayNow;
     } else {
       var dayText = daysUntilPeriod == 1 ? 'day' : 'days';
       return '~$daysUntilPeriod $dayText until your next period';
@@ -75,9 +76,9 @@ class _HomeViewState extends State<HomeView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'DAY',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.day,
+                style: const TextStyle(
                   fontSize: 20.0,
                 ),
               ),

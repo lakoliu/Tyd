@@ -1,0 +1,10 @@
+{
+  "day": "DAY",
+  "@day": {
+    "description": "The current day of the user's cycle."
+  },
+  "anyDayNow": "You can expect your period any day now",
+  "@day": {
+    "description": "Shows when the user is at or over their normal number of days in cycle."
+  }
+}
