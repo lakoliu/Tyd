@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:calendar_timeline/calendar_timeline.dart';
+// import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
 import 'package:filter_list/filter_list.dart';
@@ -9,6 +9,7 @@ import 'package:tyd/day_data.dart';
 import 'package:hive/hive.dart';
 
 import '../helpers/update_stats.dart';
+import '../packages/calendar_timeline/calendar_timeline.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
