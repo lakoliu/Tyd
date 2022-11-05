@@ -378,72 +378,93 @@ class _TimerViewState extends State<TimerView> {
               const SizedBox(
                 height: 10.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Wrap(
+                alignment: WrapAlignment.spaceAround,
+                direction: Axis.horizontal,
                 children: [
-                  Radio(
-                    activeColor: Theme.of(context).primaryColor,
-                    groupValue: stopwatchHelper.radioSelected,
-                    value: 1,
-                    onChanged: _stopWatchTimer.isRunning
-                        ? null
-                        : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Tampon';
-                              timerMinutes = appBox.get('sanitaryTypes')['Tampon'] * 60;
-                            });
-                          },
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Radio(
+                        activeColor: Theme.of(context).primaryColor,
+                        groupValue: stopwatchHelper.radioSelected,
+                        value: 1,
+                        onChanged: _stopWatchTimer.isRunning
+                            ? null
+                            : (int? value) {
+                          setState(() {
+                            stopwatchHelper.radioSelected = value!;
+                            stopwatchHelper.typeSelected = 'Tampon';
+                            timerMinutes = appBox.get('sanitaryTypes')['Tampon'] * 60;
+                          });
+                        },
+                      ),
+                      const Text('Tampon'),
+                    ],
                   ),
-                  const Text('Tampon'),
-                  Radio(
-                    activeColor: Theme.of(context).primaryColor,
-                    groupValue: stopwatchHelper.radioSelected,
-                    value: 2,
-                    onChanged: _stopWatchTimer.isRunning
-                        ? null
-                        : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Pad';
-                              stopwatchHelper.sizeSelected = '-';
-                              timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
-                            });
-                          },
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Radio(
+                        activeColor: Theme.of(context).primaryColor,
+                        groupValue: stopwatchHelper.radioSelected,
+                        value: 2,
+                        onChanged: _stopWatchTimer.isRunning
+                            ? null
+                            : (int? value) {
+                          setState(() {
+                            stopwatchHelper.radioSelected = value!;
+                            stopwatchHelper.typeSelected = 'Pad';
+                            stopwatchHelper.sizeSelected = '-';
+                            timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
+                          });
+                        },
+                      ),
+                      const Text('Pad'),
+                    ],
                   ),
-                  const Text('Pad'),
-                  Radio(
-                    activeColor: Theme.of(context).primaryColor,
-                    groupValue: stopwatchHelper.radioSelected,
-                    value: 3,
-                    onChanged: _stopWatchTimer.isRunning
-                        ? null
-                        : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Cup';
-                              stopwatchHelper.sizeSelected = '-';
-                              timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
-                            });
-                          },
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Radio(
+                        activeColor: Theme.of(context).primaryColor,
+                        groupValue: stopwatchHelper.radioSelected,
+                        value: 3,
+                        onChanged: _stopWatchTimer.isRunning
+                            ? null
+                            : (int? value) {
+                          setState(() {
+                            stopwatchHelper.radioSelected = value!;
+                            stopwatchHelper.typeSelected = 'Cup';
+                            stopwatchHelper.sizeSelected = '-';
+                            timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
+                          });
+                        },
+                      ),
+                      const Text('Cup'),
+                    ],
                   ),
-                  const Text('Cup'),
-                  Radio(
-                    activeColor: Theme.of(context).primaryColor,
-                    groupValue: stopwatchHelper.radioSelected,
-                    value: 4,
-                    onChanged: _stopWatchTimer.isRunning
-                        ? null
-                        : (int? value) {
-                      setState(() {
-                        stopwatchHelper.radioSelected = value!;
-                        stopwatchHelper.typeSelected = 'Underwear';
-                        stopwatchHelper.sizeSelected = '-';
-                        timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
-                      });
-                    },
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Radio(
+                        activeColor: Theme.of(context).primaryColor,
+                        groupValue: stopwatchHelper.radioSelected,
+                        value: 4,
+                        onChanged: _stopWatchTimer.isRunning
+                            ? null
+                            : (int? value) {
+                          setState(() {
+                            stopwatchHelper.radioSelected = value!;
+                            stopwatchHelper.typeSelected = 'Underwear';
+                            stopwatchHelper.sizeSelected = '-';
+                            timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
+                          });
+                        },
+                      ),
+                      const Text('Underwear'),
+                    ],
                   ),
-                  const Text('Underwear'),
                 ],
               ),
               // const Text('Test'),
