@@ -224,5 +224,93 @@
   "totalDaysTracked": "Total days tracked: ",
   "@totalDaysTracked": {
     "description": "Total period days recorded since the user started using Tyd (leave space at end)."
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Title of the settings page."
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance section header in settings."
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode toggle in settings."
+  },
+  "accentColor": "Accent Color",
+  "@accentColor": {
+    "description": "Accent color option in settings."
+  },
+  "sympsMedsEtc": "Symptoms, Meds, Etc.",
+  "@sympsMedsEtc": {
+    "description": "Section header in settings that contains symptoms, medicines, and tampon sizes."
+  },
+  "periodSymptomsSetting": "Period Symptoms",
+  "@periodSymptomsSetting": {
+    "description": "Period symptoms list in settings."
+  },
+  "pmsSymptomsSetting": "PMS Symptoms",
+  "@pmsSymptomsSetting": {
+    "description": "PMS symptoms list in settings."
+  },
+  "medicines": "Medicines",
+  "tamponSizes": "Tampon Sizes",
+  "times": "Times",
+  "@times": {
+    "description": "Times group heading settings, under which is the intervals options for the timer."
+  },
+  "intervals": "Intervals",
+  "@intervals": {
+    "description": "Intervals list in settings, to hours between changing tampons, pads, etc.."
+  },
+  "allSanitaryList": "Tampons, pads, cups, and underwear",
+  "@allSanitaryList": {
+    "description": "Description under Intervals setting."
+  },
+  "savedData": "Saved Data",
+  "@savedData": {
+    "description": "Saved data section header in settings, below which is ability to import, export, and delete."
+  },
+  "importData": "Import Data",
+  "importFrom": "Import data from Tyd or Clue",
+  "@importFrom": {
+    "description": "A description of the apps data can be impported from. Tyd and Clue are names and should not be translated."
+  },
+  "importFile": "Import A File",
+  "browse": "Browse",
+  "@browse": {
+    "description": "The button to open the file browser."
+  },
+  "importUpper": "IMPORT",
+  "@importUpper": {
+    "description": "The button to import the chosen file (ALL CAPS)."
+  },
+  "backupData": "Back Up Data",
+  "@backupData": {
+    "description": "Setting item to export all saved Tyd data."
+  },
+  "deleteData": "Delete All Data",
+  "@deleteData": {
+    "description": "Setting item to delete all saved Tyd data."
+  },
+  "areYouSure": "Are you sure?",
+  "@areYouSure": {
+    "description": "Confirm action."
+  },
+  "deleteAllData": "This will erase ALL of the data you have recorded. Type \"DELETE\" to continue.",
+  "@deleteAllData": {
+    "description": "Instructions to user to delete all data. DELETE here MUST MATCH 'deleteUpper'."
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset section header in settings, below which is ability to reset all settings."
+  },
+  "resetAll": "Reset All Settings",
+  "@resetAll": {
+    "description": "Reset All Settings settings option."
+  },
+  "resetAllSettings": "This will erase all of your custom settings. Type \"DELETE\" to continue.",
+  "@resetAllSettings": {
+    "description": "Instructions to user to delete all changed settings. DELETE here MUST MATCH 'deleteUpper'."
   }
 }

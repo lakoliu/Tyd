@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:tyd/helpers/export_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -46,7 +47,6 @@ class _SettingsViewState extends State<SettingsView> {
     try {
       pickedFile = (await FilePicker.platform.pickFiles(
         type: FileType.any,
-        // allowedExtensions: ['json', 'cluedata'],
       ))?.files.single;
     } catch (e) {
       pickedFile = null;
@@ -65,8 +65,8 @@ class _SettingsViewState extends State<SettingsView> {
       builder: (context, box, widget) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Settings',
+            title: Text(
+                AppLocalizations.of(context)!.settings,
             ),
           ),
           body: SafeArea(
@@ -80,7 +80,7 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               sections: [
                 SettingsSection(
-                  title: const Text('Appearance'),
+                  title: Text(AppLocalizations.of(context)!.appearance),
                   tiles: <SettingsTile>[
                     SettingsTile.switchTile(
                       onToggle: (value) {
@@ -91,11 +91,11 @@ class _SettingsViewState extends State<SettingsView> {
                       initialValue: appBox.get('darkMode', defaultValue: false),
                       activeSwitchColor: Theme.of(context).primaryColor,
                       leading: const Icon(Icons.dark_mode),
-                      title: const Text('Dark Mode'),
+                      title: Text(AppLocalizations.of(context)!.darkMode),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.color_lens),
-                      title: const Text('Accent Color'),
+                      title: Text(AppLocalizations.of(context)!.accentColor),
                       value: Text(
                           appBox.get('accentColorName') ?? 'Green'
                       ),
@@ -104,26 +104,26 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                 ),
                 SettingsSection(
-                  title: const Text('Symptoms, Meds, Etc.'),
+                  title: Text(AppLocalizations.of(context)!.sympsMedsEtc),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('Period Symptoms'),
+                      title: Text(AppLocalizations.of(context)!.periodSymptomsSetting),
                       onPressed: (context) => Navigator.pushNamed(context, 'periodSymptomsView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medical_services),
-                      title: const Text('PMS Symptoms'),
+                      title: Text(AppLocalizations.of(context)!.pmsSymptomsSetting),
                       onPressed: (context) => Navigator.pushNamed(context, 'pmsSymptomsView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medication),
-                      title: const Text('Medicines'),
+                      title: Text(AppLocalizations.of(context)!.medicines),
                       onPressed: (context) => Navigator.pushNamed(context, 'medicinesView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.photo_size_select_small),
-                      title: const Text('Tampon Sizes'),
+                      title: Text(AppLocalizations.of(context)!.tamponSizes),
                       value: Text(
                           appBox.get('tamponSizes').skip(1).join(', '),
                       ),
@@ -132,23 +132,23 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                 ),
                 SettingsSection(
-                  title: const Text('Times'),
+                  title: Text(AppLocalizations.of(context)!.times),
                   tiles: [
                     SettingsTile.navigation(
                       leading: const Icon(Icons.timer),
-                      title: const Text('Intervals'),
-                      value: const Text('Tampons, pads, cups, and underwear'),
+                      title: Text(AppLocalizations.of(context)!.intervals),
+                      value: Text(AppLocalizations.of(context)!.allSanitaryList),
                       onPressed: (context) => Navigator.pushNamed(context, 'intervalsView'),
                     ),
                   ],
                 ),
                 SettingsSection(
-                  title: const Text('Saved Data'),
+                  title: Text(AppLocalizations.of(context)!.savedData),
                   tiles: [
                     SettingsTile.navigation(
                       leading: const Icon(Icons.download),
-                      title: const Text('Import Data'),
-                      value: const Text('Import data from Tyd or Clue'),
+                      title: Text(AppLocalizations.of(context)!.importData),
+                      value: Text(AppLocalizations.of(context)!.importFrom),
                       onPressed: (context) {
                         _selectedFile = null;
                         _selectedFileName = null;
@@ -157,14 +157,14 @@ class _SettingsViewState extends State<SettingsView> {
                           builder: (BuildContext context) {
                             return StatefulBuilder(builder: (context, newSetState) {
                               return AlertDialog(
-                                title: const Text('Import A File'),
+                                title: Text(AppLocalizations.of(context)!.importFile),
                                 content: Row(
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
                                         pickAFile(newSetState);
                                       },
-                                      child: const Text('Browse'),
+                                      child: Text(AppLocalizations.of(context)!.browse),
                                     ),
                                     const SizedBox(width: 5.0,),
                                     Expanded(
@@ -188,7 +188,7 @@ class _SettingsViewState extends State<SettingsView> {
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('Cancel'),
+                                    child: Text(AppLocalizations.of(context)!.cancelUpper),
                                   ),
                                   TextButton(
                                     onPressed: _selectedFile == null ? null : () {
@@ -197,7 +197,7 @@ class _SettingsViewState extends State<SettingsView> {
                                         Navigator.pop(context);
                                       }
                                     },
-                                    child: const Text('Import'),
+                                    child: Text(AppLocalizations.of(context)!.importUpper),
                                   ),
                                 ],
                               );
@@ -208,12 +208,12 @@ class _SettingsViewState extends State<SettingsView> {
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.upload),
-                      title: const Text('Back Up Data'),
+                      title: Text(AppLocalizations.of(context)!.backupData),
                       onPressed: (context) => ExportHelper.exportSavedData(context),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.delete_forever),
-                      title: const Text('Delete All Data'),
+                      title: Text(AppLocalizations.of(context)!.deleteData),
                       onPressed: (context) {
                         var deleteAllText = '';
                         showDialog(
@@ -221,11 +221,11 @@ class _SettingsViewState extends State<SettingsView> {
                           builder: (BuildContext context) {
                             return StatefulBuilder(builder: (context, newSetState) {
                               return AlertDialog(
-                                title: const Text('Are you sure?'),
+                                title: Text(AppLocalizations.of(context)!.areYouSure),
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text('This will erase ALL of the data you have recorded. Type "DELETE" to continue.'),
+                                    Text(AppLocalizations.of(context)!.deleteAllData),
                                     TextField(
                                       textCapitalization: TextCapitalization.characters,
                                       onChanged: (value) {
@@ -238,16 +238,16 @@ class _SettingsViewState extends State<SettingsView> {
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed: deleteAllText != 'DELETE' ? null : () {
+                                    onPressed: deleteAllText != AppLocalizations.of(context)!.deleteUpper ? null : () {
                                       eraseAllDateBoxData();
                                       updateStats();
                                       Navigator.pop(context);
                                     },
-                                    child: const Text('DELETE'),
+                                    child: Text(AppLocalizations.of(context)!.deleteUpper),
                                   ),
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('CANCEL'),
+                                    child: Text(AppLocalizations.of(context)!.cancelUpper),
                                   ),
                                 ],
                               );
@@ -259,11 +259,11 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                 ),
                 SettingsSection(
-                  title: const Text('Reset'),
+                  title: Text(AppLocalizations.of(context)!.reset),
                   tiles: [
                     SettingsTile.navigation(
                       leading: const Icon(Icons.lock_reset),
-                      title: const Text('Reset All Settings'),
+                      title: Text(AppLocalizations.of(context)!.resetAll),
                       onPressed: (context) {
                         var deleteAllText = '';
                         showDialog(
@@ -271,11 +271,11 @@ class _SettingsViewState extends State<SettingsView> {
                           builder: (BuildContext context) {
                             return StatefulBuilder(builder: (context, newSetState) {
                               return AlertDialog(
-                                title: const Text('Are you sure?'),
+                                title: Text(AppLocalizations.of(context)!.areYouSure),
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text('This will erase all of your custom settings. Type "DELETE" to continue.'),
+                                    Text(AppLocalizations.of(context)!.resetAllSettings),
                                     TextField(
                                       textCapitalization: TextCapitalization.characters,
                                       onChanged: (value) {
@@ -288,15 +288,15 @@ class _SettingsViewState extends State<SettingsView> {
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed: deleteAllText != 'DELETE' ? null : () {
+                                    onPressed: deleteAllText != AppLocalizations.of(context)!.deleteUpper ? null : () {
                                       resetAllSettings();
                                       Navigator.pop(context);
                                     },
-                                    child: const Text('DELETE'),
+                                    child: Text(AppLocalizations.of(context)!.deleteUpper),
                                   ),
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('CANCEL'),
+                                    child: Text(AppLocalizations.of(context)!.cancelUpper),
                                   ),
                                 ],
                               );
