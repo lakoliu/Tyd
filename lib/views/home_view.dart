@@ -53,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
     var averageCycle = appBox.get('averageCycle');
     // var dayText = averageCycle == 1 ? 'day' : 'days';
     // return '$averageCycle $dayText';
-    return AppLocalizations.of(context)!.averageCycleNDays(averageCycle);
+    return AppLocalizations.of(context)!.nDays(averageCycle);
   }
 
   void updateDayData() {
@@ -170,7 +170,7 @@ class _HomeViewState extends State<HomeView> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.averageCycle,
+                              AppLocalizations.of(context)!.yourAverageCycle,
                               style:  const TextStyle(
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,

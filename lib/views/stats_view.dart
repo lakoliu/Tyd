@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:tyd/helpers/update_stats.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
-import 'package:tyd/views/home_view.dart';
 
-import 'history_view.dart';
 
 class StatsView extends StatefulWidget {
   const StatsView({Key? key}) : super(key: key);
@@ -19,9 +18,9 @@ class _StatsViewState extends State<StatsView> {
   var selectedPeriodDay = 1;
 
   Widget printUnknown() {
-    return const Text(
-      'Not enough data',
-      style: TextStyle(
+    return Text(
+      AppLocalizations.of(context)!.notEnoughData,
+      style: const TextStyle(
         fontSize: 20.0,
         fontStyle: FontStyle.italic,
       ),
@@ -30,7 +29,7 @@ class _StatsViewState extends State<StatsView> {
 
   String printWithDays(int value) {
     var dayString = value == 1 ? 'day' : 'days';
-    return '$value $dayString';
+    return AppLocalizations.of(context)!.nDays(value);
   }
 
   @override
@@ -43,8 +42,8 @@ class _StatsViewState extends State<StatsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Statistics',
+        title: Text(
+          AppLocalizations.of(context)!.statistics,
         ),
       ),
       body: SafeArea(
@@ -54,9 +53,9 @@ class _StatsViewState extends State<StatsView> {
             children: [
               Row(
                 children: [
-                  const Text(
-                    'Last period: ',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.lastPeriod,
+                    style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -76,16 +75,16 @@ class _StatsViewState extends State<StatsView> {
               const SizedBox(height: 15.0,),
               Row(
                 children: [
-                  const Text(
-                    'Average period: ',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.averagePeriod,
+                    style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   if (appBox.get('averagePeriod') != null) ...[
                     Text(
-                      printWithDays(appBox.get('averagePeriod')),
+                      AppLocalizations.of(context)!.nDays(appBox.get('averagePeriod')),
                       style: const TextStyle(
                         fontSize: 20.0,
                       ),
@@ -98,16 +97,16 @@ class _StatsViewState extends State<StatsView> {
               const SizedBox(height: 15.0,),
               Row(
                 children: [
-                  const Text(
-                    'Average cycle: ',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.averageCycle,
+                    style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   if (appBox.get('averageCycle') != null) ...[
                     Text(
-                      printWithDays(appBox.get('averageCycle')),
+                      AppLocalizations.of(context)!.nDays(appBox.get('averageCycle')),
                       style: const TextStyle(
                         fontSize: 20.0,
                       ),
@@ -120,9 +119,9 @@ class _StatsViewState extends State<StatsView> {
               if (appBox.get('longestPeriod') != null) ...[
                 Row(
                   children: [
-                    const Text(
-                      'Avg. bleeding on day',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.averageBleeding,
+                      style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -170,9 +169,9 @@ class _StatsViewState extends State<StatsView> {
               ],
               Row(
                 children: [
-                  const Text(
-                    'Total period days: ',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.totalPeriodDays,
+                    style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -192,9 +191,9 @@ class _StatsViewState extends State<StatsView> {
               const SizedBox(height: 15.0,),
               Row(
                 children: [
-                  const Text(
-                    'Total days tracked: ',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.totalDaysTracked,
+                    style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),

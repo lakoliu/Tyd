@@ -16,9 +16,9 @@
       }
     }
   },
-  "averageCycleNDays": "{count,plural, =1{{count} day} other{{count} days}",
-  "@averageCycleNDays": {
-    "description": "'count' is zero or greater.",
+  "nDays": "{count,plural, =1{{count} day} other{{count} days}",
+  "@nDays": {
+    "description": "'count' is zero or greater days.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -33,8 +33,8 @@
   "@lastPeriod": {
     "description": "Date range of the user's last period (leave the space at the end)."
   },
-  "averageCycle": "Your average cycle: ",
-  "@averageCycle": {
+  "yourAverageCycle": "Your average cycle: ",
+  "@yourAverageCycle": {
     "description": "Length of user's average cycle (leave the space at the end)."
   },
   "period": "Period",
@@ -196,5 +196,33 @@
   "edit": "Edit",
   "@edit": {
     "description": "Label for column where user can edit saved timer entry."
+  },
+  "notEnoughData": "Not enough data",
+  "@notEnoughData": {
+    "description": "Shown in stats when there is not enough data to calculate a statistic."
+  },
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Title of the Statistics page."
+  },
+  "averagePeriod": "Average period: ",
+  "@averagePeriod": {
+    "description": "Length of user's average period (leave the space at the end)."
+  },
+  "averageCycle": "Average cycle: ",
+  "@averageCycle": {
+    "description": "Length of user's average cycle (leave the space at the end)."
+  },
+  "averageBleeding": "Avg. bleeding on day",
+  "@averageBleeding": {
+    "description": "Average bleeding on day xx (day is a number in a drop-down selector)."
+  },
+  "totalPeriodDays": "Total period days: ",
+  "@totalPeriodDays": {
+    "description": "Total period days recorded since the user started using Tyd (leave space at end)."
+  },
+  "totalDaysTracked": "Total days tracked: ",
+  "@totalDaysTracked": {
+    "description": "Total period days recorded since the user started using Tyd (leave space at end)."
   }
 }
