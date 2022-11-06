@@ -4,7 +4,45 @@
     "description": "The current day of the user's cycle."
   },
   "anyDayNow": "You can expect your period any day now",
-  "@day": {
+  "@anyDayNow": {
     "description": "Shows when the user is at or over their normal number of days in cycle."
+  },
+  "nDaysUntilPeriod": "~{count,plural, =1{{count} day until your next period} other{{count} days until your next period}",
+  "@nDaysUntilPeriod": {
+    "description": "'~' means 'about' or 'approximately'. 'count' here cannot be less than one.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "averageCycleNDays": "{count,plural, =1{{count} day} other{{count} days}",
+  "@averageCycleNDays": {
+    "description": "'count' is zero or greater.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodStarted": "Period started: ",
+  "@periodStarted": {
+    "description": "Date the user's period started (leave the space at the end)."
+  },
+  "lastPeriod": "Last period: ",
+  "@lastPeriod": {
+    "description": "Date range of the user's last period (leave the space at the end)."
+  },
+  "averageCycle": "Your average cycle: ",
+  "@averageCycle": {
+    "description": "Length of user's average cycle (leave the space at the end)."
+  },
+  "period": "Period",
+  "@period": {
+    "description": "Period, as in menstruation."
+  },
+  "pms": "PMS",
+  "@pms": {
+    "description": "Premenstrual syndrome (use a short word or abbreviation if possible)"
   }
 }

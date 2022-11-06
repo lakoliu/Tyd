@@ -43,15 +43,17 @@ class _HomeViewState extends State<HomeView> {
     if (daysUntilPeriod < 1) {
       return AppLocalizations.of(context)!.anyDayNow;
     } else {
-      var dayText = daysUntilPeriod == 1 ? 'day' : 'days';
-      return '~$daysUntilPeriod $dayText until your next period';
+      // var dayText = daysUntilPeriod == 1 ? 'day' : 'days';
+      // return '~$daysUntilPeriod $dayText until your next period';
+      return AppLocalizations.of(context)!.nDaysUntilPeriod(daysUntilPeriod);
     }
   }
 
   String getCycleText() {
     var averageCycle = appBox.get('averageCycle');
-    var dayText = averageCycle == 1 ? 'day' : 'days';
-    return '$averageCycle $dayText';
+    // var dayText = averageCycle == 1 ? 'day' : 'days';
+    // return '$averageCycle $dayText';
+    return AppLocalizations.of(context)!.averageCycleNDays(averageCycle);
   }
 
   void updateDayData() {
@@ -114,14 +116,15 @@ class _HomeViewState extends State<HomeView> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text(
-                              'Period started: ',
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.periodStarted,
+                              style: const TextStyle(
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
+                              // TODO Localization
                               monthDayFormatter.format(appBox.get('latestStartDate')),
                               style: const TextStyle(
                                 fontSize: 15.0,
@@ -139,14 +142,15 @@ class _HomeViewState extends State<HomeView> {
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text(
-                                'Last period: ',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.lastPeriod,
+                                style: const TextStyle(
                                   fontSize: 15.0,
                                     fontWeight: FontWeight.w500,
                                 ),
                               ),
                               Text(
+                                // TODO Localization
                                 appBox.get('lastPeriod'),
                                 style: const TextStyle(
                                   fontSize: 15.0,
@@ -165,9 +169,9 @@ class _HomeViewState extends State<HomeView> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text(
-                              'Your average cycle: ',
-                              style:  TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.averageCycle,
+                              style:  const TextStyle(
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -195,10 +199,10 @@ class _HomeViewState extends State<HomeView> {
                   if (!currDayData.pms) ...[
                     TableRow(
                       children: [
-                        const AutoSizeText(
-                          'Period',
+                        AutoSizeText(
+                          AppLocalizations.of(context)!.period,
                           maxLines: 1,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20.0,
                           ),
                         ),
@@ -222,9 +226,9 @@ class _HomeViewState extends State<HomeView> {
                   if (!currDayData.period) ...[
                     TableRow(
                       children: [
-                        const Text(
-                          'PMS',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.pms,
+                          style: const TextStyle(
                             fontSize: 20.0,
                           ),
                         ),
@@ -246,62 +250,6 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ],
               ),
-              // if (!currDayData.pms) ...[
-              //   Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       const Text(
-              //         'Period',
-              //         style: TextStyle(
-              //           fontSize: 20.0,
-              //         ),
-              //       ),
-              //       Switch(
-              //         activeColor: Theme.of(context).primaryColor,
-              //         value: currDayData.period,
-              //         onChanged: (bool value) {
-              //           setState(() {
-              //             currDayData.period = value;
-              //           });
-              //           updateDayData();
-              //           updateStats();
-              //           if (value) {
-              //             Navigator.pushReplacementNamed(context, 'historyView');
-              //           }
-              //         },
-              //       ),
-              //     ],
-              //   ),
-              // ],
-              // if (!currDayData.period && !currDayData.pms) ...[
-              //   const SizedBox(height: 10.0,),
-              // ],
-              // if (!currDayData.period) ...[
-              //   Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       const Text(
-              //         'PMS',
-              //         style: TextStyle(
-              //           fontSize: 20.0,
-              //         ),
-              //       ),
-              //       Switch(
-              //         activeColor: Theme.of(context).primaryColor,
-              //         value: currDayData.pms,
-              //         onChanged: (bool value) {
-              //           setState(() {
-              //             currDayData.pms = value;
-              //           });
-              //           updateDayData();
-              //           if (value) {
-              //             Navigator.pushReplacementNamed(context, 'historyView');
-              //           }
-              //         },
-              //       ),
-              //     ],
-              //   ),
-              // ],
               const SizedBox(
                 height: 50.0,
               ), // To push everything up a little.
