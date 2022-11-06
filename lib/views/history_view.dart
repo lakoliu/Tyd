@@ -93,7 +93,6 @@ class _HistoryViewState extends State<HistoryView> {
           switch (dataField) {
             case 'periodSymptoms': currDayData.periodSymptoms = selectedList; break;
             case 'pmsSymptoms': currDayData.pmsSymptoms = selectedList; break;
-            case 'pmsMedication': currDayData.pmsMedsTaken = selectedList; break;
           }
         });
         updateDayData();
@@ -394,42 +393,81 @@ class _HistoryViewState extends State<HistoryView> {
                           ], // for
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(AppLocalizations.of(context)!.medicationTaken),
-                          // TODO change to period medication list
-                          TextButton(
-                            onPressed: () => openAddRemoveDialog(
-                                listData: medicines,
-                                selectedList: currDayData.pmsMedsTaken,
-                                dataField: 'pmsMedication'),
-                            child: Text(
-                              '+',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: -4.0,
-                        children: [
-                          for (var symptom in currDayData.pmsMedsTaken) ...[
-                            Chip(
-                              label: Text(
-                                symptom,
-                                style: const TextStyle(
-                                  color: Colors.white,
+                      Text(AppLocalizations.of(context)!.medicationTaken),
+                      for (var i = 0; i < currDayData.pmsMedsTaken.length + 1; i++) ...[
+                        Row(
+                          children: [
+                            if (currDayData.pmsMedsTaken.asMap().containsKey(i) && !appBox.get('medicines').contains(currDayData.pmsMedsTaken[i][0])) ...[
+                              Expanded(
+                                child: TextFormField(
+                                  initialValue: currDayData.pmsMedsTaken[i][0],
+                                  enabled: false,
+                                  onChanged: null,
+                                  decoration: const InputDecoration(
+                                    disabledBorder: InputBorder.none,
+                                  ),
                                 ),
                               ),
-                              backgroundColor: Theme.of(context).primaryColor,
+                            ] else ...[
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  hint: Text(AppLocalizations.of(context)!.medication),
+                                  value: currDayData.pmsMedsTaken.asMap().containsKey(i) ? currDayData.pmsMedsTaken[i][0] : null,
+                                  items: appBox.get('medicines')
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (currDayData.pmsMedsTaken.asMap().containsKey(i)) {
+                                        currDayData.pmsMedsTaken[i][0] = value.toString();
+                                      } else {
+                                        currDayData.pmsMedsTaken.add([value.toString(), '', '']);
+                                      }
+                                      updateDayData();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                            const SizedBox(width: 10.0,),
+                            Expanded(
+                              child: TextFormField(
+                                initialValue: currDayData.pmsMedsTaken.asMap().containsKey(i) ? currDayData.pmsMedsTaken[i][1] : null,
+                                enabled: currDayData.pmsMedsTaken.asMap().containsKey(i),
+                                onChanged: (value) {
+                                  setState(() {
+                                    currDayData.pmsMedsTaken[i][1] = value.toString();
+                                  });
+                                  updateDayData();
+                                },
+                                decoration: InputDecoration.collapsed(
+                                  hintText: AppLocalizations.of(context)!.time,
+                                ),
+                              ),
                             ),
-                          ], // for
-                        ],
-                      ),
+                            const SizedBox(width: 10.0,),
+                            Expanded(
+                              child: TextFormField(
+                                initialValue: currDayData.pmsMedsTaken.asMap().containsKey(i) ? currDayData.pmsMedsTaken[i][2] : null,
+                                enabled: currDayData.pmsMedsTaken.asMap().containsKey(i),
+                                onChanged: (value) {
+                                  setState(() {
+                                    currDayData.pmsMedsTaken[i][2] = value.toString();
+                                  });
+                                  updateDayData();
+                                },
+                                decoration: InputDecoration.collapsed(
+                                  hintText: AppLocalizations.of(context)!.dose,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                       TextFormField(
                         initialValue: currDayData.pmsNotes,
                         keyboardType: TextInputType.multiline,

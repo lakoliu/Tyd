@@ -31,8 +31,11 @@ class DayDataAdapter extends TypeAdapter<DayData> {
       ..periodNotes = fields[6] == null ? '' : fields[6] as String
       ..pmsSymptoms =
           fields[7] == null ? [] : (fields[7] as List).cast<String>()
-      ..pmsMedsTaken =
-          fields[8] == null ? [] : (fields[8] as List).cast<String>()
+      ..pmsMedsTaken = fields[8] == null
+          ? []
+          : (fields[8] as List)
+              .map((dynamic e) => (e as List).cast<String>())
+              .toList()
       ..pmsNotes = fields[9] == null ? '' : fields[9] as String
       ..timerData =
           fields[10] == null ? [] : (fields[10] as List).cast<TimerData>();

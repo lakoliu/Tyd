@@ -31,7 +31,7 @@ class DayData extends HiveObject {
   List<String> pmsSymptoms = [];
 
   @HiveField(8, defaultValue: [])
-  List<String> pmsMedsTaken = [];
+  List<List<String>> pmsMedsTaken = [];
 
   @HiveField(9, defaultValue: '')
   var pmsNotes = '';
