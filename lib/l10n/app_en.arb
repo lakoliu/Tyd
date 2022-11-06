@@ -80,5 +80,121 @@
   "notes": "Notes",
   "@notes": {
     "description": "Label for the text input where the user can write notes"
+  },
+  "changeTampon": "You will be notified at {notifyTime} to change your tampon.",
+  "@changeTampon": {
+    "description": "The user will receive a notification at 'notifyTime' to change their tampon.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "changePad": "You will be notified at {notifyTime} to change your pad.",
+  "@changePad": {
+    "description": "The user will receive a notification at 'notifyTime' to change their pad.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyCup": "You will be notified at {notifyTime} to empty your cup.",
+  "@emptyCup": {
+    "description": "The user will receive a notification at 'notifyTime' to empty their cup.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "changeUnderwear": "You will be notified at {notifyTime} to change your underwear.",
+  "@changeUnderwear": {
+    "description": "The user will receive a notification at 'notifyTime' to change their period underwear.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStart": "SELECT START TIME",
+  "@selectStart": {
+    "description": "Heading on clock where user can pick the timer's start time (ALL CAPS)."
+  },
+  "selectStop": "SELECT STOP TIME",
+  "@selectStop": {
+    "description": "Heading on clock where user can pick the timer's stop time (ALL CAPS)."
+  },
+  "startUpper": "START",
+  "@startUpper": {
+    "description": "Confirm button for setting start time (ALL CAPS)."
+  },
+  "stopUpper": "STOP",
+  "@stopUpper": {
+    "description": "Confirm button for setting stop time (ALL CAPS)."
+  },
+  "saveUpper": "SAVE",
+  "@saveUpper": {
+    "description": "Confirm button for saving info (ALL CAPS)."
+  },
+  "editEntry": "Edit Entry",
+  "@editEntry": {
+    "description": "Edit list item header (ALL CAPS)."
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Type of item. Placeholder for sanitary item (i.e., tampon, pad, etc.)."
+  },
+  "tampon": "Tampon",
+  "@tampon": {
+    "description": "Tampon"
+  },
+  "size": "Size",
+  "@size": {
+    "description": "Size (of tampon)"
+  },
+  "start": "Start",
+  "@start": {
+    "description": "Timer start button."
+  },
+  "stop": "Stop",
+  "@stop": {
+    "description": "Timer stop button."
+  },
+  "deleteUpper": "DELETE",
+  "@deleteUpper": {
+    "description": "Delete, as in 'delete this item' (ALL CAPS)"
+  },
+  "deleteEntry": "Delete this entry?",
+  "@deleteEntry": {
+    "description": "Ask user if they are sure they want to delete a timer history item."
+  },
+  "cancelUpper": "CANCEL",
+  "@cancelUpper": {
+    "description": "Cancel action (ALL CAPS)"
+  },
+  "closeUpper": "CLOSE",
+  "@closeUpper": {
+    "description": "Close the dialog (ALL CAPS)"
+  },
+  "pad": "Pad",
+  "@pad": {
+    "description": "Pad, as in sanitary period pad."
+  },
+  "cup": "Cup",
+  "@cup": {
+    "description": "Cup, as in sanitary period cup."
+  },
+  "underwear": "Underwear",
+  "@underwear": {
+    "description": "Underwear, as in sanitary period Underwear."
+  },
+  "justChanged": "Just Changed",
+  "@justChanged": {
+    "description": "Button the user presses when they just changed their tampon, pad, cup, or underwear to stop the timer and immediately start it again."
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Label for column where user can edit saved timer entry."
   }
 }

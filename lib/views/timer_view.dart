@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
@@ -98,16 +99,52 @@ class _TimerViewState extends State<TimerView> {
 
   void notificationTimerSnack() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    var verb = stopwatchHelper.typeSelected == 'Cup' ? 'empty' : 'change';
     var notifyDateTime = stopwatchHelper.startTime.add(Duration(minutes: timerMinutes.toInt()));
 
     if (DateTime.now().isBefore(notifyDateTime)) {
       var notifyTime = timeFormatter.format(notifyDateTime);
-      var snackBar = SnackBar(
-        content: Text(
-            'You will be notified at $notifyTime to $verb your ${stopwatchHelper.typeSelected.toLowerCase()}.'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      SnackBar? snackBar;
+      switch (stopwatchHelper.typeSelected) {
+        case 'Tampon':
+          {
+            snackBar = SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.changeTampon(notifyTime),
+              ),
+            );
+          }
+          break;
+        case 'Pad':
+          {
+            snackBar = SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.changePad(notifyTime),
+              ),
+            );
+          }
+          break;
+        case 'Cup':
+          {
+            snackBar = SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.emptyCup(notifyTime),
+              ),
+            );
+          }
+          break;
+        case 'Underwear':
+          {
+            snackBar = SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.changeUnderwear(notifyTime),
+              ),
+            );
+          }
+          break;
+      }
+      if (snackBar != null) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
 
       flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
@@ -120,8 +157,8 @@ class _TimerViewState extends State<TimerView> {
     TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      confirmText: startOrStop,
-      helpText: 'SELECT $startOrStop TIME',
+      confirmText: startOrStop == 'START' ? AppLocalizations.of(context)!.startUpper : AppLocalizations.of(context)!.stopUpper,
+      helpText: startOrStop == 'START' ? AppLocalizations.of(context)!.selectStart : AppLocalizations.of(context)!.selectStop,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -148,8 +185,8 @@ class _TimerViewState extends State<TimerView> {
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       initialTime: TimeOfDay.fromDateTime(startOrStop == 'START' ? historyList[i].startTime : historyList[i].stopTime),
-      confirmText: 'SAVE',
-      helpText: 'SELECT $startOrStop TIME',
+      confirmText: AppLocalizations.of(context)!.saveUpper,
+      helpText: startOrStop == 'START' ? AppLocalizations.of(context)!.selectStart : AppLocalizations.of(context)!.selectStop,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -191,7 +228,7 @@ class _TimerViewState extends State<TimerView> {
   Widget showHistoryEditDialog(BuildContext context, int i) {
     return StatefulBuilder(builder: (context, newSetState) {
       return AlertDialog(
-        title: const Text('Edit Entry'),
+        title: Text(AppLocalizations.of(context)!.editEntry),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -207,7 +244,7 @@ class _TimerViewState extends State<TimerView> {
               children: [
                 TableRow(
                   children: [
-                    const Text('Type'),
+                    Text(AppLocalizations.of(context)!.type),
                     DropdownButton(
                       isExpanded: true,
                       value: historyList[i].type,
@@ -224,7 +261,7 @@ class _TimerViewState extends State<TimerView> {
                             if (value != null) {
                               historyList[i].type = value;
                             }
-                            if (value != 'Tampon') {
+                            if (value != AppLocalizations.of(context)!.tampon) {
                               historyList[i].size = '-';
                             }
                             saveHistoryList();
@@ -236,7 +273,7 @@ class _TimerViewState extends State<TimerView> {
                 ),
                 TableRow(
                   children: [
-                    const Text('Size'),
+                    Text(AppLocalizations.of(context)!.size),
                     DropdownButton(
                       isExpanded: true,
                       value: historyList[i].size,
@@ -247,7 +284,7 @@ class _TimerViewState extends State<TimerView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      onChanged: historyList[i].type != 'Tampon'
+                      onChanged: historyList[i].type != 'Tampon' && historyList[i].type != AppLocalizations.of(context)!.tampon
                           ? null
                           : (String? value) {
                               newSetState(() {
@@ -264,7 +301,7 @@ class _TimerViewState extends State<TimerView> {
                 ),
                 TableRow(
                   children: [
-                    const Text('Start'),
+                    Text(AppLocalizations.of(context)!.start),
                     ElevatedButton(
                       onPressed: () {
                         showTimeEditPicker(context, 'START', i, newSetState);
@@ -276,7 +313,7 @@ class _TimerViewState extends State<TimerView> {
                 ),
                 TableRow(
                   children: [
-                    const Text('Stop'),
+                    Text(AppLocalizations.of(context)!.stop),
                     ElevatedButton(
                       onPressed: () {
                         showTimeEditPicker(context, 'STOP', i, newSetState);
@@ -297,17 +334,17 @@ class _TimerViewState extends State<TimerView> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("DELETE"),
-                    content: Text("Delete this entry?"),
+                    title: Text(AppLocalizations.of(context)!.deleteUpper),
+                    content: Text(AppLocalizations.of(context)!.deleteEntry),
                     actions: [
                       TextButton(
-                        child: Text("CANCEL"),
+                        child: Text(AppLocalizations.of(context)!.cancelUpper),
                         onPressed:  () {
                           Navigator.pop(context);
                         },
                       ),
                       TextButton(
-                        child: Text("DELETE"),
+                        child: Text(AppLocalizations.of(context)!.deleteUpper),
                         onPressed:  () {
                           Navigator.pop(context);
                           setState(() {
@@ -322,13 +359,13 @@ class _TimerViewState extends State<TimerView> {
                 },
               );
             },
-            child: const Text('DELETE'),
+            child: Text(AppLocalizations.of(context)!.deleteUpper),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('CLOSE'),
+            child: Text(AppLocalizations.of(context)!.closeUpper),
           ),
         ],
       );
@@ -399,7 +436,7 @@ class _TimerViewState extends State<TimerView> {
                           });
                         },
                       ),
-                      const Text('Tampon'),
+                      Text(AppLocalizations.of(context)!.tampon),
                     ],
                   ),
                   Wrap(
@@ -420,7 +457,7 @@ class _TimerViewState extends State<TimerView> {
                           });
                         },
                       ),
-                      const Text('Pad'),
+                      Text(AppLocalizations.of(context)!.pad),
                     ],
                   ),
                   Wrap(
@@ -441,7 +478,7 @@ class _TimerViewState extends State<TimerView> {
                           });
                         },
                       ),
-                      const Text('Cup'),
+                      Text(AppLocalizations.of(context)!.cup),
                     ],
                   ),
                   Wrap(
@@ -462,7 +499,7 @@ class _TimerViewState extends State<TimerView> {
                           });
                         },
                       ),
-                      const Text('Underwear'),
+                      Text(AppLocalizations.of(context)!.underwear)
                     ],
                   ),
                 ],
@@ -472,7 +509,7 @@ class _TimerViewState extends State<TimerView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Size'),
+                    Text(AppLocalizations.of(context)!.size),
                     const SizedBox(width: 15.0,),
                     DropdownButton(
                       value: stopwatchHelper.sizeSelected,
@@ -509,20 +546,20 @@ class _TimerViewState extends State<TimerView> {
                     stopTimer(DateTime.now());
                     startTimer(DateTime.now());
                   },
-                  child: const Text('Just Changed'),
+                  child: Text(AppLocalizations.of(context)!.justChanged),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor),
                   onPressed: () => showCustomTimePicker(context, 'STOP'),
-                  child: const Text('Stop'),
+                  child: Text(AppLocalizations.of(context)!.stop),
                 ),
               ] else ...[
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor),
                   onPressed: () => showCustomTimePicker(context, 'START'),
-                  child: const Text('Start'),
+                  child: Text(AppLocalizations.of(context)!.start),
                 ),
               ],
               const SizedBox(
@@ -541,35 +578,35 @@ class _TimerViewState extends State<TimerView> {
                         4: FractionColumnWidth(.1)
                       },
                       children: [
-                        const TableRow(
+                        TableRow(
                           children: [
                             Text(
-                              'Type',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.type,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Size',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.size,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Start',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.start,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Stop',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.stop,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Edit',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.edit,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

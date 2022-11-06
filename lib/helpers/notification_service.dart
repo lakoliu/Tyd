@@ -45,7 +45,7 @@ class NotificationService {
   void showSanitaryChangeReminder(String sanitaryItem) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails('tyd-timer', 'Tampon timer',
-        channelDescription: 'Tampon timer',
+        channelDescription: 'Tampon Timer',
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker');
