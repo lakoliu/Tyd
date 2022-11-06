@@ -67,7 +67,7 @@ void updateStats() {
 
         if (dayData.period) {
           if (periodFound && dayBefore.difference(parsedDate).inDays == 1) {
-            trueLatestStartDate = dayBefore;
+            trueLatestStartDate = parsedDate;
           } else if (periodFound && dayBefore.difference(parsedDate).inDays != 1) {
             appBox.put('latestStartDate', dayBefore);
             trueLatestStartDate = null;
