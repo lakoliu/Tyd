@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 Widget bottomNavBar(BuildContext context, int navIndex) {
   return BottomNavigationBar(
     type: BottomNavigationBarType.fixed,
     showUnselectedLabels: false,
-    items: const <BottomNavigationBarItem>[
+    items: <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: 'Home',
+        icon: const Icon(Icons.home),
+        label: AppLocalizations.of(context)!.home,
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month),
-        label: 'Calendar',
+        icon: const Icon(Icons.calendar_month),
+        label: AppLocalizations.of(context)!.calendar,
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.timer),
-        label: 'Timer',
+        icon: const Icon(Icons.timer),
+        label: AppLocalizations.of(context)!.timer,
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.bar_chart),
-        label: 'Statistics',
+        icon: const Icon(Icons.bar_chart),
+        label: AppLocalizations.of(context)!.statistics,
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.settings),
-        label: 'Settings',
+        icon: const Icon(Icons.settings),
+        label: AppLocalizations.of(context)!.settings,
       ),
     ],
     currentIndex: navIndex,

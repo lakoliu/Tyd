@@ -312,5 +312,21 @@
   "resetAllSettings": "This will erase all of your custom settings. Type \"DELETE\" to continue.",
   "@resetAllSettings": {
     "description": "Instructions to user to delete all changed settings. DELETE here MUST MATCH 'deleteUpper'."
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home page in bottom nav bar."
+  },
+  "calendar": "Calendar",
+  "@calendar": {
+    "description": "Calendar page in bottom nav bar."
+  },
+  "timer": "Timer",
+  "@timer": {
+    "description": "Home page in bottom nav bar."
+  },
+  "tamponTimer": "Tampon Timer",
+  "@tamponTimer": {
+    "description": "Tampon Timer is the name of the timer notifications that will appear in notification settings."
   }
 }
