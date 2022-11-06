@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
 import 'package:filter_list/filter_list.dart';
@@ -107,8 +107,8 @@ class _HistoryViewState extends State<HistoryView> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
-          'History',
+        title: Text(
+          AppLocalizations.of(context)!.history,
         ),
       ),
       body: SafeArea(
@@ -137,7 +137,7 @@ class _HistoryViewState extends State<HistoryView> {
                 activeDayColor: Colors.white,
                 activeBackgroundDayColor: Theme.of(context).primaryColor,
                 dotsColor: const Color(0xFF333A47),
-                locale: Intl.getCurrentLocale(),
+                locale: AppLocalizations.of(context)!.localeName,
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -148,9 +148,9 @@ class _HistoryViewState extends State<HistoryView> {
                     if (!currDayData.pms) ...[
                       Row(
                         children: [
-                          const Text(
-                            'Period',
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.period,
+                            style: const TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
@@ -171,9 +171,9 @@ class _HistoryViewState extends State<HistoryView> {
                     if (!currDayData.period) ...[
                       Row(
                         children: [
-                          const Text(
-                            'PMS',
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.pms,
+                            style: const TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
@@ -194,7 +194,7 @@ class _HistoryViewState extends State<HistoryView> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      const Text('Bleeding'),
+                      Text(AppLocalizations.of(context)!.bleeding),
                       Row(
                         children: [
                           Slider(
@@ -213,7 +213,7 @@ class _HistoryViewState extends State<HistoryView> {
                           Text((currDayData.bleeding * 10).round().toString()),
                         ],
                       ),
-                      const Text('Pain'),
+                      Text(AppLocalizations.of(context)!.pain),
                       Row(
                         children: [
                           Slider(
@@ -234,7 +234,7 @@ class _HistoryViewState extends State<HistoryView> {
                       ),
                       Row(
                         children: [
-                          const Text('Symptoms'),
+                          Text(AppLocalizations.of(context)!.symptoms),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
                                 listData: appBox.get('periodSymptoms'),
@@ -268,7 +268,7 @@ class _HistoryViewState extends State<HistoryView> {
                         ],
                       ),
                       const SizedBox(height: 15.0,),
-                      const Text('Medication Taken'),
+                      Text(AppLocalizations.of(context)!.medicationTaken),
                       for (var i = 0; i < currDayData.periodMedsTaken.length + 1; i++) ...[
                         Row(
                           children: [
@@ -286,7 +286,7 @@ class _HistoryViewState extends State<HistoryView> {
                             ] else ...[
                               DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                  hint: const Text('Medication'),
+                                  hint: Text(AppLocalizations.of(context)!.medication),
                                   value: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][0] : null,
                                   items: appBox.get('medicines')
                                       .map<DropdownMenuItem<String>>((String value) {
@@ -319,8 +319,8 @@ class _HistoryViewState extends State<HistoryView> {
                                   });
                                   updateDayData();
                                 },
-                                decoration: const InputDecoration.collapsed(
-                                  hintText: 'Time',
+                                decoration: InputDecoration.collapsed(
+                                  hintText: AppLocalizations.of(context)!.time,
                                 ),
                               ),
                             ),
@@ -335,8 +335,8 @@ class _HistoryViewState extends State<HistoryView> {
                                   });
                                   updateDayData();
                                 },
-                                decoration: const InputDecoration.collapsed(
-                                  hintText: 'Dose',
+                                decoration: InputDecoration.collapsed(
+                                  hintText: AppLocalizations.of(context)!.dose,
                                 ),
                               ),
                             ),
@@ -349,8 +349,8 @@ class _HistoryViewState extends State<HistoryView> {
                         minLines: 1,
                         maxLines: null,
                         textCapitalization: TextCapitalization.sentences,
-                        decoration: const InputDecoration(
-                          labelText: 'Notes',
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.notes,
                         ),
                         onChanged: (text) {
                           currDayData.periodNotes = text;
@@ -361,7 +361,7 @@ class _HistoryViewState extends State<HistoryView> {
                     if (currDayData.pms) ...[
                       Row(
                         children: [
-                          const Text('Symptoms'),
+                          Text(AppLocalizations.of(context)!.symptoms),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
                                 listData: pmsSymptoms,
@@ -396,7 +396,8 @@ class _HistoryViewState extends State<HistoryView> {
                       ),
                       Row(
                         children: [
-                          const Text('Medication Taken'),
+                          Text(AppLocalizations.of(context)!.medicationTaken),
+                          // TODO change to period medication list
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
                                 listData: medicines,
@@ -435,8 +436,8 @@ class _HistoryViewState extends State<HistoryView> {
                         minLines: 1,
                         maxLines: null,
                         textCapitalization: TextCapitalization.sentences,
-                        decoration: const InputDecoration(
-                          labelText: 'Notes',
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.notes,
                         ),
                         onChanged: (text) {
                           currDayData.pmsNotes = text;

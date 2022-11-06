@@ -43,6 +43,42 @@
   },
   "pms": "PMS",
   "@pms": {
-    "description": "Premenstrual syndrome (use a short word or abbreviation if possible)"
+    "description": "Premenstrual syndrome (use a short word or abbreviation if possible)."
+  },
+  "history": "History",
+  "@history": {
+    "description": "Title of the History/Calendar page."
+  },
+  "bleeding": "Bleeding",
+  "@bleeding": {
+    "description": "Label for bleeding scale."
+  },
+  "pain": "Pain",
+  "@pain": {
+    "description": "Label for pain scale."
+  },
+  "symptoms": "Symptoms",
+  "@symptoms": {
+    "description": "Label for symptoms list."
+  },
+  "medicationTaken": "Medication Taken",
+  "@medicationTaken": {
+    "description": "Label for medication taken list."
+  },
+  "medication": "Medication",
+  "@medication": {
+    "description": "Label for medication placeholder."
+  },
+  "time": "Time",
+  "@time": {
+    "description": "Placeholder for medication taken time."
+  },
+  "dose": "Dose",
+  "@dose": {
+    "description": "Placeholder for dose of medication taken."
+  },
+  "notes": "Notes",
+  "@notes": {
+    "description": "Label for the text input where the user can write notes"
   }
 }
