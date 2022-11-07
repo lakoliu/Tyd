@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -16,8 +17,8 @@ class _AccentColorViewState extends State<AccentColorView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Accent Color',
+        title: Text(
+          AppLocalizations.of(context)!.accentColor,
         ),
       ),
       body: SafeArea(
@@ -25,9 +26,9 @@ class _AccentColorViewState extends State<AccentColorView> {
           children: [
             if (!appBox.get('darkMode', defaultValue: false)) ...[
               ListTile(
-                title: const Text(
-                  'Green',
-                  style: TextStyle(
+                title: Text(
+                  AppLocalizations.of(context)!.green,
+                  style: const TextStyle(
                     color: Color(0xFF225500),
                     fontWeight: FontWeight.bold,
                     fontSize: 25.0,
@@ -43,7 +44,7 @@ class _AccentColorViewState extends State<AccentColorView> {
               ),
               ListTile(
                 title: Text(
-                  'Blue',
+                  AppLocalizations.of(context)!.blue,
                   style: TextStyle(
                     color: Colors.blue[800],
                     fontWeight: FontWeight.bold,
@@ -60,9 +61,9 @@ class _AccentColorViewState extends State<AccentColorView> {
               ),
             ] else ...[
               ListTile(
-                title: const Text(
-                  'Teal',
-                  style: TextStyle(
+                title: Text(
+                  AppLocalizations.of(context)!.teal,
+                  style: const TextStyle(
                     color: Colors.tealAccent,
                     fontWeight: FontWeight.bold,
                     fontSize: 25.0,
@@ -77,9 +78,9 @@ class _AccentColorViewState extends State<AccentColorView> {
                 },
               ),
               ListTile(
-                title: const Text(
-                  'Purple',
-                  style: TextStyle(
+                title: Text(
+                  AppLocalizations.of(context)!.purple,
+                  style: const TextStyle(
                     color: Colors.purpleAccent,
                     fontWeight: FontWeight.bold,
                     fontSize: 25.0,
@@ -96,7 +97,7 @@ class _AccentColorViewState extends State<AccentColorView> {
             ],
             ListTile(
               title: Text(
-                'Pink',
+                AppLocalizations.of(context)!.pink,
                 style: TextStyle(
                   color: Colors.pink[300],
                   fontWeight: FontWeight.bold,
@@ -113,7 +114,7 @@ class _AccentColorViewState extends State<AccentColorView> {
             ),
             ListTile(
               title: Text(
-                'Custom',
+                AppLocalizations.of(context)!.custom,
                 style: TextStyle(
                   color: appBox.get('accentColorName') == 'Custom' ? appBox.get('accentColor') ?? Colors.black : null,
                   fontWeight: FontWeight.bold,

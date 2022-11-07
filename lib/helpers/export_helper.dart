@@ -33,7 +33,7 @@ class ExportHelper {
 
       var jsonSettings = '"settings": {$jsonMedicines,$jsonPeriodSymptoms,$jsonPmsSymptoms,$jsonSanitaryTypes,$jsonTamponSizes}';
 
-      exportedFile = await exportedFile.writeAsString('{"data":$jsonDateList,$jsonSettings,"environment":{"application_id":"com.livaliva.tyd"}}');
+      exportedFile = await exportedFile.writeAsString('{"data":$jsonDateList,$jsonSettings,"environment":{"application_id":"com.lakoliu.tyd"}}');
       Share.shareXFiles([XFile(exportedFile.path)], text:'Tyd Backup');
     } catch (e) {
       showDialog(

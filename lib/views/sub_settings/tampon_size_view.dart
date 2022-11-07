@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/day_data.dart';
@@ -23,8 +24,8 @@ class _TamponSizeViewState extends State<TamponSizeView> {
 
   void emptySnack() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    var snackBar = const SnackBar(
-      content: Text('Size cannot be blank.'),
+    var snackBar = SnackBar(
+      content: Text(AppLocalizations.of(context)!.sizeBlank),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -53,8 +54,8 @@ class _TamponSizeViewState extends State<TamponSizeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Edit Tampon Sizes',
+        title: Text(
+          AppLocalizations.of(context)!.editSizes,
         ),
       ),
       body: SafeArea(
@@ -77,7 +78,7 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Edit Size'),
+                        title: Text(AppLocalizations.of(context)!.editSize),
                         content: TextFormField(
                           enabled: !sizeUsedToday(sizeList[i]),
                           initialValue: currSizeName,
@@ -89,14 +90,14 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                         actionsAlignment: MainAxisAlignment.spaceEvenly,
                         actions: [
                           TextButton(
-                            child: const Text("CANCEL"),
+                            child: Text(AppLocalizations.of(context)!.cancelUpper),
                             onPressed:  () {
                               Navigator.pop(context);
                               addSizeText = '';
                             },
                           ),
                           TextButton(
-                            child: const Text("DELETE"),
+                            child: Text(AppLocalizations.of(context)!.deleteUpper),
                             onPressed:  () {
                               setState(() {
                                 if (!sizeUsedToday(sizeList[i])) {
@@ -108,12 +109,12 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: const Text('Can\'t Delete'),
-                                        content: const Text('This size is being used in today\'s tampon timer.'),
+                                        title: Text(AppLocalizations.of(context)!.cantDelete),
+                                        content: Text(AppLocalizations.of(context)!.sizeUsed),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(context),
-                                            child: const Text('OK'),
+                                            child: Text(AppLocalizations.of(context)!.okUpper),
                                           ),
                                         ],
                                       );
@@ -134,11 +135,11 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: const Text('That size already exists.'),
+                                          title: Text(AppLocalizations.of(context)!.sizeExists),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(context),
-                                              child: const Text('OK'),
+                                              child: Text(AppLocalizations.of(context)!.okUpper),
                                             ),
                                           ],
                                         );
@@ -164,9 +165,9 @@ class _TamponSizeViewState extends State<TamponSizeView> {
               ),
             ],
             ListTile(
-              title: const Text(
-                'Add...',
-                style: TextStyle(
+              title: Text(
+                AppLocalizations.of(context)!.addDotDot,
+                style: const TextStyle(
                   fontSize: 25.0,
                 ),
               ),
@@ -175,7 +176,7 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Add New Size'),
+                      title: Text(AppLocalizations.of(context)!.addSize),
                       content: TextField(
                         textCapitalization: TextCapitalization.words,
                         onChanged: (value) {
@@ -185,14 +186,14 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                       actionsAlignment: MainAxisAlignment.spaceEvenly,
                       actions: [
                         TextButton(
-                          child: const Text("CANCEL"),
+                          child: Text(AppLocalizations.of(context)!.cancelUpper),
                           onPressed:  () {
                             Navigator.pop(context);
                             addSizeText = '';
                           },
                         ),
                         TextButton(
-                          child: const Text("SAVE"),
+                          child: Text(AppLocalizations.of(context)!.saveUpper),
                           onPressed:  () {
                             setState(() {
                               if (addSizeText.isNotEmpty) {
@@ -201,11 +202,11 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: const Text('That size already exists.'),
+                                        title: Text(AppLocalizations.of(context)!.sizeExists),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(context),
-                                            child: const Text('OK'),
+                                            child: Text(AppLocalizations.of(context)!.okUpper),
                                           ),
                                         ],
                                       );

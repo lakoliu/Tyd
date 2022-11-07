@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 
 class MedicinesView extends StatefulWidget {
@@ -19,8 +20,8 @@ class _MedicinesViewState extends State<MedicinesView> {
 
   void emptySnack() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    var snackBar = const SnackBar(
-      content: Text('Medicine cannot be blank.'),
+    var snackBar = SnackBar(
+      content: Text(AppLocalizations.of(context)!.medicineBlank),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -35,8 +36,8 @@ class _MedicinesViewState extends State<MedicinesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Edit Medicines',
+        title: Text(
+          AppLocalizations.of(context)!.editMedicines,
         ),
       ),
       body: SafeArea(
@@ -59,7 +60,7 @@ class _MedicinesViewState extends State<MedicinesView> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Edit Medicine'),
+                        title: Text(AppLocalizations.of(context)!.editMedicine),
                         content: TextFormField(
                           initialValue: currMedicineName,
                           textCapitalization: TextCapitalization.words,
@@ -70,14 +71,14 @@ class _MedicinesViewState extends State<MedicinesView> {
                         actionsAlignment: MainAxisAlignment.spaceEvenly,
                         actions: [
                           TextButton(
-                            child: const Text("CANCEL"),
+                            child: Text(AppLocalizations.of(context)!.cancelUpper),
                             onPressed:  () {
                               Navigator.pop(context);
                               addMedicineText = '';
                             },
                           ),
                           TextButton(
-                            child: const Text("DELETE"),
+                            child: Text(AppLocalizations.of(context)!.deleteUpper),
                             onPressed:  () {
                               setState(() {
                                 Navigator.pop(context);
@@ -88,7 +89,7 @@ class _MedicinesViewState extends State<MedicinesView> {
                             },
                           ),
                           TextButton(
-                            child: const Text("SAVE"),
+                            child: Text(AppLocalizations.of(context)!.saveUpper),
                             onPressed:  () {
                               setState(() {
                                 if (addMedicineText.isNotEmpty) {
@@ -97,11 +98,11 @@ class _MedicinesViewState extends State<MedicinesView> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: const Text('That medicine already exists.'),
+                                          title: Text(AppLocalizations.of(context)!.medicineExists),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(context),
-                                              child: const Text('OK'),
+                                              child: Text(AppLocalizations.of(context)!.okUpper),
                                             ),
                                           ],
                                         );
@@ -127,9 +128,9 @@ class _MedicinesViewState extends State<MedicinesView> {
               ),
             ],
             ListTile(
-              title: const Text(
-                'Add...',
-                style: TextStyle(
+              title: Text(
+                AppLocalizations.of(context)!.addDotDot,
+                style: const TextStyle(
                   fontSize: 25.0,
                 ),
               ),
@@ -138,7 +139,7 @@ class _MedicinesViewState extends State<MedicinesView> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Add New Medicine'),
+                      title: Text(AppLocalizations.of(context)!.addMedicine),
                       content: TextField(
                         textCapitalization: TextCapitalization.words,
                         onChanged: (value) {
@@ -148,14 +149,14 @@ class _MedicinesViewState extends State<MedicinesView> {
                       actionsAlignment: MainAxisAlignment.spaceEvenly,
                       actions: [
                         TextButton(
-                          child: const Text("CANCEL"),
+                          child: Text(AppLocalizations.of(context)!.cancelUpper),
                           onPressed:  () {
                             Navigator.pop(context);
                             addMedicineText = '';
                           },
                         ),
                         TextButton(
-                          child: const Text("SAVE"),
+                          child: Text(AppLocalizations.of(context)!.saveUpper),
                           onPressed:  () {
                             setState(() {
                               if (addMedicineText.isNotEmpty) {
@@ -164,11 +165,11 @@ class _MedicinesViewState extends State<MedicinesView> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: const Text('That medicine already exists.'),
+                                        title: Text(AppLocalizations.of(context)!.medicineExists),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(context),
-                                            child: const Text('OK'),
+                                            child: Text(AppLocalizations.of(context)!.okUpper),
                                           ),
                                         ],
                                       );

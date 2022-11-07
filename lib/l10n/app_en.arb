@@ -328,5 +328,122 @@
   "tamponTimer": "Tampon Timer",
   "@tamponTimer": {
     "description": "Tampon Timer is the name of the timer notifications that will appear in notification settings."
+  },
+  "green": "Green",
+  "@green": {
+    "description": "The color green."
+  },
+  "blue": "Blue",
+  "@blue": {
+    "description": "The color blue."
+  },
+  "pink": "Pink",
+  "@pink": {
+    "description": "The color pink."
+  },
+  "teal": "Teal",
+  "@teal": {
+    "description": "The color teal."
+  },
+  "purple": "Purple",
+  "@purple": {
+    "description": "The color purple."
+  },
+  "custom": "Custom",
+  "@custom": {
+    "description": "Custom color setter."
+  },
+  "editIntervals": "Edit Change Intervals",
+  "@editIntervals": {
+    "description": "Header for the page to edit time between tampon, etc. changes."
+  },
+  "itemInterval": "{sanitaryItem} Interval",
+  "@itemInterval": {
+    "description": "Header for dialog to change interval of given sanitary item (i.e., tampon, pad, etc.).",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "medicineBlank": "Medicine cannot be blank.",
+  "@medicineBlank": {
+    "description": "Warning if the user tries to save a medicine without a name."
+  },
+  "editMedicines": "Edit Medicines",
+  "@editMedicines": {
+    "description": "Page header for page where user can edit medicine names."
+  },
+  "editMedicine": "Edit Medicine",
+  "@editMedicine": {
+    "description": "Dialog header when user tries to edit one medicine name."
+  },
+  "medicineExists": "That medicine already exists.",
+  "@medicineExists": {
+    "description": "Error if user tries to rename a medicine to the same name as another medicine."
+  },
+  "okUpper": "OK",
+  "@okUpper": {
+    "description": "OK (okay) response to error message (ALL CAPS)."
+  },
+  "addDotDot": "Add...",
+  "@addDotDot": {
+    "description": "Option to add... another medicine."
+  },
+  "addMedicine": "Add New Medicine",
+  "@addMedicine": {
+    "description": "Dialog header when adding a new medicine."
+  },
+  "symptomBlank": "Symptom cannot be blank.",
+  "@symptomBlank": {
+    "description": "Warning if the user tries to save a symptom without a name."
+  },
+  "editPeriodSymptoms": "Edit Period Symptoms",
+  "@editPeriodSymptoms": {
+    "description": "Header for period symptoms edit page."
+  },
+  "editSymptom": "Edit Symptom",
+  "@editSymptom": {
+    "description": "Edit symptom label."
+  },
+  "symptomExists": "That symptom already exists.",
+  "@symptomExists": {
+    "description": "Error if user tries to rename a symptom to the same name as another symptom."
+  },
+  "addSymptom": "Add New Symptom",
+  "@addSymptom": {
+    "description": "Dialog header when adding a new symptom."
+  },
+  "editPmsSymptoms": "Edit PMS Symptoms",
+  "@editPmsSymptoms": {
+    "description": "Header for PMS symptoms edit page."
+  },
+  "sizeBlank": "Size cannot be blank.",
+  "@sizeBlank": {
+    "description": "Warning if the user tries to save a tampon size without a name."
+  },
+  "editSizes": "Edit Tampon Sizes",
+  "@editSizes": {
+    "description": "Page header for page where user can edit tampon sizes."
+  },
+  "editSize": "Edit Size",
+  "@editSize": {
+    "description": "Dialog header for editing tampon size."
+  },
+  "cantDelete": "Can't Delete",
+  "@cantDelete": {
+    "description": "Dialog header warning that a tampon size cannot be deleted."
+  },
+  "sizeUsed": "This size is being used in today's tampon timer.",
+  "@sizeUsed": {
+    "description": "Dialog message for why a tampon size cannot be deleted."
+  },
+  "sizeExists": "That size already exists.",
+  "@sizeExists": {
+    "description": "Error if user tries to rename a tampon size to the same name as another size."
+  },
+  "addSize": "Add New Size",
+  "@addSize": {
+    "description": "Dialog header when adding a new tampon size."
   }
 }

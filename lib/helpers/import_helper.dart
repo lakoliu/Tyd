@@ -42,7 +42,7 @@ class ImportHelper {
     }
 
     try {
-      if (importedJson?['environment']?['application_id'] == 'com.livaliva.tyd') {
+      if (importedJson?['environment']?['application_id'] == 'com.lakoliu.tyd') {
 
         for (var item in importedJson['data']) {
           var date = item['date'];

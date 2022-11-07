@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
-import 'package:tyd/helpers/update_stats.dart';
 
 
 class IntervalsView extends StatefulWidget {
@@ -30,8 +30,8 @@ class _IntervalsViewState extends State<IntervalsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Edit Change Intervals',
+        title: Text(
+          AppLocalizations.of(context)!.editIntervals,
         ),
       ),
       body: SafeArea(
@@ -54,7 +54,7 @@ class _IntervalsViewState extends State<IntervalsView> {
                     builder: (BuildContext context) {
                       var currInterval = sanitaryItems[sanitaryItem] ?? 4.0;
                       return AlertDialog(
-                        title: Text('$sanitaryItem Interval'),
+                        title: Text(AppLocalizations.of(context)!.itemInterval(sanitaryItem)),
                         content: SpinBox(
                           decimals: 1,
                           min: 0.5,
@@ -69,13 +69,13 @@ class _IntervalsViewState extends State<IntervalsView> {
                         ),
                         actions: [
                           TextButton(
-                            child: const Text("CANCEL"),
+                            child: Text(AppLocalizations.of(context)!.cancelUpper),
                             onPressed:  () {
                               Navigator.pop(context);
                             },
                           ),
                           TextButton(
-                            child: const Text("SAVE"),
+                            child: Text(AppLocalizations.of(context)!.saveUpper),
                             onPressed:  () {
                               setState(() {
                                 sanitaryItems[sanitaryItem] = currInterval;
