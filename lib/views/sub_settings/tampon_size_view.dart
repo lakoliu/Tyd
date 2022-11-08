@@ -126,7 +126,7 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                             },
                           ),
                           TextButton(
-                            child: const Text("SAVE"),
+                            child: Text(AppLocalizations.of(context)!.saveUpper),
                             onPressed:  () {
                               setState(() {
                                 if (addSizeText.isNotEmpty) {

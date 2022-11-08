@@ -52,6 +52,8 @@ class _TimerViewState extends State<TimerView> {
   var timerMinutes = 4.0 * 60.0;
   List<TimerData> historyList = [];
   var dropDownDisabled = false;
+  String newTypeSelected = 'Tampon';
+  String newSizeSelected = '-';
 
   void saveDayData() {
     dateBox.put(currDate, currDayData);
@@ -372,6 +374,97 @@ class _TimerViewState extends State<TimerView> {
     });
   }
 
+  Widget showJustChangedDialog(BuildContext context) {
+    newTypeSelected = stopwatchHelper.typeSelected.toString();
+    newSizeSelected = stopwatchHelper.sizeSelected.toString();
+    return StatefulBuilder(builder: (context, newSetState) {
+      return AlertDialog(
+        title: Text(AppLocalizations.of(context)!.changedTo),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Table(
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              children: [
+                TableRow(
+                  children: [
+                    Text(AppLocalizations.of(context)!.type),
+                    DropdownButton(
+                      isExpanded: true,
+                      value: newTypeSelected,
+                      items: getSanitaryList()
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        if (value != null) {
+                          newSetState(() {
+                            newTypeSelected = value;
+                            if (value != AppLocalizations.of(context)!.tampon) {
+                              newSizeSelected = '-';
+                            }
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                if (newTypeSelected == AppLocalizations.of(context)!.tampon) ...[
+                  TableRow(
+                    children: [
+                      Text(AppLocalizations.of(context)!.size),
+                      DropdownButton(
+                        isExpanded: true,
+                        value: newSizeSelected,
+                        items: appBox.get('tamponSizes')
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            newSetState(() {
+                              newSizeSelected = value;
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.cancelUpper),
+            onPressed:  () {
+              Navigator.pop(context);
+            },
+          ),
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.startUpper),
+            onPressed:  () {
+              Navigator.pop(context);
+              setState(() {
+                stopTimer(DateTime.now());
+                stopwatchHelper.typeSelected = newTypeSelected;
+                stopwatchHelper.sizeSelected = newSizeSelected;
+                startTimer(DateTime.now());
+              });
+            },
+          ),
+        ],
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -543,8 +636,12 @@ class _TimerViewState extends State<TimerView> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor),
                   onPressed: () {
-                    stopTimer(DateTime.now());
-                    startTimer(DateTime.now());
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return showJustChangedDialog(context);
+                      },
+                    );
                   },
                   child: Text(AppLocalizations.of(context)!.justChanged),
                 ),

@@ -445,5 +445,9 @@
   "addSize": "Add New Size",
   "@addSize": {
     "description": "Dialog header when adding a new tampon size."
+  },
+  "changedTo": "Changed to...",
+  "@changedTo": {
+    "description": "Dialog header after the user clicks that they just changed their tampon, pad, etc."
   }
 }

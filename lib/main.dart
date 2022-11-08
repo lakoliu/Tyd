@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       valueListenable: Hive.box('app_box').listenable(),
       builder: (context, box, widget) {
         return MaterialApp(
-          title: 'Vula',
+          title: 'Tyd',
           themeMode: Hive.box('app_box').get('darkMode', defaultValue: false) ? ThemeMode.dark : ThemeMode.light,
           theme: ThemeData(
             primaryColor: Hive.box('app_box').get('accentColor') ?? const Color(0xFF225500),
