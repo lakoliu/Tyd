@@ -430,13 +430,9 @@
   "@editSize": {
     "description": "Dialog header for editing tampon size."
   },
-  "cantDelete": "Can't Delete",
-  "@cantDelete": {
-    "description": "Dialog header warning that a tampon size cannot be deleted."
-  },
   "sizeUsed": "This size is being used in today's tampon timer.",
   "@sizeUsed": {
-    "description": "Dialog message for why a tampon size cannot be deleted."
+    "description": "Dialog message for why a tampon size cannot be changed."
   },
   "sizeExists": "That size already exists.",
   "@sizeExists": {
@@ -449,5 +445,9 @@
   "changedTo": "Changed to...",
   "@changedTo": {
     "description": "Dialog header after the user clicks that they just changed their tampon, pad, etc."
+  },
+  "cantEdit": "Can't Edit",
+  "@cantEdit": {
+    "description": "Dialog header warning that a tampon size cannot be edited because it is in use."
   }
 }

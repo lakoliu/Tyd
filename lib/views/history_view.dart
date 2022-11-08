@@ -40,6 +40,13 @@ class _HistoryViewState extends State<HistoryView> {
     dateBox.put(formatter.format(currDate), currDayData);
   }
 
+  void resetPage() {
+    var savedDayData = dateBox.get(formatter.format(currDate));
+    if (savedDayData != null) {
+      currDayData = savedDayData;
+    }
+  }
+
   DateTime getFirstCalendarDate() {
     DateTime? earliestDate = appBox.get('earliestDate');
     if (earliestDate != null) {
@@ -339,6 +346,41 @@ class _HistoryViewState extends State<HistoryView> {
                                 ),
                               ),
                             ),
+                            IconButton(
+                              onPressed: i >= currDayData.periodMedsTaken.length ? null : () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(AppLocalizations.of(context)!.deleteEntry),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(AppLocalizations.of(context)!.cancelUpper),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            // setState(() {
+                                              currDayData.periodMedsTaken.removeAt(i);
+                                              updateDayData();
+                                            // });
+                                            Navigator.pop(context);
+                                            Navigator.pushReplacementNamed(context, 'historyView');
+                                          },
+                                          child: Text(AppLocalizations.of(context)!.deleteUpper),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              icon: Icon(
+                                i < currDayData.periodMedsTaken.length ? Icons.delete : null,
+                                color: Colors.grey[700],
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -463,6 +505,41 @@ class _HistoryViewState extends State<HistoryView> {
                                 decoration: InputDecoration.collapsed(
                                   hintText: AppLocalizations.of(context)!.dose,
                                 ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: i >= currDayData.pmsMedsTaken.length ? null : () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(AppLocalizations.of(context)!.deleteEntry),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(AppLocalizations.of(context)!.cancelUpper),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            // setState(() {
+                                            currDayData.pmsMedsTaken.removeAt(i);
+                                            updateDayData();
+                                            // });
+                                            Navigator.pop(context);
+                                            Navigator.pushReplacementNamed(context, 'historyView');
+                                          },
+                                          child: Text(AppLocalizations.of(context)!.deleteUpper),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              icon: Icon(
+                                i < currDayData.pmsMedsTaken.length ? Icons.delete : null,
+                                color: Colors.grey[700],
                               ),
                             ),
                           ],

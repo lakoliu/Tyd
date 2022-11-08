@@ -74,93 +74,92 @@ class _TamponSizeViewState extends State<TamponSizeView> {
                   // currSizeName necessary to prevent "out of range" error
                   var currSizeName = sizeList[i];
                   addSizeText = currSizeName;
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.editSize),
-                        content: TextFormField(
-                          enabled: !sizeUsedToday(sizeList[i]),
-                          initialValue: currSizeName,
-                          textCapitalization: TextCapitalization.words,
-                          onChanged: (value) {
-                            addSizeText = value;
-                          },
-                        ),
-                        actionsAlignment: MainAxisAlignment.spaceEvenly,
-                        actions: [
-                          TextButton(
-                            child: Text(AppLocalizations.of(context)!.cancelUpper),
-                            onPressed:  () {
-                              Navigator.pop(context);
-                              addSizeText = '';
+                  if (sizeUsedToday(sizeList[i])) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(AppLocalizations.of(context)!.cantEdit),
+                          content: Text(AppLocalizations.of(context)!.sizeUsed),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(AppLocalizations.of(context)!.okUpper),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(AppLocalizations.of(context)!.editSize),
+                          content: TextFormField(
+                            initialValue: currSizeName,
+                            textCapitalization: TextCapitalization.words,
+                            onChanged: (value) {
+                              addSizeText = value;
                             },
                           ),
-                          TextButton(
-                            child: Text(AppLocalizations.of(context)!.deleteUpper),
-                            onPressed:  () {
-                              setState(() {
-                                if (!sizeUsedToday(sizeList[i])) {
+                          actionsAlignment: MainAxisAlignment.spaceEvenly,
+                          actions: [
+                            TextButton(
+                              child: Text(AppLocalizations.of(context)!.cancelUpper),
+                              onPressed:  () {
+                                Navigator.pop(context);
+                                addSizeText = '';
+                              },
+                            ),
+                            TextButton(
+                              child: Text(AppLocalizations.of(context)!.deleteUpper),
+                              onPressed:  () {
+                                setState(() {
                                   Navigator.pop(context);
                                   sizeList.removeAt(i);
                                   saveSizes();
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text(AppLocalizations.of(context)!.cantDelete),
-                                        content: Text(AppLocalizations.of(context)!.sizeUsed),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(context),
-                                            child: Text(AppLocalizations.of(context)!.okUpper),
-                                          ),
-                                        ],
+                                });
+                                addSizeText = '';
+                              },
+                            ),
+                            TextButton(
+                              child: Text(AppLocalizations.of(context)!.saveUpper),
+                              onPressed:  () {
+                                setState(() {
+                                  if (addSizeText.isNotEmpty) {
+                                    if (sizeList[i] != addSizeText && sizeList.contains(addSizeText)) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(AppLocalizations.of(context)!.sizeExists),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context),
+                                                child: Text(AppLocalizations.of(context)!.okUpper),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
-                                    },
-                                  );
-                                }
-                              });
-                              addSizeText = '';
-                            },
-                          ),
-                          TextButton(
-                            child: Text(AppLocalizations.of(context)!.saveUpper),
-                            onPressed:  () {
-                              setState(() {
-                                if (addSizeText.isNotEmpty) {
-                                  if (sizeList[i] != addSizeText && sizeList.contains(addSizeText)) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text(AppLocalizations.of(context)!.sizeExists),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(context),
-                                              child: Text(AppLocalizations.of(context)!.okUpper),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
+                                    } else {
+                                      sizeList[i] = addSizeText;
+                                      Navigator.pop(context);
+                                      saveSizes();
+                                    }
                                   } else {
-                                    sizeList[i] = addSizeText;
-                                    Navigator.pop(context);
-                                    saveSizes();
+                                    emptySnack();
                                   }
-                                } else {
-                                  emptySnack();
-                                }
-                              });
-                              addSizeText = '';
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                                });
+                                addSizeText = '';
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ],

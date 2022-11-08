@@ -1,4 +1,453 @@
 {
   "day": "TAG",
-  "anyDayNow": "You can expect your period any day now"
+  "@day": {
+    "description": "The current day of the user's cycle."
+  },
+  "anyDayNow": "You can expect your period any day now",
+  "@anyDayNow": {
+    "description": "Shows when the user is at or over their normal number of days in cycle."
+  },
+  "nDaysUntilPeriod": "~{count,plural, =1{{count} day until your next period} other{{count} days until your next period}",
+  "@nDaysUntilPeriod": {
+    "description": "'~' means 'about' or 'approximately'. 'count' here cannot be less than one.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nDays": "{count,plural, =1{{count} day} other{{count} days}",
+  "@nDays": {
+    "description": "'count' is zero or greater days.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodStarted": "Period started: ",
+  "@periodStarted": {
+    "description": "Date the user's period started (leave the space at the end)."
+  },
+  "lastPeriod": "Last period: ",
+  "@lastPeriod": {
+    "description": "Date range of the user's last period (leave the space at the end)."
+  },
+  "yourAverageCycle": "Your average cycle: ",
+  "@yourAverageCycle": {
+    "description": "Length of user's average cycle (leave the space at the end)."
+  },
+  "period": "Period",
+  "@period": {
+    "description": "Period, as in menstruation."
+  },
+  "pms": "PMS",
+  "@pms": {
+    "description": "Premenstrual syndrome (use a short word or abbreviation if possible)."
+  },
+  "history": "History",
+  "@history": {
+    "description": "Title of the History/Calendar page."
+  },
+  "bleeding": "Bleeding",
+  "@bleeding": {
+    "description": "Label for bleeding scale."
+  },
+  "pain": "Pain",
+  "@pain": {
+    "description": "Label for pain scale."
+  },
+  "symptoms": "Symptoms",
+  "@symptoms": {
+    "description": "Label for symptoms list."
+  },
+  "medicationTaken": "Medication Taken",
+  "@medicationTaken": {
+    "description": "Label for medication taken list."
+  },
+  "medication": "Medication",
+  "@medication": {
+    "description": "Label for medication placeholder."
+  },
+  "time": "Time",
+  "@time": {
+    "description": "Placeholder for medication taken time."
+  },
+  "dose": "Dose",
+  "@dose": {
+    "description": "Placeholder for dose of medication taken."
+  },
+  "notes": "Notes",
+  "@notes": {
+    "description": "Label for the text input where the user can write notes"
+  },
+  "changeTampon": "You will be notified at {notifyTime} to change your tampon.",
+  "@changeTampon": {
+    "description": "The user will receive a notification at 'notifyTime' to change their tampon.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "changePad": "You will be notified at {notifyTime} to change your pad.",
+  "@changePad": {
+    "description": "The user will receive a notification at 'notifyTime' to change their pad.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyCup": "You will be notified at {notifyTime} to empty your cup.",
+  "@emptyCup": {
+    "description": "The user will receive a notification at 'notifyTime' to empty their cup.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "changeUnderwear": "You will be notified at {notifyTime} to change your underwear.",
+  "@changeUnderwear": {
+    "description": "The user will receive a notification at 'notifyTime' to change their period underwear.",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStart": "SELECT START TIME",
+  "@selectStart": {
+    "description": "Heading on clock where user can pick the timer's start time (ALL CAPS)."
+  },
+  "selectStop": "SELECT STOP TIME",
+  "@selectStop": {
+    "description": "Heading on clock where user can pick the timer's stop time (ALL CAPS)."
+  },
+  "startUpper": "START",
+  "@startUpper": {
+    "description": "Confirm button for setting start time (ALL CAPS)."
+  },
+  "stopUpper": "STOP",
+  "@stopUpper": {
+    "description": "Confirm button for setting stop time (ALL CAPS)."
+  },
+  "saveUpper": "SAVE",
+  "@saveUpper": {
+    "description": "Confirm button for saving info (ALL CAPS)."
+  },
+  "editEntry": "Edit Entry",
+  "@editEntry": {
+    "description": "Edit list item header (ALL CAPS)."
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Type of item. Placeholder for sanitary item (i.e., tampon, pad, etc.)."
+  },
+  "tampon": "Tampon",
+  "@tampon": {
+    "description": "Tampon"
+  },
+  "size": "Size",
+  "@size": {
+    "description": "Size (of tampon)"
+  },
+  "start": "Start",
+  "@start": {
+    "description": "Timer start button."
+  },
+  "stop": "Stop",
+  "@stop": {
+    "description": "Timer stop button."
+  },
+  "deleteUpper": "DELETE",
+  "@deleteUpper": {
+    "description": "Delete, as in 'delete this item' (ALL CAPS)"
+  },
+  "deleteEntry": "Delete this entry?",
+  "@deleteEntry": {
+    "description": "Ask user if they are sure they want to delete a timer history item."
+  },
+  "cancelUpper": "CANCEL",
+  "@cancelUpper": {
+    "description": "Cancel action (ALL CAPS)"
+  },
+  "closeUpper": "CLOSE",
+  "@closeUpper": {
+    "description": "Close the dialog (ALL CAPS)"
+  },
+  "pad": "Pad",
+  "@pad": {
+    "description": "Pad, as in sanitary period pad."
+  },
+  "cup": "Cup",
+  "@cup": {
+    "description": "Cup, as in sanitary period cup."
+  },
+  "underwear": "Underwear",
+  "@underwear": {
+    "description": "Underwear, as in sanitary period Underwear."
+  },
+  "justChanged": "Just Changed",
+  "@justChanged": {
+    "description": "Button the user presses when they just changed their tampon, pad, cup, or underwear to stop the timer and immediately start it again."
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Label for column where user can edit saved timer entry."
+  },
+  "notEnoughData": "Not enough data",
+  "@notEnoughData": {
+    "description": "Shown in stats when there is not enough data to calculate a statistic."
+  },
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Title of the Statistics page."
+  },
+  "averagePeriod": "Average period: ",
+  "@averagePeriod": {
+    "description": "Length of user's average period (leave the space at the end)."
+  },
+  "averageCycle": "Average cycle: ",
+  "@averageCycle": {
+    "description": "Length of user's average cycle (leave the space at the end)."
+  },
+  "averageBleeding": "Avg. bleeding on day",
+  "@averageBleeding": {
+    "description": "Average bleeding on day xx (day is a number in a drop-down selector)."
+  },
+  "totalPeriodDays": "Total period days: ",
+  "@totalPeriodDays": {
+    "description": "Total period days recorded since the user started using Tyd (leave space at end)."
+  },
+  "totalDaysTracked": "Total days tracked: ",
+  "@totalDaysTracked": {
+    "description": "Total period days recorded since the user started using Tyd (leave space at end)."
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Title of the settings page."
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance section header in settings."
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode toggle in settings."
+  },
+  "accentColor": "Accent Color",
+  "@accentColor": {
+    "description": "Accent color option in settings."
+  },
+  "sympsMedsEtc": "Symptoms, Meds, Etc.",
+  "@sympsMedsEtc": {
+    "description": "Section header in settings that contains symptoms, medicines, and tampon sizes."
+  },
+  "periodSymptomsSetting": "Period Symptoms",
+  "@periodSymptomsSetting": {
+    "description": "Period symptoms list in settings."
+  },
+  "pmsSymptomsSetting": "PMS Symptoms",
+  "@pmsSymptomsSetting": {
+    "description": "PMS symptoms list in settings."
+  },
+  "medicines": "Medicines",
+  "tamponSizes": "Tampon Sizes",
+  "times": "Times",
+  "@times": {
+    "description": "Times group heading settings, under which is the intervals options for the timer."
+  },
+  "intervals": "Intervals",
+  "@intervals": {
+    "description": "Intervals list in settings, to hours between changing tampons, pads, etc.."
+  },
+  "allSanitaryList": "Tampons, pads, cups, and underwear",
+  "@allSanitaryList": {
+    "description": "Description under Intervals setting."
+  },
+  "savedData": "Saved Data",
+  "@savedData": {
+    "description": "Saved data section header in settings, below which is ability to import, export, and delete."
+  },
+  "importData": "Import Data",
+  "importFrom": "Import data from Tyd or Clue",
+  "@importFrom": {
+    "description": "A description of the apps data can be impported from. Tyd and Clue are names and should not be translated."
+  },
+  "importFile": "Import A File",
+  "browse": "Browse",
+  "@browse": {
+    "description": "The button to open the file browser."
+  },
+  "importUpper": "IMPORT",
+  "@importUpper": {
+    "description": "The button to import the chosen file (ALL CAPS)."
+  },
+  "backupData": "Back Up Data",
+  "@backupData": {
+    "description": "Setting item to export all saved Tyd data."
+  },
+  "deleteData": "Delete All Data",
+  "@deleteData": {
+    "description": "Setting item to delete all saved Tyd data."
+  },
+  "areYouSure": "Are you sure?",
+  "@areYouSure": {
+    "description": "Confirm action."
+  },
+  "deleteAllData": "This will erase ALL of the data you have recorded. Type \"DELETE\" to continue.",
+  "@deleteAllData": {
+    "description": "Instructions to user to delete all data. DELETE here MUST MATCH 'deleteUpper'."
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset section header in settings, below which is ability to reset all settings."
+  },
+  "resetAll": "Reset All Settings",
+  "@resetAll": {
+    "description": "Reset All Settings settings option."
+  },
+  "resetAllSettings": "This will erase all of your custom settings. Type \"DELETE\" to continue.",
+  "@resetAllSettings": {
+    "description": "Instructions to user to delete all changed settings. DELETE here MUST MATCH 'deleteUpper'."
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home page in bottom nav bar."
+  },
+  "calendar": "Calendar",
+  "@calendar": {
+    "description": "Calendar page in bottom nav bar."
+  },
+  "timer": "Timer",
+  "@timer": {
+    "description": "Home page in bottom nav bar."
+  },
+  "tamponTimer": "Tampon Timer",
+  "@tamponTimer": {
+    "description": "Tampon Timer is the name of the timer notifications that will appear in notification settings."
+  },
+  "green": "Green",
+  "@green": {
+    "description": "The color green."
+  },
+  "blue": "Blue",
+  "@blue": {
+    "description": "The color blue."
+  },
+  "pink": "Pink",
+  "@pink": {
+    "description": "The color pink."
+  },
+  "teal": "Teal",
+  "@teal": {
+    "description": "The color teal."
+  },
+  "purple": "Purple",
+  "@purple": {
+    "description": "The color purple."
+  },
+  "custom": "Custom",
+  "@custom": {
+    "description": "Custom color setter."
+  },
+  "editIntervals": "Edit Change Intervals",
+  "@editIntervals": {
+    "description": "Header for the page to edit time between tampon, etc. changes."
+  },
+  "itemInterval": "{sanitaryItem} Interval",
+  "@itemInterval": {
+    "description": "Header for dialog to change interval of given sanitary item (i.e., tampon, pad, etc.).",
+    "placeholders": {
+      "notifyTime": {
+        "type": "String"
+      }
+    }
+  },
+  "medicineBlank": "Medicine cannot be blank.",
+  "@medicineBlank": {
+    "description": "Warning if the user tries to save a medicine without a name."
+  },
+  "editMedicines": "Edit Medicines",
+  "@editMedicines": {
+    "description": "Page header for page where user can edit medicine names."
+  },
+  "editMedicine": "Edit Medicine",
+  "@editMedicine": {
+    "description": "Dialog header when user tries to edit one medicine name."
+  },
+  "medicineExists": "That medicine already exists.",
+  "@medicineExists": {
+    "description": "Error if user tries to rename a medicine to the same name as another medicine."
+  },
+  "okUpper": "OK",
+  "@okUpper": {
+    "description": "OK (okay) response to error message (ALL CAPS)."
+  },
+  "addDotDot": "Add...",
+  "@addDotDot": {
+    "description": "Option to add... another medicine."
+  },
+  "addMedicine": "Add New Medicine",
+  "@addMedicine": {
+    "description": "Dialog header when adding a new medicine."
+  },
+  "symptomBlank": "Symptom cannot be blank.",
+  "@symptomBlank": {
+    "description": "Warning if the user tries to save a symptom without a name."
+  },
+  "editPeriodSymptoms": "Edit Period Symptoms",
+  "@editPeriodSymptoms": {
+    "description": "Header for period symptoms edit page."
+  },
+  "editSymptom": "Edit Symptom",
+  "@editSymptom": {
+    "description": "Edit symptom label."
+  },
+  "symptomExists": "That symptom already exists.",
+  "@symptomExists": {
+    "description": "Error if user tries to rename a symptom to the same name as another symptom."
+  },
+  "addSymptom": "Add New Symptom",
+  "@addSymptom": {
+    "description": "Dialog header when adding a new symptom."
+  },
+  "editPmsSymptoms": "Edit PMS Symptoms",
+  "@editPmsSymptoms": {
+    "description": "Header for PMS symptoms edit page."
+  },
+  "sizeBlank": "Size cannot be blank.",
+  "@sizeBlank": {
+    "description": "Warning if the user tries to save a tampon size without a name."
+  },
+  "editSizes": "Edit Tampon Sizes",
+  "@editSizes": {
+    "description": "Page header for page where user can edit tampon sizes."
+  },
+  "editSize": "Edit Size",
+  "@editSize": {
+    "description": "Dialog header for editing tampon size."
+  },
+  "cantDelete": "Can't Delete",
+  "@cantDelete": {
+    "description": "Dialog header warning that a tampon size cannot be deleted."
+  },
+  "sizeUsed": "This size is being used in today's tampon timer.",
+  "@sizeUsed": {
+    "description": "Dialog message for why a tampon size cannot be deleted."
+  },
+  "sizeExists": "That size already exists.",
+  "@sizeExists": {
+    "description": "Error if user tries to rename a tampon size to the same name as another size."
+  },
+  "addSize": "Add New Size",
+  "@addSize": {
+    "description": "Dialog header when adding a new tampon size."
+  },
+  "changedTo": "Changed to...",
+  "@changedTo": {
+    "description": "Dialog header after the user clicks that they just changed their tampon, pad, etc."
+  }
 }

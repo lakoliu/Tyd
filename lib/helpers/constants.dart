@@ -53,6 +53,18 @@ final List<String> medicines = [
   'Acetaminophen',
 ];
 
-final Map<String, double> sanitaryTypes = {'Tampon':4.0, 'Pad':4.0, 'Cup':4.0, 'Underwear': 4.0};
+final Map<String, double> sanitaryTypes = {
+  'Tampon':4.0,
+  'Pad':4.0,
+  'Cup':4.0,
+  'Underwear': 4.0
+};
 
-final List<String> tamponSizes = ['-', 'L', 'R', 'S', 'SP', 'U'];
+final List<String> tamponSizes = [
+  '-',
+  'Light',
+  'Regular',
+  'Super',
+  'Super Plus',
+  'Ultra'
+];
