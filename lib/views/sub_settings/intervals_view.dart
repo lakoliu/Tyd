@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:intl/intl.dart';
 
 
 class IntervalsView extends StatefulWidget {
@@ -13,8 +14,8 @@ class IntervalsView extends StatefulWidget {
 
 class _IntervalsViewState extends State<IntervalsView> {
   var appBox = Hive.box('app_box');
-  final RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
   var sanitaryItems = {};
+  var intlDecimals = NumberFormat("#,#0.0", "AppLocalizations.of(context)!.localeName");
 
   void saveSanitaryTypes() {
     appBox.put('sanitaryTypes', sanitaryItems);
@@ -41,9 +42,9 @@ class _IntervalsViewState extends State<IntervalsView> {
               ListTile(
                 title: Text(sanitaryItem),
                 trailing: Text(
-                  sanitaryItems[sanitaryItem]! == 1.0
-                    ? '${sanitaryItems[sanitaryItem].toString().replaceAll(regex, '')} hour'
-                      : '${sanitaryItems[sanitaryItem].toString().replaceAll(regex, '')} hours',
+                  sanitaryItems[sanitaryItem]! % 1 != 0 ?
+                      AppLocalizations.of(context)!.nHours(sanitaryItems[sanitaryItem]) :
+                      AppLocalizations.of(context)!.nHours(sanitaryItems[sanitaryItem].toInt()),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

@@ -481,5 +481,14 @@
   "averagePmsPerCycle": "Average PMS days per cycle: ",
   "@averagePmsPerCycle": {
     "description": "Average number of PMS days recorded per cycle (leave space at end)."
+  },
+  "nHours": "{count,plural, =1{{count} hour} other{{count} hours}",
+  "@nHours": {
+    "description": "'count' is zero or greater days.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

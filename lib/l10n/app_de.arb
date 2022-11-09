@@ -478,6 +478,15 @@
   "@totalPmsDays": {
     "description": "Total PMS days recorded since the user started using Tyd (leave space at end)."
   },
+  "nHours": "{count,plural, =1{{count} Stunde} other{{count} Stunden}",
+  "@nHours": {
+    "description": "'count' is zero or greater days.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "averagePmsPerCycle": "Average PMS days per cycle: ",
   "@averagePmsPerCycle": {
     "description": "Average number of PMS days recorded per cycle (leave space at end)."
