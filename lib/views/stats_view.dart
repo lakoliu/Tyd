@@ -27,8 +27,18 @@ class _StatsViewState extends State<StatsView> {
     );
   }
 
+  TextSpan unknownTextSpan() {
+    return TextSpan(
+      text: AppLocalizations.of(context)!.notEnoughData,
+      style: const TextStyle(
+        fontSize: 20.0,
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.normal,
+      ),
+    );
+  }
+
   String printWithDays(int value) {
-    var dayString = value == 1 ? 'day' : 'days';
     return AppLocalizations.of(context)!.nDays(value);
   }
 
@@ -50,74 +60,80 @@ class _StatsViewState extends State<StatsView> {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.lastPeriod,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+              RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.lastPeriod,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  if (appBox.get('lastPeriod') != null) ...[
-                    Text(
-                      '${appBox.get('lastPeriod')}',
-                      style: const TextStyle(
-                        fontSize: 20.0,
+                  children: <TextSpan>[
+                    if (appBox.get('lastPeriod') != null) ...[
+                      TextSpan(
+                        text: '${appBox.get('lastPeriod')}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-                    ),
-                  ] else ...[
-                    printUnknown()
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
                   ],
-                ],
+                ),
               ),
               const SizedBox(height: 15.0,),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.averagePeriod,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.averagePeriod,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  if (appBox.get('averagePeriod') != null) ...[
-                    Text(
-                      AppLocalizations.of(context)!.nDays(appBox.get('averagePeriod')),
-                      style: const TextStyle(
-                        fontSize: 20.0,
+                  children: <TextSpan>[
+                    if (appBox.get('averagePeriod') != null) ...[
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.nDays(appBox.get('averagePeriod')),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-                    ),
-                  ] else ...[
-                    printUnknown()
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
                   ],
-                ],
+                ),
               ),
               const SizedBox(height: 15.0,),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.averageCycle,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.averageCycle,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  if (appBox.get('averageCycle') != null) ...[
-                    Text(
-                      AppLocalizations.of(context)!.nDays(appBox.get('averageCycle')),
-                      style: const TextStyle(
-                        fontSize: 20.0,
+                  children: <TextSpan>[
+                    if (appBox.get('averageCycle') != null) ...[
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.nDays(appBox.get('averageCycle')),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-                    ),
-                  ] else ...[
-                    printUnknown()
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
                   ],
-                ],
+                ),
               ),
               if (appBox.get('longestPeriod') != null) ...[
-                Row(
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.averageBleeding,
@@ -164,51 +180,98 @@ class _StatsViewState extends State<StatsView> {
                     ],
                   ],
                 ),
-              ] else ...[
-                const SizedBox(height: 15.0,),
               ],
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.totalPeriodDays,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+              const SizedBox(height: 15.0,),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.averagePmsPerCycle,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  if (appBox.get('totalPeriodDays') != null) ...[
-                    Text(
-                      printWithDays(appBox.get('totalPeriodDays')),
-                      style: const TextStyle(
-                        fontSize: 20.0,
+                  children: <TextSpan>[
+                    if (appBox.get('averagePmsPerCycle') != null) ...[
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.nDays(appBox.get('averagePmsPerCycle')),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-                    ),
-                  ] else ...[
-                    printUnknown()
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
                   ],
-                ],
+                ),
               ),
               const SizedBox(height: 15.0,),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.totalDaysTracked,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.totalPeriodDays,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  if (appBox.get('totalDaysTracked') != null) ...[
-                    Text(
-                      printWithDays(appBox.get('totalDaysTracked')),
-                      style: const TextStyle(
-                        fontSize: 20.0,
+                  children: <TextSpan>[
+                    if (appBox.get('totalPeriodDays') != null) ...[
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.nDays(appBox.get('totalPeriodDays')),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
-                    ),
-                  ] else ...[
-                    printUnknown()
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
                   ],
-                ],
+                ),
+              ),
+              const SizedBox(height: 15.0,),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.totalPmsDays,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  children: <TextSpan>[
+                    if (appBox.get('totalPmsDays') != null) ...[
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.nDays(appBox.get('totalPmsDays')),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15.0,),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.totalDaysTracked,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  children: <TextSpan>[
+                    if (appBox.get('totalDaysTracked') != null) ...[
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.nDays(appBox.get('totalDaysTracked')),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ] else ...[
+                      unknownTextSpan(),
+                    ],
+                  ],
+                ),
               ),
             ],
           ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -12,9 +12,7 @@ class ExportHelper {
     var dateBox = Hive.box('date_box');
     var appBox = Hive.box('app_box');
     var dateBoxDays = dateBox.keys.toList();
-    var appBoxKeys = appBox.keys.toList();
     List<String> jsonDateList = [];
-    List<String> jsonSettingsList = [];
 
     File exportedFile;
     exportedFile = File('${(await Directory.systemTemp.createTemp()).path}/Unnamed.json');
@@ -40,7 +38,7 @@ class ExportHelper {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Failed to export data'),
+            title: Text(AppLocalizations.of(context)!.failedExport),
             content: Text(e.toString()),
             actions: [
               TextButton(

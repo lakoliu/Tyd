@@ -361,7 +361,7 @@
   "@itemInterval": {
     "description": "Header for dialog to change interval of given sanitary item (i.e., tampon, pad, etc.).",
     "placeholders": {
-      "notifyTime": {
+      "sanitaryItem": {
         "type": "String"
       }
     }
@@ -449,5 +449,37 @@
   "cantEdit": "Can't Edit",
   "@cantEdit": {
     "description": "Dialog header warning that a tampon size cannot be edited because it is in use."
+  },
+  "bleedingDataChange": "Bleeding data will change",
+  "@bleedingDataChange": {
+    "description": "Dialog header warning that bleeding data is different between Tyd and Clue."
+  },
+  "bleedingDataChangeDetails": "Because Clue uses \"light\", \"medium\", and \"heavy\" options for bleeding while Tyd uses a scale from 1-10, your bleeding data from Clue will be changed to 3, 6, and 9, respectively. Do you want to continue?",
+  "@bleedingDataChangeDetails": {
+    "description": "Dialog header warning that bleeding data is different between Tyd and Clue and therefore it will change when imported."
+  },
+  "unsupportedFile": "Unsupported file type",
+  "@unsupportedFile": {
+    "description": "Error when the user selects to import a file that is not supported."
+  },
+  "failedImport": "Failed to import data",
+  "@failedImport": {
+    "description": "Error when the program could not import the selected file."
+  },
+  "failedExport": "Failed to export data",
+  "@failedExport": {
+    "description": "Error when the program could not export its data."
+  },
+  "noFileSelected": "No file selected",
+  "@noFileSelected": {
+    "description": "Shown if the user has not yet selected a file using the Browse button."
+  },
+  "totalPmsDays": "Total PMS days: ",
+  "@totalPmsDays": {
+    "description": "Total PMS days recorded since the user started using Tyd (leave space at end)."
+  },
+  "averagePmsPerCycle": "Average PMS days per cycle: ",
+  "@averagePmsPerCycle": {
+    "description": "Average number of PMS days recorded per cycle (leave space at end)."
   }
 }

@@ -172,7 +172,7 @@ class _SettingsViewState extends State<SettingsView> {
                                         children: <Widget>[
                                           Flexible(
                                             child: Text(
-                                              _selectedFileName?.split(path.extension(_selectedFileName!))[0] ?? 'No file selected',
+                                              _selectedFileName?.split(path.extension(_selectedFileName!))[0] ?? AppLocalizations.of(context)!.noFileSelected,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ),

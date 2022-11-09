@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
@@ -30,11 +31,11 @@ class ImportHelper {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Unsupported file type'),
+            title: Text(AppLocalizations.of(context)!.unsupportedFile),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('OK')),
+                child: Text(AppLocalizations.of(context)!.okUpper)),
             ],
           );
         },
@@ -71,12 +72,12 @@ class ImportHelper {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Bleeding data will change'),
-              content: const Text('Because Clue uses "light", "medium", and "heavy" options for bleeding while Tyd uses a scale from 1-10, your bleeding data from Clue will be changed to 3, 6, and 9, respectively. Do you want to continue?'),
+              title: Text(AppLocalizations.of(context)!.bleedingDataChange),
+              content: Text(AppLocalizations.of(context)!.bleedingDataChangeDetails),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('CANCEL'),
+                  child: Text(AppLocalizations.of(context)!.cancelUpper),
                 ),
                 TextButton(
                   onPressed: () {
@@ -120,7 +121,7 @@ class ImportHelper {
                     }
                     Navigator.pop(context);
                   },
-                  child: const Text('IMPORT'),
+                  child: Text(AppLocalizations.of(context)!.importUpper),
                 ),
               ],
             );
@@ -132,11 +133,11 @@ class ImportHelper {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Unsupported file type'),
+              title: Text(AppLocalizations.of(context)!.unsupportedFile),
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('OK')),
+                    child: Text(AppLocalizations.of(context)!.okUpper)),
               ],
             );
           },
@@ -147,12 +148,12 @@ class ImportHelper {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Failed to export data'),
+            title: Text(AppLocalizations.of(context)!.failedImport),
             content: Text(e.toString()),
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('OK')),
+                  child: Text(AppLocalizations.of(context)!.okUpper)),
             ],
           );
         },

@@ -89,7 +89,7 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                             },
                           ),
                           TextButton(
-                            child: const Text("SAVE"),
+                            child: Text(AppLocalizations.of(context)!.saveUpper),
                             onPressed:  () {
                               setState(() {
                                 if (addSymptomText.isNotEmpty) {

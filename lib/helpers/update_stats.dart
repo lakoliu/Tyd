@@ -202,8 +202,9 @@ void updateSecondaryStats() {
     var lastDate = '';
     var lastParsed = DateTime.now();
     var daysBetween = 0;
-    // List<double> bleedingByDay = [];
     List<List<double>> bleedingByDay = [];
+    List<int> pmsDaysByCycle = [];
+    var pmsDays = 0;
     for (var date in datesChronological.reversed) {
       DayData dayData = dateBox.get(date);
       var parsedDate = DateTime.parse(date);
@@ -215,26 +216,32 @@ void updateSecondaryStats() {
 
       if (dayData.period) {
         if (lastWasPeriod == null || !lastWasPeriod) {
-          // bleedingByDay.add(dayData.bleeding);
           counter ++;
           lastWasPeriod = true;
+
+          // First day of period, add pmsDays to list if it's not the first go around
+          if (pmsDaysByCycle.isNotEmpty || periodIntervals.isNotEmpty) {
+            pmsDaysByCycle.add(pmsDays);
+            pmsDays = 0;
+          }
         } else if (lastWasPeriod && daysBetween == 1) {
-          // bleedingByDay.add(dayData.bleeding);
           counter ++;
           lastWasPeriod = true;
         } else if (lastWasPeriod && daysBetween !=1) {
-          // allBleedingData.add(bleedingByDay);
-          // bleedingByDay = [];
           periodIntervals.add(counter);
           counter = 1;
           lastWasPeriod = true;
+
+          pmsDaysByCycle.add(pmsDays);
+          pmsDays = 0;
         }
       } else {
         if (lastWasPeriod ?? false) {
-          // allBleedingData.add(bleedingByDay);
-          // bleedingByDay = [];
           periodIntervals.add(counter);
           counter = 0;
+        }
+        if (dayData.pms) {
+          pmsDays++;
         }
         lastWasPeriod = false;
       }
@@ -249,6 +256,10 @@ void updateSecondaryStats() {
           bleedingByDay.add(newPeriodDay);
         }
       }
+    }
+    if (pmsDays != 0) {
+      pmsDaysByCycle.add(pmsDays);
+      pmsDays = 0;
     }
     if (periodIntervals.isNotEmpty) {
       // Get longest period length for average bleeding stats
@@ -269,16 +280,24 @@ void updateSecondaryStats() {
       }
       appBox.put('averageBleedingByDay', averageBleedingByDay);
     }
+    if (pmsDaysByCycle.isNotEmpty) {
+      var averagePmsPerCycle = pmsDaysByCycle.sum / pmsDaysByCycle.length;
+      appBox.put('averagePmsPerCycle', averagePmsPerCycle.round());
+    }
 
     // Calculate total period days
     var numPeriodDays = 0;
+    var numPmsDays = 0;
     for (var date in datesChronological) {
       DayData dayData = dateBox.get(date);
 
       if (dayData.period) {
         numPeriodDays++;
+      } else if (dayData.pms) {
+        numPmsDays++;
       }
     }
     appBox.put('totalPeriodDays', numPeriodDays);
+    appBox.put('totalPmsDays', numPmsDays);
   }
 }
