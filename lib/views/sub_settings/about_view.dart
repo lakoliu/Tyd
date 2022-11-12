@@ -58,6 +58,7 @@ class _AboutViewState extends State<AboutView> {
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8.0,),
               RichText(
