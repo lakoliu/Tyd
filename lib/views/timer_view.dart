@@ -255,7 +255,6 @@ class _TimerViewState extends State<TimerView> {
         };
       }
     }
-    print('showingLess');
     return const {
       0: FractionColumnWidth(.45),
       1: FractionColumnWidth(.2),
@@ -270,7 +269,6 @@ class _TimerViewState extends State<TimerView> {
         return true;
       }
     }
-    print('noSize');
     return false;
   }
 
