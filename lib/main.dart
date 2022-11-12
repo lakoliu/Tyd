@@ -10,6 +10,7 @@ import 'package:tyd/views/home_view.dart';
 import 'package:tyd/day_data.dart';
 import 'package:tyd/views/settings_view.dart';
 import 'package:tyd/views/stats_view.dart';
+import 'package:tyd/views/sub_settings/about_view.dart';
 import 'package:tyd/views/sub_settings/intervals_view.dart';
 import 'package:tyd/views/sub_settings/medicines_view.dart';
 import 'package:tyd/views/sub_settings/period_symptoms_view.dart';
@@ -196,6 +197,7 @@ class MyApp extends StatelessWidget {
             'pmsSymptomsView': (context) => const PmsSymptomsView(),
             'medicinesView': (context) => const MedicinesView(),
             'intervalsView': (context) => const IntervalsView(),
+            'aboutView': (context) => const AboutView(),
           },
         );
       },

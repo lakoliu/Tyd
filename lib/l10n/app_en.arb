@@ -519,5 +519,33 @@
   "changedAppetite": "Changed appetite",
   "changedSexDrive": "Changed sex drive",
   "dizziness": "Dizziness",
-  "sadness": "Sadness"
+  "sadness": "Sadness",
+  "contactUs": "Contact Us",
+  "@contactUs": {
+    "description": "Contact option to send an email to the developers from the Settings page."
+  },
+  "about": "About",
+  "@about": {
+    "description": "About section header on the Settings page."
+  },
+  "aboutTyd": "About Tyd",
+  "@aboutTyd": {
+    "description": "Settings option to go to the 'About' page."
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Version label on About Tyd page."
+  },
+  "lakoLiuApp": "A LakoLiu app",
+  "@lakoLiuApp": {
+    "description": "LakoLiu is a company name; do not change it. Shown on the about page."
+  },
+  "issuesSuggestions": "Issues or suggestions?",
+  "@issuesSuggestions": {
+    "description": "Just over the company email on the about page, letting users know what to do if they have issues or suggestions."
+  },
+  "email": "Email ",
+  "@email": {
+    "description": "Email label on About Tyd page. Leave a space at the end."
+  }
 }

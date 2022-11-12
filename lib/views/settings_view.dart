@@ -307,6 +307,16 @@ class _SettingsViewState extends State<SettingsView> {
                     ),
                   ],
                 ),
+                SettingsSection(
+                  title: Text(AppLocalizations.of(context)!.about),
+                  tiles: [
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.info),
+                      title: Text(AppLocalizations.of(context)!.aboutTyd),
+                      onPressed: (context) => Navigator.pushNamed(context, 'aboutView'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
