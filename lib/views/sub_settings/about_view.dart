@@ -61,13 +61,13 @@ class _AboutViewState extends State<AboutView> {
               ),
               const SizedBox(height: 8.0,),
               RichText(
-                text: const TextSpan(
+                text: TextSpan(
                   text: AppLocalizations.of(context)!.email,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     color: Colors.black
                   ),
-                  children: <TextSpan>[
+                  children: const <TextSpan>[
                     TextSpan(
                       text: 'tyd@lakoliu.com',
                       style: TextStyle(
