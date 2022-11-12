@@ -154,6 +154,15 @@ class _TimerViewState extends State<TimerView> {
       flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
 
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+
       NotificationService().showTimedSanitaryChangeReminder(context, stopwatchHelper.typeSelected, notifyDateTime);
     }
   }
