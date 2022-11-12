@@ -95,6 +95,7 @@ class _HomeViewState extends State<HomeView> {
               if (appBox.get('averageCycle') != null && (dateBox.get(formatter.format(currDate)) == null || !dateBox.get(formatter.format(currDate)).period)) ...[
                 Text(
                   getNextPeriodText(),
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.bold,
