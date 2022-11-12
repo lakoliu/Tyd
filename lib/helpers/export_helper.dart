@@ -15,7 +15,7 @@ class ExportHelper {
     List<String> jsonDateList = [];
 
     File exportedFile;
-    exportedFile = File('${(await Directory.systemTemp.createTemp()).path}/Unnamed.json');
+    exportedFile = File('${(await Directory.systemTemp.createTemp()).path}/Tyd.json');
     try {
       for (var date in dateBoxDays) {
         var jsonEncodedData = jsonEncode(dateBox.get(date));

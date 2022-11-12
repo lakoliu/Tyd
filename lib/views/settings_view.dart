@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/foundation.dart' show TargetPlatform;
 import 'package:tyd/helpers/export_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -23,7 +24,6 @@ class _SettingsViewState extends State<SettingsView> {
   var dateBox = Hive.box('date_box');
   PlatformFile? _selectedFile;
   String? _selectedFileName;
-
 
   void resetAllSettings() {
     appBox.put('darkMode', false);
@@ -60,6 +60,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
+    var platform = Theme.of(context).platform;
     return ValueListenableBuilder(
       valueListenable: Hive.box('app_box').listenable(),
       builder: (context, box, widget) {
@@ -124,8 +125,8 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.photo_size_select_small),
                       title: Text(AppLocalizations.of(context)!.tamponSizes),
-                      value: Text(
-                          appBox.get('tamponSizes').skip(1).join(', '),
+                      value: platform == TargetPlatform.iOS ? null : Text(
+                        appBox.get('tamponSizes').skip(1).join(', '),
                       ),
                       onPressed: (context) => Navigator.pushNamed(context, 'tamponSizeView'),
                     ),
@@ -137,7 +138,7 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.timer),
                       title: Text(AppLocalizations.of(context)!.intervals),
-                      value: Text(AppLocalizations.of(context)!.allSanitaryList),
+                      value: platform == TargetPlatform.iOS ? null : Text(AppLocalizations.of(context)!.allSanitaryList),
                       onPressed: (context) => Navigator.pushNamed(context, 'intervalsView'),
                     ),
                   ],

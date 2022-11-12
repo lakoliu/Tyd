@@ -280,7 +280,7 @@
     "description": "Saved data section header in settings, below which is ability to import, export, and delete."
   },
   "importData": "Datensatz importieren",
-  "importFrom": "Importiere deinen Datensatz aus Tyd oder Clue",
+  "importFrom": "Aus Tyd oder Clue",
   "@importFrom": {
     "description": "A description of the apps data can be impported from. Tyd and Clue are names and should not be translated."
   },
