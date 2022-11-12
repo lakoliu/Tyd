@@ -51,7 +51,8 @@ class DayData extends HiveObject {
       'pmsSymptoms': pmsSymptoms,
       'pmsMedsTaken': pmsMedsTaken,
       'pmsNotes': pmsNotes,
-      'timerData': timerData,
+      // timerData is an object and causes export to fail. Not currently necessary.
+      // 'timerData': timerData,
     };
   }
 }

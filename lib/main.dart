@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
               foregroundColor: Colors.white,
               iconTheme: const IconThemeData(
                 color: Colors.white,
+              ),
+              systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+                statusBarColor: Colors.transparent,
               ),
             ),
             bottomNavigationBarTheme: BottomNavigationBarThemeData(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
@@ -76,6 +77,9 @@ class _TimerViewState extends State<TimerView> {
       notificationTimerSnack();
       appBox.put('timerRunning', true);
       appBox.put('timerStartTime', startingTime);
+      appBox.put('timerRadioSelected', stopwatchHelper.radioSelected);
+      appBox.put('timerTypeSelected', stopwatchHelper.typeSelected);
+      appBox.put('timerSizeSelected', stopwatchHelper.sizeSelected);
     }
   }
 
@@ -525,6 +529,13 @@ class _TimerViewState extends State<TimerView> {
       if (isTimerRunning != null) {
         if (!_stopWatchTimer.isRunning && isTimerRunning) {
           var timerStartTime = appBox.get('timerStartTime');
+          var timerRadioSelected = appBox.get('timerRadioSelected');
+          var timerTypeSelected = appBox.get('timerTypeSelected');
+          var timerSizeSelected = appBox.get('timerSizeSelected');
+          stopwatchHelper.radioSelected = timerRadioSelected ?? 1;
+          stopwatchHelper.typeSelected = timerTypeSelected ?? 'Tampon';
+          stopwatchHelper.sizeSelected = timerSizeSelected ?? '-';
+          timerMinutes = appBox.get('sanitaryTypes')[timerTypeSelected ?? 'Tampon'] * 60;
           if (timerStartTime != null) {
             startTimer(timerStartTime);
           }
@@ -535,279 +546,282 @@ class _TimerViewState extends State<TimerView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: historyList.isEmpty ? MainAxisAlignment.center : MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20.0,
-              ),
-              StreamBuilder<int>(
-                  stream: _stopWatchTimer.rawTime,
-                  initialData: _stopWatchTimer.rawTime.value,
-                  builder: (context, snap) {
-                    final value = snap.data!;
-                    final displayTime = StopWatchTimer.getDisplayTime(value,
-                        milliSecond: false);
-                    // Save for future indicator: var progress = 100 - (value / (timerMinutes * 60 * 1000) * 100);
-                    return Text(
-                      displayTime,
-                      style: TextStyle(
-                        fontSize: 75.0,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    );
-                  }),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Wrap(
-                alignment: WrapAlignment.spaceAround,
-                direction: Axis.horizontal,
-                children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Radio(
-                        activeColor: Theme.of(context).primaryColor,
-                        groupValue: stopwatchHelper.radioSelected,
-                        value: 1,
-                        onChanged: _stopWatchTimer.isRunning
-                            ? null
-                            : (int? value) {
-                          setState(() {
-                            stopwatchHelper.radioSelected = value!;
-                            stopwatchHelper.typeSelected = 'Tampon';
-                            timerMinutes = appBox.get('sanitaryTypes')['Tampon'] * 60;
-                          });
-                        },
-                      ),
-                      Text(AppLocalizations.of(context)!.tampon),
-                    ],
-                  ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Radio(
-                        activeColor: Theme.of(context).primaryColor,
-                        groupValue: stopwatchHelper.radioSelected,
-                        value: 2,
-                        onChanged: _stopWatchTimer.isRunning
-                            ? null
-                            : (int? value) {
-                          setState(() {
-                            stopwatchHelper.radioSelected = value!;
-                            stopwatchHelper.typeSelected = 'Pad';
-                            stopwatchHelper.sizeSelected = '-';
-                            timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
-                          });
-                        },
-                      ),
-                      Text(AppLocalizations.of(context)!.pad),
-                    ],
-                  ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Radio(
-                        activeColor: Theme.of(context).primaryColor,
-                        groupValue: stopwatchHelper.radioSelected,
-                        value: 3,
-                        onChanged: _stopWatchTimer.isRunning
-                            ? null
-                            : (int? value) {
-                          setState(() {
-                            stopwatchHelper.radioSelected = value!;
-                            stopwatchHelper.typeSelected = 'Cup';
-                            stopwatchHelper.sizeSelected = '-';
-                            timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
-                          });
-                        },
-                      ),
-                      Text(AppLocalizations.of(context)!.cup),
-                    ],
-                  ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Radio(
-                        activeColor: Theme.of(context).primaryColor,
-                        groupValue: stopwatchHelper.radioSelected,
-                        value: 4,
-                        onChanged: _stopWatchTimer.isRunning
-                            ? null
-                            : (int? value) {
-                          setState(() {
-                            stopwatchHelper.radioSelected = value!;
-                            stopwatchHelper.typeSelected = 'Underwear';
-                            stopwatchHelper.sizeSelected = '-';
-                            timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
-                          });
-                        },
-                      ),
-                      Text(AppLocalizations.of(context)!.underwear)
-                    ],
-                  ),
-                ],
-              ),
-              // const Text('Test'),
-              if (stopwatchHelper.radioSelected == 1) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(AppLocalizations.of(context)!.size),
-                    const SizedBox(width: 15.0,),
-                    DropdownButton(
-                      value: stopwatchHelper.sizeSelected,
-                      items: appBox.get('tamponSizes')
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: _stopWatchTimer.isRunning ? null : (String? value) {
-                        if (value != null) {
-                          setState(() {
-                            stopwatchHelper.sizeSelected = value;
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-              ] else ...[
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: historyList.isEmpty ? MainAxisAlignment.center : MainAxisAlignment.start,
+              children: [
                 const SizedBox(
                   height: 20.0,
                 ),
-              ],
-              if (_stopWatchTimer.isRunning) ...[
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return showJustChangedDialog(context);
-                      },
-                    );
-                  },
-                  child: Text(AppLocalizations.of(context)!.justChanged),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor),
-                  onPressed: () => showCustomTimePicker(context, 'STOP'),
-                  child: Text(AppLocalizations.of(context)!.stop),
-                ),
-              ] else ...[
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor),
-                  onPressed: () => showCustomTimePicker(context, 'START'),
-                  child: Text(AppLocalizations.of(context)!.start),
-                ),
-              ],
-              const SizedBox(
-                height: 20.0,
-              ),
-              if (historyList.isNotEmpty) ...[
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Table(
-                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                      columnWidths: const {
-                        0: FractionColumnWidth(.3),
-                        1: FractionColumnWidth(.15),
-                        2: FractionColumnWidth(.2),
-                        3: FractionColumnWidth(.2),
-                        4: FractionColumnWidth(.05)
-                      },
-                      children: [
-                        TableRow(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.type,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.size,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.startListHeading,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.stopListHeading,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const Text(
-                              '',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                StreamBuilder<int>(
+                    stream: _stopWatchTimer.rawTime,
+                    initialData: _stopWatchTimer.rawTime.value,
+                    builder: (context, snap) {
+                      final value = snap.data!;
+                      final displayTime = StopWatchTimer.getDisplayTime(value,
+                          milliSecond: false);
+                      // Save for future indicator: var progress = 100 - (value / (timerMinutes * 60 * 1000) * 100);
+                      return Text(
+                        displayTime,
+                        style: TextStyle(
+                          fontSize: 75.0,
+                          color: Theme.of(context).primaryColor,
                         ),
-                        rowSpacer,
-                        for (var i = 0; i < historyList.length; i++) ...[
-                          // rowSpacer,
+                      );
+                    }),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Wrap(
+                  alignment: WrapAlignment.spaceAround,
+                  direction: Axis.horizontal,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Radio(
+                          activeColor: Theme.of(context).primaryColor,
+                          groupValue: stopwatchHelper.radioSelected,
+                          value: 1,
+                          onChanged: _stopWatchTimer.isRunning
+                              ? null
+                              : (int? value) {
+                            setState(() {
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Tampon';
+                              timerMinutes = appBox.get('sanitaryTypes')['Tampon'] * 60;
+                            });
+                          },
+                        ),
+                        Text(AppLocalizations.of(context)!.tampon),
+                      ],
+                    ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Radio(
+                          activeColor: Theme.of(context).primaryColor,
+                          groupValue: stopwatchHelper.radioSelected,
+                          value: 2,
+                          onChanged: _stopWatchTimer.isRunning
+                              ? null
+                              : (int? value) {
+                            setState(() {
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Pad';
+                              stopwatchHelper.sizeSelected = '-';
+                              timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
+                            });
+                          },
+                        ),
+                        Text(AppLocalizations.of(context)!.pad),
+                      ],
+                    ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Radio(
+                          activeColor: Theme.of(context).primaryColor,
+                          groupValue: stopwatchHelper.radioSelected,
+                          value: 3,
+                          onChanged: _stopWatchTimer.isRunning
+                              ? null
+                              : (int? value) {
+                            setState(() {
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Cup';
+                              stopwatchHelper.sizeSelected = '-';
+                              timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
+                            });
+                          },
+                        ),
+                        Text(AppLocalizations.of(context)!.cup),
+                      ],
+                    ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Radio(
+                          activeColor: Theme.of(context).primaryColor,
+                          groupValue: stopwatchHelper.radioSelected,
+                          value: 4,
+                          onChanged: _stopWatchTimer.isRunning
+                              ? null
+                              : (int? value) {
+                            setState(() {
+                              stopwatchHelper.radioSelected = value!;
+                              stopwatchHelper.typeSelected = 'Underwear';
+                              stopwatchHelper.sizeSelected = '-';
+                              timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
+                            });
+                          },
+                        ),
+                        Text(AppLocalizations.of(context)!.underwear)
+                      ],
+                    ),
+                  ],
+                ),
+                // const Text('Test'),
+                if (stopwatchHelper.radioSelected == 1) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(AppLocalizations.of(context)!.size),
+                      const SizedBox(width: 15.0,),
+                      DropdownButton(
+                        value: stopwatchHelper.sizeSelected,
+                        items: appBox.get('tamponSizes')
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: _stopWatchTimer.isRunning ? null : (String? value) {
+                          if (value != null) {
+                            setState(() {
+                              stopwatchHelper.sizeSelected = value;
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                ] else ...[
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                ],
+                if (_stopWatchTimer.isRunning) ...[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return showJustChangedDialog(context);
+                        },
+                      );
+                    },
+                    child: Text(AppLocalizations.of(context)!.justChanged),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor),
+                    onPressed: () => showCustomTimePicker(context, 'STOP'),
+                    child: Text(AppLocalizations.of(context)!.stop),
+                  ),
+                ] else ...[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor),
+                    onPressed: () => showCustomTimePicker(context, 'START'),
+                    child: Text(AppLocalizations.of(context)!.start),
+                  ),
+                ],
+                const SizedBox(
+                  height: 20.0,
+                ),
+                if (historyList.isNotEmpty) ...[
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Table(
+                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                        columnWidths: const {
+                          0: FractionColumnWidth(.3),
+                          1: FractionColumnWidth(.15),
+                          2: FractionColumnWidth(.2),
+                          3: FractionColumnWidth(.2),
+                          4: FractionColumnWidth(.05)
+                        },
+                        children: [
                           TableRow(
                             children: [
                               Text(
-                                getTranslatedSanitaryItem(context, historyList[i].type),
+                                AppLocalizations.of(context)!.type,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Text(
-                                historyList[i].size,
+                                AppLocalizations.of(context)!.size,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Text(
-                                timeFormatter.format(historyList[i].startTime),
+                                AppLocalizations.of(context)!.startListHeading,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Text(
-                                timeFormatter.format(historyList[i].stopTime),
+                                AppLocalizations.of(context)!.stopListHeading,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return showHistoryEditDialog(context, i);
-                                      });
-                                },
-                                icon: const Icon(
-                                  Icons.edit,
-                                  size: 20.0,
+                              const Text(
+                                '',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
+                          rowSpacer,
+                          for (var i = 0; i < historyList.length; i++) ...[
+                            // rowSpacer,
+                            TableRow(
+                              children: [
+                                Text(
+                                  getTranslatedSanitaryItem(context, historyList[i].type),
+                                ),
+                                Text(
+                                  historyList[i].size,
+                                ),
+                                Text(
+                                  timeFormatter.format(historyList[i].startTime),
+                                ),
+                                Text(
+                                  timeFormatter.format(historyList[i].stopTime),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return showHistoryEditDialog(context, i);
+                                        });
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
+        bottomNavigationBar: bottomNavBar(context, 2),
       ),
-      bottomNavigationBar: bottomNavBar(context, 2),
     );
   }
 }

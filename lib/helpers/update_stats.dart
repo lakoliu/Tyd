@@ -173,7 +173,7 @@ void updateStats() {
       }
       lastDate = date;
     }
-    if (cycleIntervals.isNotEmpty) {
+    if (cycleIntervals.length > 1) {
       var averageCycle = cycleIntervals.sum / cycleIntervals.length;
       appBox.put('averageCycle', averageCycle.round());
     } else {
@@ -280,9 +280,11 @@ void updateSecondaryStats() {
       }
       appBox.put('averageBleedingByDay', averageBleedingByDay);
     }
-    if (pmsDaysByCycle.isNotEmpty) {
+    if (pmsDaysByCycle.length > 1) {
       var averagePmsPerCycle = pmsDaysByCycle.sum / pmsDaysByCycle.length;
       appBox.put('averagePmsPerCycle', averagePmsPerCycle.round());
+    } else {
+      appBox.put('averagePmsPerCycle', null);
     }
 
     // Calculate total period days

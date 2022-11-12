@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
@@ -72,87 +73,115 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.day,
-                style: const TextStyle(
-                  fontSize: 20.0,
-                ),
-              ),
-              Text(
-                daysSinceStart().toString(),
-                // Change color to red if on period
-                style: TextStyle(
-                  fontSize: 120.0,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              if (appBox.get('averageCycle') != null && (dateBox.get(formatter.format(currDate)) == null || !dateBox.get(formatter.format(currDate)).period)) ...[
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Text(
-                  getNextPeriodText(),
-                  textAlign: TextAlign.center,
+                  AppLocalizations.of(context)!.day,
                   style: const TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
                   ),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-              ],
-              if (appBox.get('lastPeriod') != null || appBox.get('averageCycle') != null) ...[
-                Container(
-                  padding: const EdgeInsets.all(12.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                Text(
+                  daysSinceStart().toString(),
+                  // Change color to red if on period
+                  style: TextStyle(
+                    fontSize: 120.0,
+                    color: Theme.of(context).primaryColor,
                   ),
-                  child: Column(
-                    children: [
-                      if (currDayData.period) ...[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.periodStarted,
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              // TODO Localization
-                              monthDayFormatter.format(appBox.get('latestStartDate')),
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (appBox.get('averageCycle') != null) ...[
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
-                      ] else ...[
-                        if (appBox.get('lastPeriod') != null) ...[
+                ),
+                if (appBox.get('averageCycle') != null && (dateBox.get(formatter.format(currDate)) == null || !dateBox.get(formatter.format(currDate)).period)) ...[
+                  Text(
+                    getNextPeriodText(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                ],
+                if (appBox.get('lastPeriod') != null || appBox.get('averageCycle') != null || currDayData.period) ...[
+                  Container(
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: Column(
+                      children: [
+                        if (currDayData.period) ...[
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.lastPeriod,
+                                AppLocalizations.of(context)!.periodStarted,
                                 style: const TextStyle(
                                   fontSize: 15.0,
-                                    fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               Text(
                                 // TODO Localization
-                                appBox.get('lastPeriod'),
+                                monthDayFormatter.format(appBox.get('latestStartDate')),
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (appBox.get('averageCycle') != null) ...[
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                          ],
+                        ] else ...[
+                          if (appBox.get('lastPeriod') != null) ...[
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.lastPeriod,
+                                  style: const TextStyle(
+                                    fontSize: 15.0,
+                                      fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  // TODO Localization
+                                  appBox.get('lastPeriod'),
+                                  style: const TextStyle(
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                          if (appBox.get('averageCycle') != null) ...[
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                          ],
+                        ],
+                        if (appBox.get('averageCycle') != null) ...[
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.yourAverageCycle,
+                                style:  const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                getCycleText(),
                                 style: const TextStyle(
                                   fontSize: 15.0,
                                 ),
@@ -160,105 +189,80 @@ class _HomeViewState extends State<HomeView> {
                             ],
                           ),
                         ],
-                        if (appBox.get('averageCycle') != null) ...[
-                          const SizedBox(
-                            height: 10.0,
+                      ],
+                    ),
+                  ),
+                ],
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Table(
+                  defaultColumnWidth: const FixedColumnWidth(70),
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    if (!currDayData.pms) ...[
+                      TableRow(
+                        children: [
+                          AutoSizeText(
+                            AppLocalizations.of(context)!.period,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          Switch(
+                            activeColor: Theme.of(context).primaryColor,
+                            value: currDayData.period,
+                            onChanged: (bool value) {
+                              setState(() {
+                                currDayData.period = value;
+                              });
+                              updateDayData();
+                              updateStats();
+                              if (value) {
+                                Navigator.pushReplacementNamed(context, 'historyView');
+                              }
+                            },
                           ),
                         ],
-                      ],
-                      if (appBox.get('averageCycle') != null) ...[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.yourAverageCycle,
-                              style:  const TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              getCycleText(),
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ],
-                  ),
+                    if (!currDayData.period) ...[
+                      TableRow(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.pms,
+                            style: const TextStyle(
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          Switch(
+                            activeColor: Theme.of(context).primaryColor,
+                            value: currDayData.pms,
+                            onChanged: (bool value) {
+                              setState(() {
+                                currDayData.pms = value;
+                              });
+                              updateDayData();
+                              if (value) {
+                                Navigator.pushReplacementNamed(context, 'historyView');
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
                 ),
+                const SizedBox(
+                  height: 50.0,
+                ), // To push everything up a little.
               ],
-              const SizedBox(
-                height: 10.0,
-              ),
-              Table(
-                defaultColumnWidth: const FixedColumnWidth(70),
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: [
-                  if (!currDayData.pms) ...[
-                    TableRow(
-                      children: [
-                        AutoSizeText(
-                          AppLocalizations.of(context)!.period,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        Switch(
-                          activeColor: Theme.of(context).primaryColor,
-                          value: currDayData.period,
-                          onChanged: (bool value) {
-                            setState(() {
-                              currDayData.period = value;
-                            });
-                            updateDayData();
-                            updateStats();
-                            if (value) {
-                              Navigator.pushReplacementNamed(context, 'historyView');
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                  if (!currDayData.period) ...[
-                    TableRow(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.pms,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        Switch(
-                          activeColor: Theme.of(context).primaryColor,
-                          value: currDayData.pms,
-                          onChanged: (bool value) {
-                            setState(() {
-                              currDayData.pms = value;
-                            });
-                            updateDayData();
-                            if (value) {
-                              Navigator.pushReplacementNamed(context, 'historyView');
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ],
-              ),
-              const SizedBox(
-                height: 50.0,
-              ), // To push everything up a little.
-            ],
+            ),
           ),
         ),
+        bottomNavigationBar: bottomNavBar(context, 0),
       ),
-      bottomNavigationBar: bottomNavBar(context, 0),
     );
   }
 }
