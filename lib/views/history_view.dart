@@ -10,6 +10,7 @@ import 'package:hive/hive.dart';
 
 import '../helpers/update_stats.dart';
 import '../packages/calendar_timeline/calendar_timeline.dart';
+import '../l10n/translation_helper.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -71,7 +72,13 @@ class _HistoryViewState extends State<HistoryView> {
       context,
       listData: listData,
       selectedListData: selectedList,
-      choiceChipLabel: (symptoms) => symptoms,
+      choiceChipLabel: (symptoms) {
+        if (symptoms == null) {
+          return symptoms;
+        } else {
+          return getTranslatedSymptom(context, symptoms);
+        }
+      },
       validateSelectedItem: (list, val) => list!.contains(val),
       hideHeader: true,
       hideSelectedTextCount: true,
@@ -263,7 +270,7 @@ class _HistoryViewState extends State<HistoryView> {
                           for (var symptom in currDayData.periodSymptoms) ...[
                             Chip(
                               label: Text(
-                                symptom,
+                                getTranslatedSymptom(context, symptom),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -425,7 +432,7 @@ class _HistoryViewState extends State<HistoryView> {
                           for (var symptom in currDayData.pmsSymptoms) ...[
                             Chip(
                               label: Text(
-                                symptom,
+                                getTranslatedSymptom(context, symptom),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),

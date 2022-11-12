@@ -12,7 +12,7 @@ import 'package:tyd/views/stats_view.dart';
 import 'package:tyd/views/sub_settings/intervals_view.dart';
 import 'package:tyd/views/sub_settings/medicines_view.dart';
 import 'package:tyd/views/sub_settings/period_symptoms_view.dart';
-import 'package:tyd/views/sub_settings/pms_settings_view.dart';
+import 'package:tyd/views/sub_settings/pms_symptoms_view.dart';
 import 'package:tyd/views/sub_settings/tampon_size_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

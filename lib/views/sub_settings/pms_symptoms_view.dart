@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 
+import '../../l10n/translation_helper.dart';
+
 class PmsSymptomsView extends StatefulWidget {
   const PmsSymptomsView({Key? key}) : super(key: key);
 
@@ -26,6 +28,15 @@ class _PmsSymptomsViewState extends State<PmsSymptomsView> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  bool symptomListTranslatedContains(String symptom) {
+    for (var symptomFromList in symptomList) {
+      if (getTranslatedSymptom(context, symptomFromList) == symptom) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +57,7 @@ class _PmsSymptomsViewState extends State<PmsSymptomsView> {
             for (var i = 0; i < symptomList.length; i++) ...[
               ListTile(
                 title: Text(
-                  symptomList[i],
+                  getTranslatedSymptom(context, symptomList[i]),
                   style: const TextStyle(
                     fontSize: 25.0,
                   ),
@@ -62,7 +73,7 @@ class _PmsSymptomsViewState extends State<PmsSymptomsView> {
                       return AlertDialog(
                         title: Text(AppLocalizations.of(context)!.editSymptom),
                         content: TextFormField(
-                          initialValue: currSymptomName,
+                          initialValue: getTranslatedSymptom(context, currSymptomName),
                           textCapitalization: TextCapitalization.words,
                           onChanged: (value) {
                             addSymptomText = value;
@@ -93,7 +104,7 @@ class _PmsSymptomsViewState extends State<PmsSymptomsView> {
                             onPressed:  () {
                               setState(() {
                                 if (addSymptomText.isNotEmpty) {
-                                  if (symptomList[i] != addSymptomText && symptomList.contains(addSymptomText)) {
+                                  if (symptomList[i] != addSymptomText && (symptomList.contains(addSymptomText) || symptomListTranslatedContains(addSymptomText))) {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {

@@ -193,7 +193,7 @@ void updateSecondaryStats() {
     // Calculate number of dates tracked (starting date until today)
     var firstDay = DateTime.parse(datesChronological.reversed.first);
     var numDaysTracked = DateTime.now().difference(firstDay);
-    appBox.put('totalDaysTracked', numDaysTracked.inDays);
+    appBox.put('totalDaysTracked', numDaysTracked.inDays + 1);
 
     // Calculate average period length AND average bleeding by day
     bool? lastWasPeriod;

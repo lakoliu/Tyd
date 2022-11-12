@@ -49,11 +49,11 @@
   "@history": {
     "description": "Title of the History/Calendar page."
   },
-  "bleeding": "Blutung",
+  "bleeding": "Blutungsstärke",
   "@bleeding": {
     "description": "Label for bleeding scale."
   },
-  "pain": "Schmerz",
+  "pain": "Schmerzstärke",
   "@pain": {
     "description": "Label for pain scale."
   },
@@ -69,7 +69,7 @@
   "@medication": {
     "description": "Label for medication placeholder."
   },
-  "time": "Zeitpunkt",
+  "time": "Uhrzeit",
   "@time": {
     "description": "Placeholder for medication taken time."
   },
@@ -157,9 +157,17 @@
   "@start": {
     "description": "Timer start button."
   },
+  "startListHeading": "Beginn",
+  "@startListHeading": {
+    "description": "Start heading in past tampon timer list."
+  },
   "stop": "Stopp",
   "@stop": {
     "description": "Timer stop button."
+  },
+  "stopListHeading": "Ende",
+  "@stopListHeading": {
+    "description": "Stop heading in past tampon timer list."
   },
   "deleteUpper": "LÖSCHEN",
   "@deleteUpper": {
@@ -201,7 +209,7 @@
   "@notEnoughData": {
     "description": "Shown in stats when there is not enough data to calculate a statistic."
   },
-  "statistics": "Statistiken",
+  "statistics": "Statistik",
   "@statistics": {
     "description": "Title of the Statistics page."
   },
@@ -213,7 +221,7 @@
   "@averageCycle": {
     "description": "Length of user's average cycle (leave the space at the end)."
   },
-  "averageBleeding": "Durchschnittliche Blutung an Tag",
+  "averageBleeding": "Durchschnittliche Blutungsstärke an Tag",
   "@averageBleeding": {
     "description": "Average bleeding on day xx (day is a number in a drop-down selector)."
   },
@@ -321,11 +329,11 @@
   "@calendar": {
     "description": "Calendar page in bottom nav bar."
   },
-  "timer": "Stoppuhr",
+  "timer": "Timer",
   "@timer": {
     "description": "Home page in bottom nav bar."
   },
-  "tamponTimer": "Periodenprodukt Stoppuhr",
+  "tamponTimer": "Periodenprodukt Timer",
   "@tamponTimer": {
     "description": "Tampon Timer is the name of the timer notifications that will appear in notification settings."
   },
@@ -430,7 +438,7 @@
   "@editSize": {
     "description": "Dialog header for editing tampon size."
   },
-  "sizeUsed": "Diese Größe wird heute schon in der Stoppuhr genutzt.",
+  "sizeUsed": "Diese Größe wird heute schon im Timer genutzt.",
   "@sizeUsed": {
     "description": "Dialog message for why a tampon size cannot be deleted."
   },
@@ -478,6 +486,10 @@
   "@totalPmsDays": {
     "description": "Total PMS days recorded since the user started using Tyd (leave space at end)."
   },
+  "averagePmsPerCycle": "Durchschnittliche Tage mit PMS per Zyklus: ",
+  "@averagePmsPerCycle": {
+    "description": "Average number of PMS days recorded per cycle (leave space at end)."
+  },
   "nHours": "{count,plural, =1{{count} Stunde} other{{count} Stunden}",
   "@nHours": {
     "description": "'count' is zero or greater days.",
@@ -487,8 +499,25 @@
       }
     }
   },
-  "averagePmsPerCycle": "Average PMS days per cycle: ",
-  "@averagePmsPerCycle": {
-    "description": "Average number of PMS days recorded per cycle (leave space at end)."
-  }
+  "anxious": "Ängstlichkeit",
+  "backPain": "Rückenschmerzen",
+  "bloating": "Aufgeblähter Bauch",
+  "breastTenderness": "Sensible Brüste",
+  "constipation": "Verstopfung",
+  "cramps": "Unterleibsschmerzen",
+  "diarrhea": "Durchfall",
+  "fatigue": "Fatigue",
+  "headache": "Kopfschmerzen",
+  "insomnia": "Insomnia",
+  "irritable": "Gereiztheit",
+  "jointPain": "Gelenkschmerzen",
+  "muscleAches": "Muskelschmerzen",
+  "nausea": "Übelkeit",
+  "painfulDefecation": "Schmerzen beim Stuhlgang",
+  "pimples": "Pickel",
+  "anger": "Wut",
+  "changedAppetite": "Veränderter Appetit",
+  "changedSexDrive": "Veränderte Libido",
+  "dizziness": "Schwindel",
+  "sadness": "Traurigkeit"
 }

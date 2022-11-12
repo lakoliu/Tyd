@@ -1,8 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-
 final List<String> periodSymptoms = [
-  'Abdominal pain',
   'Anxious',
   'Back pain',
   'Bloating',
@@ -22,7 +18,6 @@ final List<String> periodSymptoms = [
 ];
 
 final List<String> pmsSymptoms = [
-  'Abdominal pain',
   'Anger',
   'Anxious',
   'Back pain',

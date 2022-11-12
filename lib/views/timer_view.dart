@@ -9,6 +9,7 @@ import 'package:tyd/helpers/stopwatch_helper.dart';
 
 import '../day_data.dart';
 import '../helpers/notification_service.dart';
+import '../l10n/translation_helper.dart';
 import '../timer_data.dart';
 import 'components/bottom_nav_bar.dart';
 
@@ -69,11 +70,12 @@ class _TimerViewState extends State<TimerView> {
       stopwatchHelper.startTime = startingTime;
       var timeDifference = DateTime.now().difference(startingTime).inMinutes;
       _stopWatchTimer.setPresetMinuteTime(timeDifference);
-
       setState(() {
         _stopWatchTimer.onStartTimer();
       });
       notificationTimerSnack();
+      appBox.put('timerRunning', true);
+      appBox.put('timerStartTime', startingTime);
     }
   }
 
@@ -90,6 +92,7 @@ class _TimerViewState extends State<TimerView> {
         historyList.add(TimerData(stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime, stopwatchHelper.sizeSelected));
       });
       saveHistoryList();
+      appBox.put('timerRunning', false);
     }
   }
 
@@ -151,7 +154,7 @@ class _TimerViewState extends State<TimerView> {
       flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
 
-      NotificationService().showTimedSanitaryChangeReminder(stopwatchHelper.typeSelected, notifyDateTime);
+      NotificationService().showTimedSanitaryChangeReminder(context, stopwatchHelper.typeSelected, notifyDateTime);
     }
   }
 
@@ -227,6 +230,37 @@ class _TimerViewState extends State<TimerView> {
     return sanitaryList;
   }
 
+  Map<int, FractionColumnWidth> getNumColumns() {
+    for (var item in historyList) {
+      if (item.type == 'Tampon') {
+        return const {
+          0: FractionColumnWidth(.3),
+          1: FractionColumnWidth(.15),
+          2: FractionColumnWidth(.2),
+          3: FractionColumnWidth(.2),
+          4: FractionColumnWidth(.1)
+        };
+      }
+    }
+    print('showingLess');
+    return const {
+      0: FractionColumnWidth(.45),
+      1: FractionColumnWidth(.2),
+      2: FractionColumnWidth(.2),
+      3: FractionColumnWidth(.1)
+    };
+  }
+
+  bool showSizeColumn() {
+    for (var item in historyList) {
+      if (item.type == 'Tampon') {
+        return true;
+      }
+    }
+    print('noSize');
+    return false;
+  }
+
   Widget showHistoryEditDialog(BuildContext context, int i) {
     return StatefulBuilder(builder: (context, newSetState) {
       return AlertDialog(
@@ -252,9 +286,10 @@ class _TimerViewState extends State<TimerView> {
                       value: historyList[i].type,
                       items: getSanitaryList()
                           .map<DropdownMenuItem<String>>((String value) {
+                        var translatedValue = getTranslatedSanitaryItem(context, value);
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(translatedValue),
                         );
                       }).toList(),
                       onChanged: (String? value) {
@@ -394,9 +429,10 @@ class _TimerViewState extends State<TimerView> {
                       value: newTypeSelected,
                       items: getSanitaryList()
                           .map<DropdownMenuItem<String>>((String value) {
+                            var translatedValue = getTranslatedSanitaryItem(context, value);
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(translatedValue),
                         );
                       }).toList(),
                       onChanged: (String? value) {
@@ -475,6 +511,17 @@ class _TimerViewState extends State<TimerView> {
         historyList = currDayData.timerData;
       });
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var isTimerRunning = appBox.get('timerRunning');
+      if (isTimerRunning != null) {
+        if (!_stopWatchTimer.isRunning && isTimerRunning) {
+          var timerStartTime = appBox.get('timerStartTime');
+          if (timerStartTime != null) {
+            startTimer(timerStartTime);
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -668,11 +715,11 @@ class _TimerViewState extends State<TimerView> {
                     child: Table(
                       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                       columnWidths: const {
-                        0: FractionColumnWidth(.2),
+                        0: FractionColumnWidth(.3),
                         1: FractionColumnWidth(.15),
-                        2: FractionColumnWidth(.25),
-                        3: FractionColumnWidth(.25),
-                        4: FractionColumnWidth(.1)
+                        2: FractionColumnWidth(.2),
+                        3: FractionColumnWidth(.2),
+                        4: FractionColumnWidth(.05)
                       },
                       children: [
                         TableRow(
@@ -690,20 +737,20 @@ class _TimerViewState extends State<TimerView> {
                               ),
                             ),
                             Text(
-                              AppLocalizations.of(context)!.start,
+                              AppLocalizations.of(context)!.startListHeading,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              AppLocalizations.of(context)!.stop,
+                              AppLocalizations.of(context)!.stopListHeading,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              AppLocalizations.of(context)!.edit,
-                              style: const TextStyle(
+                            const Text(
+                              '',
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -715,7 +762,7 @@ class _TimerViewState extends State<TimerView> {
                           TableRow(
                             children: [
                               Text(
-                                historyList[i].type,
+                                getTranslatedSanitaryItem(context, historyList[i].type),
                               ),
                               Text(
                                 historyList[i].size,
