@@ -129,7 +129,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               Text(
                                 // TODO Localization
-                                monthDayFormatter.format(appBox.get('latestStartDate')),
+                                appBox.get('latestStartDate') != null ? monthDayFormatter.format(appBox.get('latestStartDate')) : 'Calculating...',
                                 style: const TextStyle(
                                   fontSize: 15.0,
                                 ),

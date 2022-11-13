@@ -50,10 +50,10 @@ void updateStats() {
           latestStart = date;
           indexToRemove = datesChronological.indexOf(date);
         } else {
-          appBox.put('latestStartDate', DateTime.parse(latestStart));
           break;
         }
       }
+      appBox.put('latestStartDate', DateTime.parse(latestStart));
       // Remove index
       alteredDates.removeRange(0, indexToRemove + 1);
     } else {
