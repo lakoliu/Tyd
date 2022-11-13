@@ -739,7 +739,7 @@ class _TimerViewState extends State<TimerView> {
                           1: FractionColumnWidth(.15),
                           2: FractionColumnWidth(.2),
                           3: FractionColumnWidth(.2),
-                          4: FractionColumnWidth(.05)
+                          4: FractionColumnWidth(.1)
                         },
                         children: [
                           TableRow(
