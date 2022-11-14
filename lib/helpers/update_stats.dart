@@ -15,7 +15,9 @@ void resetAllStats() {
   appBox.put('longestPeriod', null);
   appBox.put('averagePeriod', null);
   appBox.put('averageBleedingByDay', null);
+  appBox.put('averagePmsPerCycle', null);
   appBox.put('totalPeriodDays', null);
+  appBox.put('totalPmsDays', null);
 }
 
 void updateStats() {

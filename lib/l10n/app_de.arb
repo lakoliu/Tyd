@@ -544,7 +544,7 @@
   "@daysUsingTyd": {
     "description": "Label for total days using Tyd on Stats page."
   },
-  "seeMoreStats": "You will see more stats once you have recorded more data.",
+  "seeMoreStats": "Sobald du mehr Daten eingegeben hast, wirst du weitere Statistiken sehen.",
   "@seeMoreStats": {
     "description": "Message on the stats view if there is not enough data to show all stats."
   }
