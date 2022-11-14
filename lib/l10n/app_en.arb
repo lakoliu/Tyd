@@ -29,9 +29,9 @@
   "@periodStarted": {
     "description": "Date the user's period started (leave the space at the end)."
   },
-  "lastPeriod": "Last period: ",
+  "lastPeriod": "Last period",
   "@lastPeriod": {
-    "description": "Date range of the user's last period (leave the space at the end)."
+    "description": "Date range of the user's last period."
   },
   "yourAverageCycle": "Your average cycle: ",
   "@yourAverageCycle": {
@@ -213,24 +213,20 @@
   "@statistics": {
     "description": "Title of the Statistics page."
   },
-  "averagePeriod": "Average period: ",
+  "averagePeriod": "Average period",
   "@averagePeriod": {
-    "description": "Length of user's average period (leave the space at the end)."
+    "description": "Length of user's average period."
   },
-  "averageCycle": "Average cycle: ",
+  "averageCycle": "Average cycle",
   "@averageCycle": {
-    "description": "Length of user's average cycle (leave the space at the end)."
+    "description": "Length of user's average cycle."
   },
   "averageBleeding": "Avg. bleeding on day",
   "@averageBleeding": {
     "description": "Average bleeding on day xx (day is a number in a drop-down selector)."
   },
-  "totalPeriodDays": "Total period days: ",
+  "totalPeriodDays": "Period days",
   "@totalPeriodDays": {
-    "description": "Total period days recorded since the user started using Tyd (leave space at end)."
-  },
-  "totalDaysTracked": "Total days tracked: ",
-  "@totalDaysTracked": {
     "description": "Total period days recorded since the user started using Tyd (leave space at end)."
   },
   "settings": "Settings",
@@ -482,13 +478,13 @@
   "@noFileSelected": {
     "description": "Shown if the user has not yet selected a file using the Browse button."
   },
-  "totalPmsDays": "Total PMS days: ",
+  "totalPmsDays": "PMS days",
   "@totalPmsDays": {
     "description": "Total PMS days recorded since the user started using Tyd (leave space at end)."
   },
-  "averagePmsPerCycle": "Average PMS days per cycle: ",
+  "averagePmsPerCycle": "Average PMS days per cycle",
   "@averagePmsPerCycle": {
-    "description": "Average number of PMS days recorded per cycle (leave space at end)."
+    "description": "Average number of PMS days recorded per cycle."
   },
   "nHours": "{count,plural, =1{{count} hour} other{{count} hours}",
   "@nHours": {
@@ -547,5 +543,13 @@
   "email": "Email ",
   "@email": {
     "description": "Email label on About Tyd page. Leave a space at the end."
+  },
+  "daysUsingTyd": "Days using Tyd",
+  "@daysUsingTyd": {
+    "description": "Label for total days using Tyd on Stats page."
+  },
+  "nA": "N/A",
+  "@nA": {
+    "description": "Short abbreviation for 'Not Available'. Placeholder for when there is not enough data to calculate statistics."
   }
 }

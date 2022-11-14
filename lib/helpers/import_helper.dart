@@ -58,7 +58,7 @@ class ImportHelper {
           dayData.pmsSymptoms = List<String>.from(item['pmsSymptoms']);
           dayData.pmsMedsTaken = List<List<String>>.from(item['pmsMedsTaken']);
           dayData.pmsNotes = item['pmsNotes'];
-          dayData.timerData = List<TimerData>.from(item['timerData']);
+          // dayData.timerData = List<TimerData>.from(item['timerData']);
 
           dateBox.put(date, dayData);
         }

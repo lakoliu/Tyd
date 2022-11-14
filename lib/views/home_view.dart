@@ -147,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context)!.lastPeriod,
+                                  '${AppLocalizations.of(context)!.lastPeriod}: ',
                                   style: const TextStyle(
                                     fontSize: 15.0,
                                       fontWeight: FontWeight.w500,

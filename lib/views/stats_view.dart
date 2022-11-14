@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
@@ -27,13 +28,13 @@ class _StatsViewState extends State<StatsView> {
     );
   }
 
-  TextSpan unknownTextSpan() {
-    return TextSpan(
-      text: AppLocalizations.of(context)!.notEnoughData,
-      style: const TextStyle(
-        fontSize: 20.0,
-        fontStyle: FontStyle.italic,
-        fontWeight: FontWeight.normal,
+  AutoSizeText printNA() {
+    return AutoSizeText(
+      AppLocalizations.of(context)!.nA,
+      maxLines: 1,
+      style: TextStyle(
+        fontSize: 80.0,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
@@ -45,6 +46,7 @@ class _StatsViewState extends State<StatsView> {
   @override
   void initState() {
     super.initState();
+    updateStats();
     updateSecondaryStats();
   }
 
@@ -59,221 +61,294 @@ class _StatsViewState extends State<StatsView> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RichText(
-                textAlign: TextAlign.start,
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.lastPeriod,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 15.0,),
+                AutoSizeText(
+                  AppLocalizations.of(context)!.lastPeriod,
+                  maxLines: 1,
                   style: const TextStyle(
                     fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
-                  children: <TextSpan>[
-                    if (appBox.get('lastPeriod') != null) ...[
-                      TextSpan(
-                        text: '${appBox.get('lastPeriod')}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
+                ),
+                const SizedBox(height: 10.0,),
+                AutoSizeText(
+                  appBox.get('lastPeriod') ?? 'N/A',
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 80.0,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                const SizedBox(height: 30.0,),
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AutoSizeText(
+                        (appBox.get('averagePeriod') ?? 'N/A').toString(),
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 80.0,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15.0,),
-              RichText(
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.averagePeriod,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    if (appBox.get('averagePeriod') != null) ...[
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.nDays(appBox.get('averagePeriod')),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15.0,),
-              RichText(
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.averageCycle,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    if (appBox.get('averageCycle') != null) ...[
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.nDays(appBox.get('averageCycle')),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-              if (appBox.get('longestPeriod') != null) ...[
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.averageBleeding,
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 10.0,),
-                    DropdownButton(
-                      value: selectedPeriodDay,
-                      items: List<int>.generate(appBox.get('longestPeriod'), (k) => k + 1)
-                          .map<DropdownMenuItem<int>>((int value) {
-                        return DropdownMenuItem<int>(
-                          value: value,
-                          child: Text(value.toString()),
-                        );
-                      }).toList(),
-                      onChanged: (int? value) {
-                        if (value != null) {
-                          setState(() {
-                            selectedPeriodDay = value;
-                          });
-                        }
-                      },
-                    ),
-                    const Text(
-                      ':',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 7.0,),
-                    if (appBox.get('averageBleedingByDay') != null) ...[
-                      Text(
-                        (appBox.get('averageBleedingByDay')[selectedPeriodDay] * 10).toStringAsFixed(1),
+                      AutoSizeText(
+                        AppLocalizations.of(context)!.averagePeriod,
+                        maxLines: 1,
                         style: const TextStyle(
                           fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ] else ...[
-                      printUnknown()
                     ],
-                  ],
+                  ),
+                ),
+                const SizedBox(height: 30.0,),
+                AutoSizeText(
+                  (appBox.get('averagePmsPerCycle') ?? 'N/A').toString(),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 80.0,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                AutoSizeText(
+                  AppLocalizations.of(context)!.averagePmsPerCycle,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 30.0,),
+                if (appBox.get('longestPeriod') != null) ...[
+                  Container(
+                    padding: const EdgeInsets.all(15.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      // TODO add a gradient
+                      borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (appBox.get('averageBleedingByDay') != null && appBox.get('averageBleedingByDay').isNotEmpty) ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: 60,
+                                width: 60,
+                                child: IconButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  onPressed: selectedPeriodDay == 1
+                                      ? null
+                                      : () {
+                                    setState(() {
+                                      selectedPeriodDay--;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_left_rounded,
+                                    size: 60.0,
+                                  ),
+                                ),
+                              ),
+                              AutoSizeText(
+                                (appBox.get('averageBleedingByDay')[selectedPeriodDay] * 10).toStringAsFixed(1),
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 80.0,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 60,
+                                width: 60,
+                                child: IconButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  alignment: Alignment.center,
+                                  onPressed: appBox.get('averageBleedingByDay').length == selectedPeriodDay
+                                    ? null
+                                    : () {
+                                    setState(() {
+                                      selectedPeriodDay++;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_right_rounded,
+                                    size: 60.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ] else ...[
+                          printNA()
+                        ],
+                        AutoSizeText(
+                          '${AppLocalizations.of(context)!.averageBleeding} $selectedPeriodDay',
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30.0,),
+                ] else ...[
+                  const SizedBox(
+                    width: 120,
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 10.0,),
+                ],
+                AutoSizeText(
+                  (appBox.get('averageCycle') ?? 'N/A').toString(),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 80.0,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                AutoSizeText(
+                  AppLocalizations.of(context)!.averageCycle,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 50.0,),
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    color: Colors.grey[300],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                          color: Colors.grey[200],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            AutoSizeText(
+                              AppLocalizations.of(context)!.daysUsingTyd,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            AutoSizeText(
+                              (appBox.get('totalDaysTracked') ?? '0').toString(),
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 80.0,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15.0,),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(15.0),
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                                color: Colors.grey[200],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  AutoSizeText(
+                                    (appBox.get('totalPeriodDays') ?? '0').toString(),
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontSize: 80.0,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  AutoSizeText(
+                                    AppLocalizations.of(context)!.totalPeriodDays,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 15.0,),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(15.0),
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                                color: Colors.grey[200],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  AutoSizeText(
+                                    (appBox.get('totalPmsDays') ?? '0').toString(),
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontSize: 80.0,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  AutoSizeText(
+                                    AppLocalizations.of(context)!.totalPmsDays,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ],
-              const SizedBox(height: 15.0,),
-              RichText(
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.averagePmsPerCycle,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    if (appBox.get('averagePmsPerCycle') != null) ...[
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.nDays(appBox.get('averagePmsPerCycle')),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15.0,),
-              RichText(
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.totalPeriodDays,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    if (appBox.get('totalPeriodDays') != null) ...[
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.nDays(appBox.get('totalPeriodDays')),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15.0,),
-              RichText(
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.totalPmsDays,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    if (appBox.get('totalPmsDays') != null) ...[
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.nDays(appBox.get('totalPmsDays')),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15.0,),
-              RichText(
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.totalDaysTracked,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    if (appBox.get('totalDaysTracked') != null) ...[
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.nDays(appBox.get('totalDaysTracked')),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ] else ...[
-                      unknownTextSpan(),
-                    ],
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
