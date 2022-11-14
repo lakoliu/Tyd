@@ -266,7 +266,7 @@ class _SettingsViewState extends State<SettingsView> {
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed: deleteAllText !=
+                                    onPressed: deleteAllText.trim() !=
                                             AppLocalizations.of(context)!
                                                 .deleteUpper
                                         ? null
@@ -326,7 +326,7 @@ class _SettingsViewState extends State<SettingsView> {
                                   ),
                                   actions: [
                                     TextButton(
-                                      onPressed: deleteAllText !=
+                                      onPressed: deleteAllText.trim() !=
                                               AppLocalizations.of(context)!
                                                   .deleteUpper
                                           ? null
