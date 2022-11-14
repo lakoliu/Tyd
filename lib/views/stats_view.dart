@@ -241,7 +241,7 @@ class _StatsViewState extends State<StatsView> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                    color: Colors.grey[300],
+                    color: appBox.get('darkMode') ? Colors.black : Colors.grey[300],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -251,7 +251,7 @@ class _StatsViewState extends State<StatsView> {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                          color: Colors.grey[200],
+                          color: appBox.get('darkMode') ? Colors.grey[900] : Colors.grey[200],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -284,7 +284,7 @@ class _StatsViewState extends State<StatsView> {
                               padding: const EdgeInsets.all(15.0),
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                                color: Colors.grey[200],
+                                color: appBox.get('darkMode') ? Colors.grey[900] : Colors.grey[200],
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -316,7 +316,7 @@ class _StatsViewState extends State<StatsView> {
                               padding: const EdgeInsets.all(15.0),
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                                color: Colors.grey[200],
+                                color: appBox.get('darkMode') ? Colors.grey[900] : Colors.grey[200],
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,

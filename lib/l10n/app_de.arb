@@ -547,5 +547,9 @@
   "daysUsingTyd": "Mit Tyd getrackte Tage",
   "@daysUsingTyd": {
     "description": "Label for total days using Tyd on Stats page."
+  },
+  "nA": "n. a.",
+  "@nA": {
+    "description": "Short abbreviation for 'Not Available'. Placeholder for when there is not enough data to calculate statistics."
   }
 }
