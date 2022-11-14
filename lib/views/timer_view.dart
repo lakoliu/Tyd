@@ -44,9 +44,6 @@ class _TimerViewState extends State<TimerView> {
     SizedBox(
       height: 15,
     ),
-    SizedBox(
-      height: 15,
-    ),
   ]);
 
   var currDayData = DayData();
@@ -93,7 +90,7 @@ class _TimerViewState extends State<TimerView> {
       stopTime = stoppingTime;
       NotificationService().cancelPendingNotifications();
       setState(() {
-        historyList.add(TimerData(stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime, stopwatchHelper.sizeSelected));
+        historyList.add(TimerData(stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime));
       });
       saveHistoryList();
       appBox.put('timerRunning', false);
@@ -243,35 +240,6 @@ class _TimerViewState extends State<TimerView> {
     return sanitaryList;
   }
 
-  Map<int, FractionColumnWidth> getNumColumns() {
-    for (var item in historyList) {
-      if (item.type == 'Tampon') {
-        return const {
-          0: FractionColumnWidth(.3),
-          1: FractionColumnWidth(.15),
-          2: FractionColumnWidth(.2),
-          3: FractionColumnWidth(.2),
-          4: FractionColumnWidth(.1)
-        };
-      }
-    }
-    return const {
-      0: FractionColumnWidth(.45),
-      1: FractionColumnWidth(.2),
-      2: FractionColumnWidth(.2),
-      3: FractionColumnWidth(.1)
-    };
-  }
-
-  bool showSizeColumn() {
-    for (var item in historyList) {
-      if (item.type == 'Tampon') {
-        return true;
-      }
-    }
-    return false;
-  }
-
   Widget showHistoryEditDialog(BuildContext context, int i) {
     return StatefulBuilder(builder: (context, newSetState) {
       return AlertDialog(
@@ -309,41 +277,10 @@ class _TimerViewState extends State<TimerView> {
                             if (value != null) {
                               historyList[i].type = value;
                             }
-                            if (value != AppLocalizations.of(context)!.tampon) {
-                              historyList[i].size = '-';
-                            }
                             saveHistoryList();
                           });
                         });
                       },
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(AppLocalizations.of(context)!.size),
-                    DropdownButton(
-                      isExpanded: true,
-                      value: historyList[i].size,
-                      items: appBox.get('tamponSizes')
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: historyList[i].type != 'Tampon' && historyList[i].type != AppLocalizations.of(context)!.tampon
-                          ? null
-                          : (String? value) {
-                              newSetState(() {
-                                setState(() {
-                                  if (value != null) {
-                                    historyList[i].size = value;
-                                    saveHistoryList();
-                                  }
-                                });
-                              });
-                            },
                     ),
                   ],
                 ),
@@ -422,7 +359,6 @@ class _TimerViewState extends State<TimerView> {
 
   Widget showJustChangedDialog(BuildContext context) {
     newTypeSelected = stopwatchHelper.typeSelected.toString();
-    newSizeSelected = stopwatchHelper.sizeSelected.toString();
     return StatefulBuilder(builder: (context, newSetState) {
       return AlertDialog(
         title: Text(AppLocalizations.of(context)!.changedTo),
@@ -450,40 +386,12 @@ class _TimerViewState extends State<TimerView> {
                         if (value != null) {
                           newSetState(() {
                             newTypeSelected = value;
-                            if (value != AppLocalizations.of(context)!.tampon) {
-                              newSizeSelected = '-';
-                            }
                           });
                         }
                       },
                     ),
                   ],
                 ),
-                if (newTypeSelected == AppLocalizations.of(context)!.tampon) ...[
-                  TableRow(
-                    children: [
-                      Text(AppLocalizations.of(context)!.size),
-                      DropdownButton(
-                        isExpanded: true,
-                        value: newSizeSelected,
-                        items: appBox.get('tamponSizes')
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          if (value != null) {
-                            newSetState(() {
-                              newSizeSelected = value;
-                            });
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ],
               ],
             ),
           ],
@@ -502,7 +410,6 @@ class _TimerViewState extends State<TimerView> {
               setState(() {
                 stopTimer(DateTime.now());
                 stopwatchHelper.typeSelected = newTypeSelected;
-                stopwatchHelper.sizeSelected = newSizeSelected;
                 startTimer(DateTime.now());
               });
             },
@@ -529,10 +436,8 @@ class _TimerViewState extends State<TimerView> {
           var timerStartTime = appBox.get('timerStartTime');
           var timerRadioSelected = appBox.get('timerRadioSelected');
           var timerTypeSelected = appBox.get('timerTypeSelected');
-          var timerSizeSelected = appBox.get('timerSizeSelected');
           stopwatchHelper.radioSelected = timerRadioSelected ?? 1;
           stopwatchHelper.typeSelected = timerTypeSelected ?? 'Tampon';
-          stopwatchHelper.sizeSelected = timerSizeSelected ?? '-';
           timerMinutes = appBox.get('sanitaryTypes')[timerTypeSelected ?? 'Tampon'] * 60;
           if (timerStartTime != null) {
             startTimer(timerStartTime);
@@ -612,7 +517,6 @@ class _TimerViewState extends State<TimerView> {
                             setState(() {
                               stopwatchHelper.radioSelected = value!;
                               stopwatchHelper.typeSelected = 'Pad';
-                              stopwatchHelper.sizeSelected = '-';
                               timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
                             });
                           },
@@ -633,7 +537,6 @@ class _TimerViewState extends State<TimerView> {
                             setState(() {
                               stopwatchHelper.radioSelected = value!;
                               stopwatchHelper.typeSelected = 'Cup';
-                              stopwatchHelper.sizeSelected = '-';
                               timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
                             });
                           },
@@ -654,7 +557,6 @@ class _TimerViewState extends State<TimerView> {
                             setState(() {
                               stopwatchHelper.radioSelected = value!;
                               stopwatchHelper.typeSelected = 'Underwear';
-                              stopwatchHelper.sizeSelected = '-';
                               timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
                             });
                           },
@@ -664,40 +566,9 @@ class _TimerViewState extends State<TimerView> {
                     ),
                   ],
                 ),
-                // const Text('Test'),
-                if (stopwatchHelper.radioSelected == 1) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(AppLocalizations.of(context)!.size),
-                      const SizedBox(width: 15.0,),
-                      DropdownButton(
-                        value: stopwatchHelper.sizeSelected,
-                        items: appBox.get('tamponSizes')
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: _stopWatchTimer.isRunning ? null : (String? value) {
-                          if (value != null) {
-                            setState(() {
-                              stopwatchHelper.sizeSelected = value;
-                            });
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                ] else ...[
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                ],
+                const SizedBox(
+                  height: 20.0,
+                ),
                 if (_stopWatchTimer.isRunning) ...[
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -735,23 +606,16 @@ class _TimerViewState extends State<TimerView> {
                       child: Table(
                         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                         columnWidths: const {
-                          0: FractionColumnWidth(.3),
-                          1: FractionColumnWidth(.15),
+                          0: FractionColumnWidth(.4),
+                          1: FractionColumnWidth(.2),
                           2: FractionColumnWidth(.2),
-                          3: FractionColumnWidth(.2),
-                          4: FractionColumnWidth(.1)
+                          3: FractionColumnWidth(.1)
                         },
                         children: [
                           TableRow(
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.type,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.size,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -783,9 +647,6 @@ class _TimerViewState extends State<TimerView> {
                               children: [
                                 Text(
                                   getTranslatedSanitaryItem(context, historyList[i].type),
-                                ),
-                                Text(
-                                  historyList[i].size,
                                 ),
                                 Text(
                                   timeFormatter.format(historyList[i].startTime),

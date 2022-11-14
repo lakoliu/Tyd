@@ -8,8 +8,8 @@ class TimerData extends HiveObject {
   @HiveField(0, defaultValue: '')
   late String type;
 
-  @HiveField(1, defaultValue: '-')
-  late String size = '-';
+  // @HiveField(1, defaultValue: '-')
+  // late String size = '-';
 
   @HiveField(2)
   late DateTime startTime;
@@ -17,5 +17,5 @@ class TimerData extends HiveObject {
   @HiveField(3)
   late DateTime stopTime;
 
-  TimerData(this.type, this.startTime, this.stopTime, this.size);
+  TimerData(this.type, this.startTime, this.stopTime);
 }

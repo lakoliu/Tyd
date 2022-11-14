@@ -7,7 +7,6 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 import '../day_data.dart';
-import '../timer_data.dart';
 
 
 class ImportHelper {

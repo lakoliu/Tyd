@@ -20,18 +20,15 @@ class TimerDataAdapter extends TypeAdapter<TimerData> {
       fields[0] == null ? '' : fields[0] as String,
       fields[2] as DateTime,
       fields[3] as DateTime,
-      fields[1] == null ? '-' : fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, TimerData obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.type)
-      ..writeByte(1)
-      ..write(obj.size)
       ..writeByte(2)
       ..write(obj.startTime)
       ..writeByte(3)

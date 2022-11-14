@@ -76,7 +76,7 @@ class _StatsViewState extends State<StatsView> {
                 ),
                 const SizedBox(height: 10.0,),
                 AutoSizeText(
-                  appBox.get('lastPeriod') ?? 'N/A',
+                  appBox.get('lastPeriod') ?? AppLocalizations.of(context)!.nA,
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: 80.0,
@@ -95,7 +95,7 @@ class _StatsViewState extends State<StatsView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       AutoSizeText(
-                        (appBox.get('averagePeriod') ?? 'N/A').toString(),
+                        (appBox.get('averagePeriod') ?? AppLocalizations.of(context)!.nA).toString(),
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 80.0,
@@ -115,7 +115,7 @@ class _StatsViewState extends State<StatsView> {
                 ),
                 const SizedBox(height: 30.0,),
                 AutoSizeText(
-                  (appBox.get('averagePmsPerCycle') ?? 'N/A').toString(),
+                  (appBox.get('averagePmsPerCycle') ?? AppLocalizations.of(context)!.nA).toString(),
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: 80.0,
@@ -220,7 +220,7 @@ class _StatsViewState extends State<StatsView> {
                   const SizedBox(height: 10.0,),
                 ],
                 AutoSizeText(
-                  (appBox.get('averageCycle') ?? 'N/A').toString(),
+                  (appBox.get('averageCycle') ?? AppLocalizations.of(context)!.nA).toString(),
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: 80.0,

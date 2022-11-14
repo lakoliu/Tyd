@@ -31,7 +31,6 @@ class _SettingsViewState extends State<SettingsView> {
     appBox.put('tamponTimer', 4.0);
     appBox.put('padTimer', 4.0);
     appBox.put('cupTimer', 4.0);
-    appBox.put('tamponSizes', tamponSizes);
     appBox.put('periodSymptoms', periodSymptoms);
     appBox.put('pmsSymptoms', pmsSymptoms);
     appBox.put('medicines', medicines);
@@ -125,14 +124,6 @@ class _SettingsViewState extends State<SettingsView> {
                       leading: const Icon(Icons.medication),
                       title: Text(AppLocalizations.of(context)!.medicines),
                       onPressed: (context) => Navigator.pushNamed(context, 'medicinesView'),
-                    ),
-                    SettingsTile.navigation(
-                      leading: const Icon(Icons.photo_size_select_small),
-                      title: Text(AppLocalizations.of(context)!.tamponSizes),
-                      value: platform == TargetPlatform.iOS ? null : Text(
-                        appBox.get('tamponSizes').skip(1).join(', '),
-                      ),
-                      onPressed: (context) => Navigator.pushNamed(context, 'tamponSizeView'),
                     ),
                   ],
                 ),

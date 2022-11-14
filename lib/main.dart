@@ -15,7 +15,6 @@ import 'package:tyd/views/sub_settings/intervals_view.dart';
 import 'package:tyd/views/sub_settings/medicines_view.dart';
 import 'package:tyd/views/sub_settings/period_symptoms_view.dart';
 import 'package:tyd/views/sub_settings/pms_symptoms_view.dart';
-import 'package:tyd/views/sub_settings/tampon_size_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'helpers/color_adapter.dart';
@@ -29,8 +28,8 @@ void main() async {
   Hive.registerAdapter(DayDataAdapter());
   Hive.registerAdapter(TimerDataAdapter());
   Hive.registerAdapter(ColorAdapter());
-  var dateBox = await Hive.openBox('date_box');
-  var appBox = await Hive.openBox('app_box');
+  await Hive.openBox('date_box');
+  await Hive.openBox('app_box');
   await NotificationService().init();
   initializeDatabase();
   runApp(const MyApp());
@@ -192,7 +191,6 @@ class MyApp extends StatelessWidget {
             'settingsView': (context) => const SettingsView(),
             'timerView': (context) => const TimerView(),
             'accentColorView': (context) => const AccentColorView(),
-            'tamponSizeView': (context) => const TamponSizeView(),
             'periodSymptomsView': (context) => const PeriodSymptomsView(),
             'pmsSymptomsView': (context) => const PmsSymptomsView(),
             'medicinesView': (context) => const MedicinesView(),
