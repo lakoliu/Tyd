@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive/hive.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
-
+import 'package:hive/hive.dart';
 
 class IntervalsView extends StatefulWidget {
   const IntervalsView({Key? key}) : super(key: key);
@@ -40,9 +39,11 @@ class _IntervalsViewState extends State<IntervalsView> {
               ListTile(
                 title: Text(sanitaryItem),
                 trailing: Text(
-                  sanitaryItems[sanitaryItem]! % 1 != 0 ?
-                      AppLocalizations.of(context)!.nHours(sanitaryItems[sanitaryItem]) :
-                      AppLocalizations.of(context)!.nHours(sanitaryItems[sanitaryItem].toInt()),
+                  sanitaryItems[sanitaryItem]! % 1 != 0
+                      ? AppLocalizations.of(context)!
+                          .nHours(sanitaryItems[sanitaryItem])
+                      : AppLocalizations.of(context)!
+                          .nHours(sanitaryItems[sanitaryItem].toInt()),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -53,7 +54,8 @@ class _IntervalsViewState extends State<IntervalsView> {
                     builder: (BuildContext context) {
                       var currInterval = sanitaryItems[sanitaryItem] ?? 4.0;
                       return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.itemInterval(sanitaryItem)),
+                        title: Text(AppLocalizations.of(context)!
+                            .itemInterval(sanitaryItem)),
                         content: SpinBox(
                           decimals: 1,
                           min: 0.5,
@@ -68,14 +70,16 @@ class _IntervalsViewState extends State<IntervalsView> {
                         ),
                         actions: [
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.cancelUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.cancelUpper),
+                            onPressed: () {
                               Navigator.pop(context);
                             },
                           ),
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.saveUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.saveUpper),
+                            onPressed: () {
                               setState(() {
                                 sanitaryItems[sanitaryItem] = currInterval;
                                 saveSanitaryTypes();

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 Widget bottomNavBar(BuildContext context, int navIndex) {
   return BottomNavigationBar(
     type: BottomNavigationBarType.fixed,

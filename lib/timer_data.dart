@@ -4,7 +4,6 @@ part 'timer_data.g.dart';
 
 @HiveType(typeId: 1)
 class TimerData extends HiveObject {
-
   @HiveField(0, defaultValue: '')
   late String type;
 

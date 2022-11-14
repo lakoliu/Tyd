@@ -72,7 +72,8 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                       return AlertDialog(
                         title: Text(AppLocalizations.of(context)!.editSymptom),
                         content: TextFormField(
-                          initialValue: getTranslatedSymptom(context, currSymptomName),
+                          initialValue:
+                              getTranslatedSymptom(context, currSymptomName),
                           textCapitalization: TextCapitalization.words,
                           onChanged: (value) {
                             addSymptomText = value;
@@ -81,15 +82,17 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                         actionsAlignment: MainAxisAlignment.spaceEvenly,
                         actions: [
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.cancelUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.cancelUpper),
+                            onPressed: () {
                               Navigator.pop(context);
                               addSymptomText = '';
                             },
                           ),
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.deleteUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.deleteUpper),
+                            onPressed: () {
                               setState(() {
                                 Navigator.pop(context);
                                 symptomList.removeAt(i);
@@ -99,20 +102,29 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                             },
                           ),
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.saveUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.saveUpper),
+                            onPressed: () {
                               setState(() {
                                 if (addSymptomText.isNotEmpty) {
-                                  if (symptomList[i] != addSymptomText && (symptomList.contains(addSymptomText) || symptomListTranslatedContains(addSymptomText))) {
+                                  if (symptomList[i] != addSymptomText &&
+                                      (symptomList.contains(addSymptomText) ||
+                                          symptomListTranslatedContains(
+                                              addSymptomText))) {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: Text(AppLocalizations.of(context)!.symptomExists),
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .symptomExists),
                                           actions: [
                                             TextButton(
-                                              onPressed: () => Navigator.pop(context),
-                                              child: Text(AppLocalizations.of(context)!.okUpper),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .okUpper),
                                             ),
                                           ],
                                         );
@@ -159,15 +171,16 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                       actionsAlignment: MainAxisAlignment.spaceEvenly,
                       actions: [
                         TextButton(
-                          child: Text(AppLocalizations.of(context)!.cancelUpper),
-                          onPressed:  () {
+                          child:
+                              Text(AppLocalizations.of(context)!.cancelUpper),
+                          onPressed: () {
                             Navigator.pop(context);
                             addSymptomText = '';
                           },
                         ),
                         TextButton(
                           child: Text(AppLocalizations.of(context)!.saveUpper),
-                          onPressed:  () {
+                          onPressed: () {
                             setState(() {
                               if (addSymptomText.isNotEmpty) {
                                 if (symptomList.contains(addSymptomText)) {
@@ -175,11 +188,16 @@ class _PeriodSymptomsViewState extends State<PeriodSymptomsView> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text(AppLocalizations.of(context)!.symptomExists),
+                                        title: Text(
+                                            AppLocalizations.of(context)!
+                                                .symptomExists),
                                         actions: [
                                           TextButton(
-                                            onPressed: () => Navigator.pop(context),
-                                            child: Text(AppLocalizations.of(context)!.okUpper),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .okUpper),
                                           ),
                                         ],
                                       );

@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-
 
 class NotificationService {
   static final NotificationService _notificationService =
-  NotificationService._internal();
+      NotificationService._internal();
 
   factory NotificationService() {
     return _notificationService;
@@ -15,26 +14,26 @@ class NotificationService {
 
   NotificationService._internal();
 
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@drawable/ic_stat_notifications');
+        AndroidInitializationSettings('@drawable/ic_stat_notifications');
 
     // Need to add more to properly make iOS notifications work
     const DarwinInitializationSettings initializationSettingsDarwin =
-    DarwinInitializationSettings(
+        DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
     );
 
     const InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsDarwin,
-        macOS: null
-    );
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsDarwin,
+            macOS: null);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
@@ -45,20 +44,25 @@ class NotificationService {
 
   void showSanitaryChangeReminder(String sanitaryItem) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails('tyd-timer', 'Tampon timer',
-        channelDescription: 'Tampon Timer',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker');
+        AndroidNotificationDetails('tyd-timer', 'Tampon timer',
+            channelDescription: 'Tampon Timer',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
     const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
+        NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, 'It\'s time!', 'Time to change your ${sanitaryItem.toLowerCase()}.', platformChannelSpecifics,
+        0,
+        'It\'s time!',
+        'Time to change your ${sanitaryItem.toLowerCase()}.',
+        platformChannelSpecifics,
         payload: 'item x');
   }
 
-  void showTimedSanitaryChangeReminder(BuildContext context, String sanitaryItem, DateTime showTime) async {
-    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+  void showTimedSanitaryChangeReminder(
+      BuildContext context, String sanitaryItem, DateTime showTime) async {
+    final String currentTimeZone =
+        await FlutterNativeTimezone.getLocalTimezone();
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
     // print('Logged for: ${tz.TZDateTime.from(showTime, tz.local)}');
@@ -69,17 +73,18 @@ class NotificationService {
         'Time to change your ${sanitaryItem.toLowerCase()}.',
         tz.TZDateTime.from(showTime, tz.local),
         const NotificationDetails(
-            android: AndroidNotificationDetails(
-                'tyd-timer', 'Tampon timer',
-                channelDescription: 'Tampon Timer',
-                importance: Importance.max,
-                priority: Priority.max,
-                ticker: 'Time to change!',
-            ),
+          android: AndroidNotificationDetails(
+            'tyd-timer',
+            'Tampon timer',
+            channelDescription: 'Tampon Timer',
+            importance: Importance.max,
+            priority: Priority.max,
+            ticker: 'Time to change!',
+          ),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime);
+            UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   void cancelAllNotifications() async {
@@ -88,10 +93,9 @@ class NotificationService {
 
   void cancelPendingNotifications() async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
-    await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     for (var pendingRequest in pendingNotificationRequests) {
       flutterLocalNotificationsPlugin.cancel(pendingRequest.id);
     }
   }
-
 }

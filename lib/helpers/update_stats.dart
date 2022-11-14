@@ -1,7 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/day_data.dart';
-import 'package:collection/collection.dart';
 
 void resetAllStats() {
   var appBox = Hive.box('app_box');
@@ -27,7 +27,7 @@ void updateStats() {
 
   var datesChronological = dateBox.keys.toList();
   if (datesChronological.isNotEmpty) {
-    datesChronological.sort((a,b) => b.compareTo(a));
+    datesChronological.sort((a, b) => b.compareTo(a));
 
     appBox.put('earliestDate', DateTime.parse(datesChronological.last));
 
@@ -68,7 +68,8 @@ void updateStats() {
         if (dayData.period) {
           if (periodFound && dayBefore.difference(parsedDate).inDays == 1) {
             trueLatestStartDate = parsedDate;
-          } else if (periodFound && dayBefore.difference(parsedDate).inDays != 1) {
+          } else if (periodFound &&
+              dayBefore.difference(parsedDate).inDays != 1) {
             appBox.put('latestStartDate', dayBefore);
             trueLatestStartDate = null;
             break;
@@ -97,13 +98,14 @@ void updateStats() {
       if (periodFound) {
         // If it's the last in the list, it should end
         if (alteredDates.indexOf(date) == alteredDates.length - 1) {
-          if (dayData.period  && dayBefore.difference(parsedDate).inDays == 1) {
+          if (dayData.period && dayBefore.difference(parsedDate).inDays == 1) {
             appBox.put('lastStartDate', parsedDate);
           } else {
             appBox.put('lastStartDate', dayBefore);
           }
           break;
-        } else if (dayData.period  && dayBefore.difference(parsedDate).inDays == 1) {
+        } else if (dayData.period &&
+            dayBefore.difference(parsedDate).inDays == 1) {
           dayBefore = DateTime.parse(date);
         } else {
           appBox.put('lastStartDate', dayBefore);
@@ -120,7 +122,8 @@ void updateStats() {
     }
 
     // Format the 'Last Period' string
-    if (appBox.get('lastStartDate') != null && appBox.get('lastEndDate') != null) {
+    if (appBox.get('lastStartDate') != null &&
+        appBox.get('lastEndDate') != null) {
       final DateFormat monthDayFormatter = DateFormat('MMM d');
       var lastStart = monthDayFormatter.format(appBox.get('lastStartDate'));
       var lastEnd = monthDayFormatter.format(appBox.get('lastEndDate'));
@@ -142,12 +145,12 @@ void updateStats() {
       DayData dayData = dateBox.get(date);
       var parsedDate = DateTime.parse(date);
 
-      if(lastDate.isNotEmpty) {
+      if (lastDate.isNotEmpty) {
         lastParsed = DateTime.parse(lastDate);
         daysBetween = parsedDate.difference(lastParsed).inDays;
       }
 
-      if(lastDate.isEmpty || daysBetween == 1) {
+      if (lastDate.isEmpty || daysBetween == 1) {
         if (!dayData.period) {
           // Not a period
           endAtNextPeriod = true;
@@ -188,7 +191,7 @@ void updateSecondaryStats() {
 
   var datesChronological = dateBox.keys.toList();
   if (datesChronological.isNotEmpty) {
-    datesChronological.sort((a,b) => b.compareTo(a));
+    datesChronological.sort((a, b) => b.compareTo(a));
 
     // Calculate number of dates tracked (starting date until today)
     var firstDay = DateTime.parse(datesChronological.reversed.first);
@@ -216,7 +219,7 @@ void updateSecondaryStats() {
 
       if (dayData.period) {
         if (lastWasPeriod == null || !lastWasPeriod) {
-          counter ++;
+          counter++;
           lastWasPeriod = true;
 
           // First day of period, add pmsDays to list if it's not the first go around
@@ -225,9 +228,9 @@ void updateSecondaryStats() {
             pmsDays = 0;
           }
         } else if (lastWasPeriod && daysBetween == 1) {
-          counter ++;
+          counter++;
           lastWasPeriod = true;
-        } else if (lastWasPeriod && daysBetween !=1) {
+        } else if (lastWasPeriod && daysBetween != 1) {
           periodIntervals.add(counter);
           counter = 1;
           lastWasPeriod = true;
@@ -249,8 +252,8 @@ void updateSecondaryStats() {
 
       // Organize bleeding into days
       if (counter > 0) {
-        if (bleedingByDay.asMap().containsKey(counter-1)) {
-          bleedingByDay[counter-1].add(dayData.bleeding);
+        if (bleedingByDay.asMap().containsKey(counter - 1)) {
+          bleedingByDay[counter - 1].add(dayData.bleeding);
         } else {
           List<double> newPeriodDay = [dayData.bleeding];
           bleedingByDay.add(newPeriodDay);
@@ -276,7 +279,7 @@ void updateSecondaryStats() {
       Map<int, double> averageBleedingByDay = {};
       for (var i = 0; i < bleedingByDay.length; i++) {
         var averageBleeding = bleedingByDay[i].sum / bleedingByDay[i].length;
-        averageBleedingByDay[i+1] = averageBleeding;
+        averageBleedingByDay[i + 1] = averageBleeding;
       }
       appBox.put('averageBleedingByDay', averageBleedingByDay);
     }

@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
-import 'package:hive/hive.dart';
-import '../helpers/update_stats.dart';
-import '../day_data.dart';
 
+import '../day_data.dart';
+import '../helpers/update_stats.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -95,7 +95,9 @@ class _HomeViewState extends State<HomeView> {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-                if (appBox.get('averageCycle') != null && (dateBox.get(formatter.format(currDate)) == null || !dateBox.get(formatter.format(currDate)).period)) ...[
+                if (appBox.get('averageCycle') != null &&
+                    (dateBox.get(formatter.format(currDate)) == null ||
+                        !dateBox.get(formatter.format(currDate)).period)) ...[
                   Text(
                     getNextPeriodText(),
                     textAlign: TextAlign.center,
@@ -108,7 +110,9 @@ class _HomeViewState extends State<HomeView> {
                     height: 20.0,
                   ),
                 ],
-                if (appBox.get('lastPeriod') != null || appBox.get('averageCycle') != null || currDayData.period) ...[
+                if (appBox.get('lastPeriod') != null ||
+                    appBox.get('averageCycle') != null ||
+                    currDayData.period) ...[
                   Container(
                     padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
@@ -129,7 +133,10 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               Text(
                                 // TODO Localization
-                                appBox.get('latestStartDate') != null ? monthDayFormatter.format(appBox.get('latestStartDate')) : 'Calculating...',
+                                appBox.get('latestStartDate') != null
+                                    ? monthDayFormatter
+                                        .format(appBox.get('latestStartDate'))
+                                    : 'Calculating...',
                                 style: const TextStyle(
                                   fontSize: 15.0,
                                 ),
@@ -150,7 +157,7 @@ class _HomeViewState extends State<HomeView> {
                                   '${AppLocalizations.of(context)!.lastPeriod}: ',
                                   style: const TextStyle(
                                     fontSize: 15.0,
-                                      fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
@@ -175,7 +182,7 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.yourAverageCycle,
-                                style:  const TextStyle(
+                                style: const TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -220,7 +227,8 @@ class _HomeViewState extends State<HomeView> {
                               updateDayData();
                               updateStats();
                               if (value) {
-                                Navigator.pushReplacementNamed(context, 'historyView');
+                                Navigator.pushReplacementNamed(
+                                    context, 'historyView');
                               }
                             },
                           ),
@@ -245,7 +253,8 @@ class _HomeViewState extends State<HomeView> {
                               });
                               updateDayData();
                               if (value) {
-                                Navigator.pushReplacementNamed(context, 'historyView');
+                                Navigator.pushReplacementNamed(
+                                    context, 'historyView');
                               }
                             },
                           ),

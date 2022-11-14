@@ -1,15 +1,14 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:tyd/helpers/export_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path/path.dart' as path;
 import 'package:settings_ui/settings_ui.dart';
+import 'package:tyd/helpers/constants.dart';
+import 'package:tyd/helpers/export_helper.dart';
 import 'package:tyd/helpers/import_helper.dart';
 import 'package:tyd/helpers/update_stats.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
-import 'package:tyd/helpers/constants.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:path/path.dart' as path;
-
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -35,7 +34,7 @@ class _SettingsViewState extends State<SettingsView> {
     appBox.put('pmsSymptoms', pmsSymptoms);
     appBox.put('medicines', medicines);
   }
-  
+
   void eraseAllDateBoxData() {
     dateBox.clear();
   }
@@ -45,7 +44,9 @@ class _SettingsViewState extends State<SettingsView> {
     try {
       pickedFile = (await FilePicker.platform.pickFiles(
         type: FileType.any,
-      ))?.files.single;
+      ))
+          ?.files
+          .single;
     } catch (e) {
       pickedFile = null;
     }
@@ -65,7 +66,7 @@ class _SettingsViewState extends State<SettingsView> {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-                AppLocalizations.of(context)!.settings,
+              AppLocalizations.of(context)!.settings,
             ),
           ),
           body: SafeArea(
@@ -100,10 +101,9 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.color_lens),
                       title: Text(AppLocalizations.of(context)!.accentColor),
-                      value: Text(
-                          appBox.get('accentColorName') ?? 'Green'
-                      ),
-                      onPressed: (context) => Navigator.pushNamed(context, 'accentColorView'),
+                      value: Text(appBox.get('accentColorName') ?? 'Green'),
+                      onPressed: (context) =>
+                          Navigator.pushNamed(context, 'accentColorView'),
                     ),
                   ],
                 ),
@@ -112,18 +112,23 @@ class _SettingsViewState extends State<SettingsView> {
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medical_services),
-                      title: Text(AppLocalizations.of(context)!.periodSymptomsSetting),
-                      onPressed: (context) => Navigator.pushNamed(context, 'periodSymptomsView'),
+                      title: Text(
+                          AppLocalizations.of(context)!.periodSymptomsSetting),
+                      onPressed: (context) =>
+                          Navigator.pushNamed(context, 'periodSymptomsView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medical_services),
-                      title: Text(AppLocalizations.of(context)!.pmsSymptomsSetting),
-                      onPressed: (context) => Navigator.pushNamed(context, 'pmsSymptomsView'),
+                      title: Text(
+                          AppLocalizations.of(context)!.pmsSymptomsSetting),
+                      onPressed: (context) =>
+                          Navigator.pushNamed(context, 'pmsSymptomsView'),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.medication),
                       title: Text(AppLocalizations.of(context)!.medicines),
-                      onPressed: (context) => Navigator.pushNamed(context, 'medicinesView'),
+                      onPressed: (context) =>
+                          Navigator.pushNamed(context, 'medicinesView'),
                     ),
                   ],
                 ),
@@ -133,8 +138,11 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.timer),
                       title: Text(AppLocalizations.of(context)!.intervals),
-                      value: platform == TargetPlatform.iOS ? null : Text(AppLocalizations.of(context)!.allSanitaryList),
-                      onPressed: (context) => Navigator.pushNamed(context, 'intervalsView'),
+                      value: platform == TargetPlatform.iOS
+                          ? null
+                          : Text(AppLocalizations.of(context)!.allSanitaryList),
+                      onPressed: (context) =>
+                          Navigator.pushNamed(context, 'intervalsView'),
                     ),
                   ],
                 ),
@@ -142,70 +150,90 @@ class _SettingsViewState extends State<SettingsView> {
                   title: Text(AppLocalizations.of(context)!.savedData),
                   tiles: [
                     SettingsTile.navigation(
-                      leading: const Icon(Icons.download),
-                      title: Text(AppLocalizations.of(context)!.importData),
-                      value: Text(AppLocalizations.of(context)!.importFrom),
-                      onPressed: (context) {
-                        _selectedFile = null;
-                        _selectedFileName = null;
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(builder: (context, newSetState) {
-                              return AlertDialog(
-                                title: Text(AppLocalizations.of(context)!.importFile),
-                                content: Row(
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        pickAFile(newSetState);
-                                      },
-                                      child: Text(AppLocalizations.of(context)!.browse),
+                        leading: const Icon(Icons.download),
+                        title: Text(AppLocalizations.of(context)!.importData),
+                        value: Text(AppLocalizations.of(context)!.importFrom),
+                        onPressed: (context) {
+                          _selectedFile = null;
+                          _selectedFileName = null;
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(
+                                    builder: (context, newSetState) {
+                                  return AlertDialog(
+                                    title: Text(AppLocalizations.of(context)!
+                                        .importFile),
+                                    content: Row(
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            pickAFile(newSetState);
+                                          },
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .browse),
+                                        ),
+                                        const SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Expanded(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Flexible(
+                                                child: Text(
+                                                  _selectedFileName?.split(
+                                                              path.extension(
+                                                                  _selectedFileName!))[
+                                                          0] ??
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .noFileSelected,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Text(
+                                                path.extension(
+                                                    _selectedFileName ?? ''),
+                                                // style: Theme.of(context).textTheme.caption,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    const SizedBox(width: 5.0,),
-                                    Expanded(
-                                      child: Row(
-                                        children: <Widget>[
-                                          Flexible(
-                                            child: Text(
-                                              _selectedFileName?.split(path.extension(_selectedFileName!))[0] ?? AppLocalizations.of(context)!.noFileSelected,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Text(
-                                            path.extension(_selectedFileName ?? ''),
-                                            // style: Theme.of(context).textTheme.caption,
-                                          ),
-                                        ],
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .cancelUpper),
                                       ),
-                                    )
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text(AppLocalizations.of(context)!.cancelUpper),
-                                  ),
-                                  TextButton(
-                                    onPressed: _selectedFile == null ? null : () {
-                                      if (_selectedFile != null) {
-                                        ImportHelper.getJsonData(context, _selectedFile!);
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    child: Text(AppLocalizations.of(context)!.importUpper),
-                                  ),
-                                ],
-                              );
-                            });
-                          }
-                        );
-                      }
-                    ),
+                                      TextButton(
+                                        onPressed: _selectedFile == null
+                                            ? null
+                                            : () {
+                                                if (_selectedFile != null) {
+                                                  ImportHelper.getJsonData(
+                                                      context, _selectedFile!);
+                                                  Navigator.pop(context);
+                                                }
+                                              },
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .importUpper),
+                                      ),
+                                    ],
+                                  );
+                                });
+                              });
+                        }),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.upload),
                       title: Text(AppLocalizations.of(context)!.backupData),
-                      onPressed: (context) => ExportHelper.exportSavedData(context),
+                      onPressed: (context) =>
+                          ExportHelper.exportSavedData(context),
                     ),
                     SettingsTile.navigation(
                       leading: const Icon(Icons.delete_forever),
@@ -215,15 +243,19 @@ class _SettingsViewState extends State<SettingsView> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return StatefulBuilder(builder: (context, newSetState) {
+                            return StatefulBuilder(
+                                builder: (context, newSetState) {
                               return AlertDialog(
-                                title: Text(AppLocalizations.of(context)!.areYouSure),
+                                title: Text(
+                                    AppLocalizations.of(context)!.areYouSure),
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(AppLocalizations.of(context)!.deleteAllData),
+                                    Text(AppLocalizations.of(context)!
+                                        .deleteAllData),
                                     TextField(
-                                      textCapitalization: TextCapitalization.characters,
+                                      textCapitalization:
+                                          TextCapitalization.characters,
                                       onChanged: (value) {
                                         newSetState(() {
                                           deleteAllText = value;
@@ -234,16 +266,22 @@ class _SettingsViewState extends State<SettingsView> {
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed: deleteAllText != AppLocalizations.of(context)!.deleteUpper ? null : () {
-                                      eraseAllDateBoxData();
-                                      updateStats();
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(AppLocalizations.of(context)!.deleteUpper),
+                                    onPressed: deleteAllText !=
+                                            AppLocalizations.of(context)!
+                                                .deleteUpper
+                                        ? null
+                                        : () {
+                                            eraseAllDateBoxData();
+                                            updateStats();
+                                            Navigator.pop(context);
+                                          },
+                                    child: Text(AppLocalizations.of(context)!
+                                        .deleteUpper),
                                   ),
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: Text(AppLocalizations.of(context)!.cancelUpper),
+                                    child: Text(AppLocalizations.of(context)!
+                                        .cancelUpper),
                                   ),
                                 ],
                               );
@@ -258,49 +296,58 @@ class _SettingsViewState extends State<SettingsView> {
                   title: Text(AppLocalizations.of(context)!.reset),
                   tiles: [
                     SettingsTile.navigation(
-                      leading: const Icon(Icons.lock_reset),
-                      title: Text(AppLocalizations.of(context)!.resetAll),
-                      onPressed: (context) {
-                        var deleteAllText = '';
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(builder: (context, newSetState) {
-                              return AlertDialog(
-                                title: Text(AppLocalizations.of(context)!.areYouSure),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(AppLocalizations.of(context)!.resetAllSettings),
-                                    TextField(
-                                      textCapitalization: TextCapitalization.characters,
-                                      onChanged: (value) {
-                                        newSetState(() {
-                                          deleteAllText = value;
-                                        });
-                                      },
+                        leading: const Icon(Icons.lock_reset),
+                        title: Text(AppLocalizations.of(context)!.resetAll),
+                        onPressed: (context) {
+                          var deleteAllText = '';
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                  builder: (context, newSetState) {
+                                return AlertDialog(
+                                  title: Text(
+                                      AppLocalizations.of(context)!.areYouSure),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(AppLocalizations.of(context)!
+                                          .resetAllSettings),
+                                      TextField(
+                                        textCapitalization:
+                                            TextCapitalization.characters,
+                                        onChanged: (value) {
+                                          newSetState(() {
+                                            deleteAllText = value;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: deleteAllText !=
+                                              AppLocalizations.of(context)!
+                                                  .deleteUpper
+                                          ? null
+                                          : () {
+                                              resetAllSettings();
+                                              Navigator.pop(context);
+                                            },
+                                      child: Text(AppLocalizations.of(context)!
+                                          .deleteUpper),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text(AppLocalizations.of(context)!
+                                          .cancelUpper),
                                     ),
                                   ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: deleteAllText != AppLocalizations.of(context)!.deleteUpper ? null : () {
-                                      resetAllSettings();
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(AppLocalizations.of(context)!.deleteUpper),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text(AppLocalizations.of(context)!.cancelUpper),
-                                  ),
-                                ],
-                              );
-                            });
-                          },
-                        );
-                      }
-                    ),
+                                );
+                              });
+                            },
+                          );
+                        }),
                   ],
                 ),
                 SettingsSection(
@@ -309,7 +356,8 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.info),
                       title: Text(AppLocalizations.of(context)!.aboutTyd),
-                      onPressed: (context) => Navigator.pushNamed(context, 'aboutView'),
+                      onPressed: (context) =>
+                          Navigator.pushNamed(context, 'aboutView'),
                     ),
                   ],
                 ),

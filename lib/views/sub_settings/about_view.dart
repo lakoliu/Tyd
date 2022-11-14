@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class AboutView extends StatefulWidget {
   const AboutView({Key? key}) : super(key: key);
 
@@ -29,14 +28,18 @@ class _AboutViewState extends State<AboutView> {
                 image: AssetImage('assets/tyd.png'),
                 width: 200.0,
               ),
-              const SizedBox(height: 15.0,),
+              const SizedBox(
+                height: 15.0,
+              ),
               const AutoSizeText(
                 'Tyd',
                 style: TextStyle(
                   fontSize: 40.0,
                 ),
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(
+                height: 8.0,
+              ),
               Text(
                 '${AppLocalizations.of(context)!.version} 0.5.1',
                 style: const TextStyle(
@@ -44,14 +47,18 @@ class _AboutViewState extends State<AboutView> {
                   fontStyle: FontStyle.italic,
                 ),
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(
+                height: 8.0,
+              ),
               Text(
                 AppLocalizations.of(context)!.lakoLiuApp,
                 style: const TextStyle(
                   fontSize: 20.0,
                 ),
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(
+                height: 8.0,
+              ),
               Text(
                 AppLocalizations.of(context)!.issuesSuggestions,
                 style: const TextStyle(
@@ -60,14 +67,13 @@ class _AboutViewState extends State<AboutView> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8.0,),
+              const SizedBox(
+                height: 8.0,
+              ),
               RichText(
                 text: TextSpan(
                   text: AppLocalizations.of(context)!.email,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black
-                  ),
+                  style: const TextStyle(fontSize: 20.0, color: Colors.black),
                   children: const <TextSpan>[
                     TextSpan(
                       text: 'tyd@lakoliu.com',

@@ -5,7 +5,6 @@ part 'day_data.g.dart';
 
 @HiveType(typeId: 0)
 class DayData extends HiveObject {
-
   @HiveField(0, defaultValue: false)
   bool period = false;
 

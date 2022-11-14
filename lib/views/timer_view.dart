@@ -25,7 +25,7 @@ class _TimerViewState extends State<TimerView> {
   var appBox = Hive.box('app_box');
   var dateBox = Hive.box('date_box');
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   final StopwatchHelper stopwatchHelper = StopwatchHelper();
   final _stopWatchTimer = StopwatchHelper().stopWatchTimer;
@@ -90,7 +90,8 @@ class _TimerViewState extends State<TimerView> {
       stopTime = stoppingTime;
       NotificationService().cancelPendingNotifications();
       setState(() {
-        historyList.add(TimerData(stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime));
+        historyList.add(TimerData(
+            stopwatchHelper.typeSelected, stopwatchHelper.startTime, stopTime));
       });
       saveHistoryList();
       appBox.put('timerRunning', false);
@@ -105,7 +106,8 @@ class _TimerViewState extends State<TimerView> {
 
   void notificationTimerSnack() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    var notifyDateTime = stopwatchHelper.startTime.add(Duration(minutes: timerMinutes.toInt()));
+    var notifyDateTime =
+        stopwatchHelper.startTime.add(Duration(minutes: timerMinutes.toInt()));
 
     if (DateTime.now().isBefore(notifyDateTime)) {
       var notifyTime = timeFormatter.format(notifyDateTime);
@@ -152,19 +154,22 @@ class _TimerViewState extends State<TimerView> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
 
-      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestPermission();
 
       flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
+              IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(
             alert: true,
             badge: true,
             sound: true,
           );
 
-      NotificationService().showTimedSanitaryChangeReminder(context, stopwatchHelper.typeSelected, notifyDateTime);
+      NotificationService().showTimedSanitaryChangeReminder(
+          context, stopwatchHelper.typeSelected, notifyDateTime);
     }
   }
 
@@ -172,8 +177,12 @@ class _TimerViewState extends State<TimerView> {
     TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      confirmText: startOrStop == 'START' ? AppLocalizations.of(context)!.startUpper : AppLocalizations.of(context)!.stopUpper,
-      helpText: startOrStop == 'START' ? AppLocalizations.of(context)!.selectStart : AppLocalizations.of(context)!.selectStop,
+      confirmText: startOrStop == 'START'
+          ? AppLocalizations.of(context)!.startUpper
+          : AppLocalizations.of(context)!.stopUpper,
+      helpText: startOrStop == 'START'
+          ? AppLocalizations.of(context)!.selectStart
+          : AppLocalizations.of(context)!.selectStop,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -188,20 +197,25 @@ class _TimerViewState extends State<TimerView> {
     );
     if (selectedTime != null) {
       if (startOrStop == 'START') {
-          startTimer(toDateTime(selectedTime));
+        startTimer(toDateTime(selectedTime));
       } else {
-          stopTimer(toDateTime(selectedTime));
+        stopTimer(toDateTime(selectedTime));
       }
     }
   }
 
-  void showTimeEditPicker(BuildContext context, String startOrStop, int i, void Function(void Function()) newState) async {
+  void showTimeEditPicker(BuildContext context, String startOrStop, int i,
+      void Function(void Function()) newState) async {
     TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
-      initialTime: TimeOfDay.fromDateTime(startOrStop == 'START' ? historyList[i].startTime : historyList[i].stopTime),
+      initialTime: TimeOfDay.fromDateTime(startOrStop == 'START'
+          ? historyList[i].startTime
+          : historyList[i].stopTime),
       confirmText: AppLocalizations.of(context)!.saveUpper,
-      helpText: startOrStop == 'START' ? AppLocalizations.of(context)!.selectStart : AppLocalizations.of(context)!.selectStop,
+      helpText: startOrStop == 'START'
+          ? AppLocalizations.of(context)!.selectStart
+          : AppLocalizations.of(context)!.selectStop,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -221,7 +235,6 @@ class _TimerViewState extends State<TimerView> {
             historyList[i].startTime = toDateTime(selectedTime);
           });
         });
-
       } else {
         newState(() {
           setState(() {
@@ -265,7 +278,8 @@ class _TimerViewState extends State<TimerView> {
                       value: historyList[i].type,
                       items: getSanitaryList()
                           .map<DropdownMenuItem<String>>((String value) {
-                        var translatedValue = getTranslatedSanitaryItem(context, value);
+                        var translatedValue =
+                            getTranslatedSanitaryItem(context, value);
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(translatedValue),
@@ -324,13 +338,13 @@ class _TimerViewState extends State<TimerView> {
                     actions: [
                       TextButton(
                         child: Text(AppLocalizations.of(context)!.cancelUpper),
-                        onPressed:  () {
+                        onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
                       TextButton(
                         child: Text(AppLocalizations.of(context)!.deleteUpper),
-                        onPressed:  () {
+                        onPressed: () {
                           Navigator.pop(context);
                           setState(() {
                             historyList.removeAt(i);
@@ -376,7 +390,8 @@ class _TimerViewState extends State<TimerView> {
                       value: newTypeSelected,
                       items: getSanitaryList()
                           .map<DropdownMenuItem<String>>((String value) {
-                            var translatedValue = getTranslatedSanitaryItem(context, value);
+                        var translatedValue =
+                            getTranslatedSanitaryItem(context, value);
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(translatedValue),
@@ -399,13 +414,13 @@ class _TimerViewState extends State<TimerView> {
         actions: [
           TextButton(
             child: Text(AppLocalizations.of(context)!.cancelUpper),
-            onPressed:  () {
+            onPressed: () {
               Navigator.pop(context);
             },
           ),
           TextButton(
             child: Text(AppLocalizations.of(context)!.startUpper),
-            onPressed:  () {
+            onPressed: () {
               Navigator.pop(context);
               setState(() {
                 stopTimer(DateTime.now());
@@ -438,7 +453,8 @@ class _TimerViewState extends State<TimerView> {
           var timerTypeSelected = appBox.get('timerTypeSelected');
           stopwatchHelper.radioSelected = timerRadioSelected ?? 1;
           stopwatchHelper.typeSelected = timerTypeSelected ?? 'Tampon';
-          timerMinutes = appBox.get('sanitaryTypes')[timerTypeSelected ?? 'Tampon'] * 60;
+          timerMinutes =
+              appBox.get('sanitaryTypes')[timerTypeSelected ?? 'Tampon'] * 60;
           if (timerStartTime != null) {
             startTimer(timerStartTime);
           }
@@ -456,7 +472,9 @@ class _TimerViewState extends State<TimerView> {
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: historyList.isEmpty ? MainAxisAlignment.center : MainAxisAlignment.start,
+              mainAxisAlignment: historyList.isEmpty
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
               children: [
                 const SizedBox(
                   height: 20.0,
@@ -494,12 +512,14 @@ class _TimerViewState extends State<TimerView> {
                           onChanged: _stopWatchTimer.isRunning
                               ? null
                               : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Tampon';
-                              timerMinutes = appBox.get('sanitaryTypes')['Tampon'] * 60;
-                            });
-                          },
+                                  setState(() {
+                                    stopwatchHelper.radioSelected = value!;
+                                    stopwatchHelper.typeSelected = 'Tampon';
+                                    timerMinutes =
+                                        appBox.get('sanitaryTypes')['Tampon'] *
+                                            60;
+                                  });
+                                },
                         ),
                         Text(AppLocalizations.of(context)!.tampon),
                       ],
@@ -514,12 +534,13 @@ class _TimerViewState extends State<TimerView> {
                           onChanged: _stopWatchTimer.isRunning
                               ? null
                               : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Pad';
-                              timerMinutes = appBox.get('sanitaryTypes')['Pad'] * 60;
-                            });
-                          },
+                                  setState(() {
+                                    stopwatchHelper.radioSelected = value!;
+                                    stopwatchHelper.typeSelected = 'Pad';
+                                    timerMinutes =
+                                        appBox.get('sanitaryTypes')['Pad'] * 60;
+                                  });
+                                },
                         ),
                         Text(AppLocalizations.of(context)!.pad),
                       ],
@@ -534,12 +555,13 @@ class _TimerViewState extends State<TimerView> {
                           onChanged: _stopWatchTimer.isRunning
                               ? null
                               : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Cup';
-                              timerMinutes = appBox.get('sanitaryTypes')['Cup'] * 60;
-                            });
-                          },
+                                  setState(() {
+                                    stopwatchHelper.radioSelected = value!;
+                                    stopwatchHelper.typeSelected = 'Cup';
+                                    timerMinutes =
+                                        appBox.get('sanitaryTypes')['Cup'] * 60;
+                                  });
+                                },
                         ),
                         Text(AppLocalizations.of(context)!.cup),
                       ],
@@ -554,12 +576,14 @@ class _TimerViewState extends State<TimerView> {
                           onChanged: _stopWatchTimer.isRunning
                               ? null
                               : (int? value) {
-                            setState(() {
-                              stopwatchHelper.radioSelected = value!;
-                              stopwatchHelper.typeSelected = 'Underwear';
-                              timerMinutes = appBox.get('sanitaryTypes')['Underwear'] * 60;
-                            });
-                          },
+                                  setState(() {
+                                    stopwatchHelper.radioSelected = value!;
+                                    stopwatchHelper.typeSelected = 'Underwear';
+                                    timerMinutes = appBox
+                                            .get('sanitaryTypes')['Underwear'] *
+                                        60;
+                                  });
+                                },
                         ),
                         Text(AppLocalizations.of(context)!.underwear)
                       ],
@@ -604,7 +628,8 @@ class _TimerViewState extends State<TimerView> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Table(
-                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
                         columnWidths: const {
                           0: FractionColumnWidth(.4),
                           1: FractionColumnWidth(.2),
@@ -646,10 +671,12 @@ class _TimerViewState extends State<TimerView> {
                             TableRow(
                               children: [
                                 Text(
-                                  getTranslatedSanitaryItem(context, historyList[i].type),
+                                  getTranslatedSanitaryItem(
+                                      context, historyList[i].type),
                                 ),
                                 Text(
-                                  timeFormatter.format(historyList[i].startTime),
+                                  timeFormatter
+                                      .format(historyList[i].startTime),
                                 ),
                                 Text(
                                   timeFormatter.format(historyList[i].stopTime),
@@ -659,7 +686,8 @@ class _TimerViewState extends State<TimerView> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return showHistoryEditDialog(context, i);
+                                          return showHistoryEditDialog(
+                                              context, i);
                                         });
                                   },
                                   icon: const Icon(

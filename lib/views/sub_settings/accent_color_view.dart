@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AccentColorView extends StatefulWidget {
   const AccentColorView({Key? key}) : super(key: key);
@@ -34,7 +34,9 @@ class _AccentColorViewState extends State<AccentColorView> {
                     fontSize: 25.0,
                   ),
                 ),
-                leading: appBox.get('accentColorName') == 'Green' ? const Icon(Icons.check, color: Color(0xFF225500)) : null,
+                leading: appBox.get('accentColorName') == 'Green'
+                    ? const Icon(Icons.check, color: Color(0xFF225500))
+                    : null,
                 onTap: () {
                   setState(() {
                     appBox.put('accentColor', const Color(0xFF225500));
@@ -51,7 +53,9 @@ class _AccentColorViewState extends State<AccentColorView> {
                     fontSize: 25.0,
                   ),
                 ),
-                leading: appBox.get('accentColorName') == 'Blue' ? Icon(Icons.check, color: Colors.blue[800]) : null,
+                leading: appBox.get('accentColorName') == 'Blue'
+                    ? Icon(Icons.check, color: Colors.blue[800])
+                    : null,
                 onTap: () {
                   setState(() {
                     appBox.put('accentColor', Colors.blue[800]);
@@ -69,7 +73,9 @@ class _AccentColorViewState extends State<AccentColorView> {
                     fontSize: 25.0,
                   ),
                 ),
-                leading: appBox.get('accentColorName') == 'Teal' ? const Icon(Icons.check, color: Colors.tealAccent) : null,
+                leading: appBox.get('accentColorName') == 'Teal'
+                    ? const Icon(Icons.check, color: Colors.tealAccent)
+                    : null,
                 onTap: () {
                   setState(() {
                     appBox.put('accentColor', Colors.tealAccent);
@@ -86,7 +92,9 @@ class _AccentColorViewState extends State<AccentColorView> {
                     fontSize: 25.0,
                   ),
                 ),
-                leading: appBox.get('accentColorName') == 'Purple' ? const Icon(Icons.check, color: Colors.purpleAccent) : null,
+                leading: appBox.get('accentColorName') == 'Purple'
+                    ? const Icon(Icons.check, color: Colors.purpleAccent)
+                    : null,
                 onTap: () {
                   setState(() {
                     appBox.put('accentColor', Colors.purpleAccent);
@@ -104,7 +112,9 @@ class _AccentColorViewState extends State<AccentColorView> {
                   fontSize: 25.0,
                 ),
               ),
-              leading: appBox.get('accentColorName') == 'Pink' ? Icon(Icons.check, color: Colors.pink[300]) : null,
+              leading: appBox.get('accentColorName') == 'Pink'
+                  ? Icon(Icons.check, color: Colors.pink[300])
+                  : null,
               onTap: () {
                 setState(() {
                   appBox.put('accentColor', Colors.pink[300]);
@@ -116,12 +126,17 @@ class _AccentColorViewState extends State<AccentColorView> {
               title: Text(
                 AppLocalizations.of(context)!.custom,
                 style: TextStyle(
-                  color: appBox.get('accentColorName') == 'Custom' ? appBox.get('accentColor') ?? Colors.black : null,
+                  color: appBox.get('accentColorName') == 'Custom'
+                      ? appBox.get('accentColor') ?? Colors.black
+                      : null,
                   fontWeight: FontWeight.bold,
                   fontSize: 25.0,
                 ),
               ),
-              leading: appBox.get('accentColorName') == 'Custom' ? Icon(Icons.check, color: appBox.get('accentColor') ?? Colors.black) : null,
+              leading: appBox.get('accentColorName') == 'Custom'
+                  ? Icon(Icons.check,
+                      color: appBox.get('accentColor') ?? Colors.black)
+                  : null,
               onTap: () {
                 showDialog(
                   context: context,
@@ -131,7 +146,8 @@ class _AccentColorViewState extends State<AccentColorView> {
                       contentPadding: const EdgeInsets.all(0),
                       content: SingleChildScrollView(
                         child: ColorPicker(
-                          pickerColor: appBox.get('accentColor') ?? const Color(0xFF225500),
+                          pickerColor: appBox.get('accentColor') ??
+                              const Color(0xFF225500),
                           onColorChanged: (color) {
                             setState(() {
                               appBox.put('accentColor', color);

@@ -49,9 +49,9 @@ final List<String> medicines = [
 ];
 
 final Map<String, double> sanitaryTypes = {
-  'Tampon':4.0,
-  'Pad':4.0,
-  'Cup':4.0,
+  'Tampon': 4.0,
+  'Pad': 4.0,
+  'Cup': 4.0,
   'Underwear': 4.0
 };
 

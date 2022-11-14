@@ -1,16 +1,16 @@
+import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:tyd/views/components/bottom_nav_bar.dart';
-import 'package:filter_list/filter_list.dart';
-import 'package:tyd/helpers/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/day_data.dart';
-import 'package:hive/hive.dart';
+import 'package:tyd/helpers/constants.dart';
+import 'package:tyd/views/components/bottom_nav_bar.dart';
 
 import '../helpers/update_stats.dart';
-import '../packages/calendar_timeline/calendar_timeline.dart';
 import '../l10n/translation_helper.dart';
+import '../packages/calendar_timeline/calendar_timeline.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -86,7 +86,9 @@ class _HistoryViewState extends State<HistoryView> {
         context,
         choiceChipTheme: ChoiceChipThemeData(
           selectedBackgroundColor: Theme.of(context).primaryColor,
-          backgroundColor: appBox.get('darkMode', defaultValue: false) ? Colors.grey[700] : Colors.grey[200],
+          backgroundColor: appBox.get('darkMode', defaultValue: false)
+              ? Colors.grey[700]
+              : Colors.grey[200],
         ),
         controlButtonBarTheme: ControlButtonBarThemeData(
           context,
@@ -105,8 +107,12 @@ class _HistoryViewState extends State<HistoryView> {
         selectedList = List.from(list!);
         setState(() {
           switch (dataField) {
-            case 'periodSymptoms': currDayData.periodSymptoms = selectedList; break;
-            case 'pmsSymptoms': currDayData.pmsSymptoms = selectedList; break;
+            case 'periodSymptoms':
+              currDayData.periodSymptoms = selectedList;
+              break;
+            case 'pmsSymptoms':
+              currDayData.pmsSymptoms = selectedList;
+              break;
           }
         });
         updateDayData();
@@ -280,15 +286,24 @@ class _HistoryViewState extends State<HistoryView> {
                           ], // for
                         ],
                       ),
-                      const SizedBox(height: 15.0,),
+                      const SizedBox(
+                        height: 15.0,
+                      ),
                       Text(AppLocalizations.of(context)!.medicationTaken),
-                      for (var i = 0; i < currDayData.periodMedsTaken.length + 1; i++) ...[
+                      for (var i = 0;
+                          i < currDayData.periodMedsTaken.length + 1;
+                          i++) ...[
                         Row(
                           children: [
-                            if (currDayData.periodMedsTaken.asMap().containsKey(i) && !appBox.get('medicines').contains(currDayData.periodMedsTaken[i][0])) ...[
+                            if (currDayData.periodMedsTaken
+                                    .asMap()
+                                    .containsKey(i) &&
+                                !appBox.get('medicines').contains(
+                                    currDayData.periodMedsTaken[i][0])) ...[
                               Expanded(
                                 child: TextFormField(
-                                  initialValue: currDayData.periodMedsTaken[i][0],
+                                  initialValue: currDayData.periodMedsTaken[i]
+                                      [0],
                                   enabled: false,
                                   onChanged: null,
                                   decoration: const InputDecoration(
@@ -299,10 +314,17 @@ class _HistoryViewState extends State<HistoryView> {
                             ] else ...[
                               DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                  hint: Text(AppLocalizations.of(context)!.medication),
-                                  value: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][0] : null,
-                                  items: appBox.get('medicines')
-                                      .map<DropdownMenuItem<String>>((String value) {
+                                  hint: Text(
+                                      AppLocalizations.of(context)!.medication),
+                                  value: currDayData.periodMedsTaken
+                                          .asMap()
+                                          .containsKey(i)
+                                      ? currDayData.periodMedsTaken[i][0]
+                                      : null,
+                                  items: appBox
+                                      .get('medicines')
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(value),
@@ -310,10 +332,14 @@ class _HistoryViewState extends State<HistoryView> {
                                   }).toList(),
                                   onChanged: (value) {
                                     setState(() {
-                                      if (currDayData.periodMedsTaken.asMap().containsKey(i)) {
-                                        currDayData.periodMedsTaken[i][0] = value.toString();
+                                      if (currDayData.periodMedsTaken
+                                          .asMap()
+                                          .containsKey(i)) {
+                                        currDayData.periodMedsTaken[i][0] =
+                                            value.toString();
                                       } else {
-                                        currDayData.periodMedsTaken.add([value.toString(), '', '']);
+                                        currDayData.periodMedsTaken
+                                            .add([value.toString(), '', '']);
                                       }
                                       updateDayData();
                                     });
@@ -321,14 +347,23 @@ class _HistoryViewState extends State<HistoryView> {
                                 ),
                               ),
                             ],
-                            const SizedBox(width: 10.0,),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
                             Expanded(
                               child: TextFormField(
-                                initialValue: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][1] : null,
-                                enabled: currDayData.periodMedsTaken.asMap().containsKey(i),
+                                initialValue: currDayData.periodMedsTaken
+                                        .asMap()
+                                        .containsKey(i)
+                                    ? currDayData.periodMedsTaken[i][1]
+                                    : null,
+                                enabled: currDayData.periodMedsTaken
+                                    .asMap()
+                                    .containsKey(i),
                                 onChanged: (value) {
                                   setState(() {
-                                    currDayData.periodMedsTaken[i][1] = value.toString();
+                                    currDayData.periodMedsTaken[i][1] =
+                                        value.toString();
                                   });
                                   updateDayData();
                                 },
@@ -337,14 +372,23 @@ class _HistoryViewState extends State<HistoryView> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10.0,),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
                             Expanded(
                               child: TextFormField(
-                                initialValue: currDayData.periodMedsTaken.asMap().containsKey(i) ? currDayData.periodMedsTaken[i][2] : null,
-                                enabled: currDayData.periodMedsTaken.asMap().containsKey(i),
+                                initialValue: currDayData.periodMedsTaken
+                                        .asMap()
+                                        .containsKey(i)
+                                    ? currDayData.periodMedsTaken[i][2]
+                                    : null,
+                                enabled: currDayData.periodMedsTaken
+                                    .asMap()
+                                    .containsKey(i),
                                 onChanged: (value) {
                                   setState(() {
-                                    currDayData.periodMedsTaken[i][2] = value.toString();
+                                    currDayData.periodMedsTaken[i][2] =
+                                        value.toString();
                                   });
                                   updateDayData();
                                 },
@@ -354,37 +398,51 @@ class _HistoryViewState extends State<HistoryView> {
                               ),
                             ),
                             IconButton(
-                              onPressed: i >= currDayData.periodMedsTaken.length ? null : () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(AppLocalizations.of(context)!.deleteEntry),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(AppLocalizations.of(context)!.cancelUpper),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            // setState(() {
-                                              currDayData.periodMedsTaken.removeAt(i);
-                                              updateDayData();
-                                            // });
-                                            Navigator.pop(context);
-                                            Navigator.pushReplacementNamed(context, 'historyView');
-                                          },
-                                          child: Text(AppLocalizations.of(context)!.deleteUpper),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
+                              onPressed: i >= currDayData.periodMedsTaken.length
+                                  ? null
+                                  : () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                AppLocalizations.of(context)!
+                                                    .deleteEntry),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(AppLocalizations.of(
+                                                        context)!
+                                                    .cancelUpper),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  // setState(() {
+                                                  currDayData.periodMedsTaken
+                                                      .removeAt(i);
+                                                  updateDayData();
+                                                  // });
+                                                  Navigator.pop(context);
+                                                  Navigator
+                                                      .pushReplacementNamed(
+                                                          context,
+                                                          'historyView');
+                                                },
+                                                child: Text(AppLocalizations.of(
+                                                        context)!
+                                                    .deleteUpper),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                               icon: Icon(
-                                i < currDayData.periodMedsTaken.length ? Icons.delete : null,
+                                i < currDayData.periodMedsTaken.length
+                                    ? Icons.delete
+                                    : null,
                                 color: Colors.grey[700],
                               ),
                             ),
@@ -443,10 +501,16 @@ class _HistoryViewState extends State<HistoryView> {
                         ],
                       ),
                       Text(AppLocalizations.of(context)!.medicationTaken),
-                      for (var i = 0; i < currDayData.pmsMedsTaken.length + 1; i++) ...[
+                      for (var i = 0;
+                          i < currDayData.pmsMedsTaken.length + 1;
+                          i++) ...[
                         Row(
                           children: [
-                            if (currDayData.pmsMedsTaken.asMap().containsKey(i) && !appBox.get('medicines').contains(currDayData.pmsMedsTaken[i][0])) ...[
+                            if (currDayData.pmsMedsTaken
+                                    .asMap()
+                                    .containsKey(i) &&
+                                !appBox.get('medicines').contains(
+                                    currDayData.pmsMedsTaken[i][0])) ...[
                               Expanded(
                                 child: TextFormField(
                                   initialValue: currDayData.pmsMedsTaken[i][0],
@@ -460,10 +524,17 @@ class _HistoryViewState extends State<HistoryView> {
                             ] else ...[
                               DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                  hint: Text(AppLocalizations.of(context)!.medication),
-                                  value: currDayData.pmsMedsTaken.asMap().containsKey(i) ? currDayData.pmsMedsTaken[i][0] : null,
-                                  items: appBox.get('medicines')
-                                      .map<DropdownMenuItem<String>>((String value) {
+                                  hint: Text(
+                                      AppLocalizations.of(context)!.medication),
+                                  value: currDayData.pmsMedsTaken
+                                          .asMap()
+                                          .containsKey(i)
+                                      ? currDayData.pmsMedsTaken[i][0]
+                                      : null,
+                                  items: appBox
+                                      .get('medicines')
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(value),
@@ -471,10 +542,14 @@ class _HistoryViewState extends State<HistoryView> {
                                   }).toList(),
                                   onChanged: (value) {
                                     setState(() {
-                                      if (currDayData.pmsMedsTaken.asMap().containsKey(i)) {
-                                        currDayData.pmsMedsTaken[i][0] = value.toString();
+                                      if (currDayData.pmsMedsTaken
+                                          .asMap()
+                                          .containsKey(i)) {
+                                        currDayData.pmsMedsTaken[i][0] =
+                                            value.toString();
                                       } else {
-                                        currDayData.pmsMedsTaken.add([value.toString(), '', '']);
+                                        currDayData.pmsMedsTaken
+                                            .add([value.toString(), '', '']);
                                       }
                                       updateDayData();
                                     });
@@ -482,14 +557,23 @@ class _HistoryViewState extends State<HistoryView> {
                                 ),
                               ),
                             ],
-                            const SizedBox(width: 10.0,),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
                             Expanded(
                               child: TextFormField(
-                                initialValue: currDayData.pmsMedsTaken.asMap().containsKey(i) ? currDayData.pmsMedsTaken[i][1] : null,
-                                enabled: currDayData.pmsMedsTaken.asMap().containsKey(i),
+                                initialValue: currDayData.pmsMedsTaken
+                                        .asMap()
+                                        .containsKey(i)
+                                    ? currDayData.pmsMedsTaken[i][1]
+                                    : null,
+                                enabled: currDayData.pmsMedsTaken
+                                    .asMap()
+                                    .containsKey(i),
                                 onChanged: (value) {
                                   setState(() {
-                                    currDayData.pmsMedsTaken[i][1] = value.toString();
+                                    currDayData.pmsMedsTaken[i][1] =
+                                        value.toString();
                                   });
                                   updateDayData();
                                 },
@@ -498,14 +582,23 @@ class _HistoryViewState extends State<HistoryView> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10.0,),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
                             Expanded(
                               child: TextFormField(
-                                initialValue: currDayData.pmsMedsTaken.asMap().containsKey(i) ? currDayData.pmsMedsTaken[i][2] : null,
-                                enabled: currDayData.pmsMedsTaken.asMap().containsKey(i),
+                                initialValue: currDayData.pmsMedsTaken
+                                        .asMap()
+                                        .containsKey(i)
+                                    ? currDayData.pmsMedsTaken[i][2]
+                                    : null,
+                                enabled: currDayData.pmsMedsTaken
+                                    .asMap()
+                                    .containsKey(i),
                                 onChanged: (value) {
                                   setState(() {
-                                    currDayData.pmsMedsTaken[i][2] = value.toString();
+                                    currDayData.pmsMedsTaken[i][2] =
+                                        value.toString();
                                   });
                                   updateDayData();
                                 },
@@ -515,37 +608,51 @@ class _HistoryViewState extends State<HistoryView> {
                               ),
                             ),
                             IconButton(
-                              onPressed: i >= currDayData.pmsMedsTaken.length ? null : () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(AppLocalizations.of(context)!.deleteEntry),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(AppLocalizations.of(context)!.cancelUpper),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            // setState(() {
-                                            currDayData.pmsMedsTaken.removeAt(i);
-                                            updateDayData();
-                                            // });
-                                            Navigator.pop(context);
-                                            Navigator.pushReplacementNamed(context, 'historyView');
-                                          },
-                                          child: Text(AppLocalizations.of(context)!.deleteUpper),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
+                              onPressed: i >= currDayData.pmsMedsTaken.length
+                                  ? null
+                                  : () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                AppLocalizations.of(context)!
+                                                    .deleteEntry),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(AppLocalizations.of(
+                                                        context)!
+                                                    .cancelUpper),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  // setState(() {
+                                                  currDayData.pmsMedsTaken
+                                                      .removeAt(i);
+                                                  updateDayData();
+                                                  // });
+                                                  Navigator.pop(context);
+                                                  Navigator
+                                                      .pushReplacementNamed(
+                                                          context,
+                                                          'historyView');
+                                                },
+                                                child: Text(AppLocalizations.of(
+                                                        context)!
+                                                    .deleteUpper),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                               icon: Icon(
-                                i < currDayData.pmsMedsTaken.length ? Icons.delete : null,
+                                i < currDayData.pmsMedsTaken.length
+                                    ? Icons.delete
+                                    : null,
                                 color: Colors.grey[700],
                               ),
                             ),

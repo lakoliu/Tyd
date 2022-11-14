@@ -71,15 +71,17 @@ class _MedicinesViewState extends State<MedicinesView> {
                         actionsAlignment: MainAxisAlignment.spaceEvenly,
                         actions: [
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.cancelUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.cancelUpper),
+                            onPressed: () {
                               Navigator.pop(context);
                               addMedicineText = '';
                             },
                           ),
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.deleteUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.deleteUpper),
+                            onPressed: () {
                               setState(() {
                                 Navigator.pop(context);
                                 medicineList.removeAt(i);
@@ -89,20 +91,27 @@ class _MedicinesViewState extends State<MedicinesView> {
                             },
                           ),
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.saveUpper),
-                            onPressed:  () {
+                            child:
+                                Text(AppLocalizations.of(context)!.saveUpper),
+                            onPressed: () {
                               setState(() {
                                 if (addMedicineText.isNotEmpty) {
-                                  if (medicineList[i] != addMedicineText && medicineList.contains(addMedicineText)) {
+                                  if (medicineList[i] != addMedicineText &&
+                                      medicineList.contains(addMedicineText)) {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: Text(AppLocalizations.of(context)!.medicineExists),
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .medicineExists),
                                           actions: [
                                             TextButton(
-                                              onPressed: () => Navigator.pop(context),
-                                              child: Text(AppLocalizations.of(context)!.okUpper),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .okUpper),
                                             ),
                                           ],
                                         );
@@ -149,15 +158,16 @@ class _MedicinesViewState extends State<MedicinesView> {
                       actionsAlignment: MainAxisAlignment.spaceEvenly,
                       actions: [
                         TextButton(
-                          child: Text(AppLocalizations.of(context)!.cancelUpper),
-                          onPressed:  () {
+                          child:
+                              Text(AppLocalizations.of(context)!.cancelUpper),
+                          onPressed: () {
                             Navigator.pop(context);
                             addMedicineText = '';
                           },
                         ),
                         TextButton(
                           child: Text(AppLocalizations.of(context)!.saveUpper),
-                          onPressed:  () {
+                          onPressed: () {
                             setState(() {
                               if (addMedicineText.isNotEmpty) {
                                 if (medicineList.contains(addMedicineText)) {
@@ -165,11 +175,16 @@ class _MedicinesViewState extends State<MedicinesView> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text(AppLocalizations.of(context)!.medicineExists),
+                                        title: Text(
+                                            AppLocalizations.of(context)!
+                                                .medicineExists),
                                         actions: [
                                           TextButton(
-                                            onPressed: () => Navigator.pop(context),
-                                            child: Text(AppLocalizations.of(context)!.okUpper),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .okUpper),
                                           ),
                                         ],
                                       );
