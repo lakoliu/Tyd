@@ -205,10 +205,6 @@
   "@edit": {
     "description": "Label for column where user can edit saved timer entry."
   },
-  "notEnoughData": "Not enough data",
-  "@notEnoughData": {
-    "description": "Shown in stats when there is not enough data to calculate a statistic."
-  },
   "statistics": "Statistics",
   "@statistics": {
     "description": "Title of the Statistics page."
@@ -548,8 +544,8 @@
   "@daysUsingTyd": {
     "description": "Label for total days using Tyd on Stats page."
   },
-  "nA": "N/A",
-  "@nA": {
-    "description": "Short abbreviation for 'Not Available'. Placeholder for when there is not enough data to calculate statistics."
+  "seeMoreStats": "You will see more stats once you have recorded more data.",
+  "@seeMoreStats": {
+    "description": "Message on the stats view if there is not enough data to show all stats."
   }
 }

@@ -17,27 +17,6 @@ class _StatsViewState extends State<StatsView> {
 
   var selectedPeriodDay = 1;
 
-  Widget printUnknown() {
-    return Text(
-      AppLocalizations.of(context)!.notEnoughData,
-      style: const TextStyle(
-        fontSize: 20.0,
-        fontStyle: FontStyle.italic,
-      ),
-    );
-  }
-
-  AutoSizeText printNA() {
-    return AutoSizeText(
-      AppLocalizations.of(context)!.nA,
-      maxLines: 1,
-      style: TextStyle(
-        fontSize: 80.0,
-        color: Theme.of(context).primaryColor,
-      ),
-    );
-  }
-
   String printWithDays(int value) {
     return AppLocalizations.of(context)!.nDays(value);
   }
@@ -67,89 +46,91 @@ class _StatsViewState extends State<StatsView> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                AutoSizeText(
-                  AppLocalizations.of(context)!.lastPeriod,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
+                if (appBox.get('lastPeriod') != null) ...[
+                  AutoSizeText(
+                    AppLocalizations.of(context)!.lastPeriod,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                AutoSizeText(
-                  appBox.get('lastPeriod') ?? AppLocalizations.of(context)!.nA,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 80.0,
-                    color: Theme.of(context).primaryColor,
+                  const SizedBox(
+                    height: 10.0,
                   ),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(15.0),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                    color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  AutoSizeText(
+                    appBox.get('lastPeriod'),
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 80.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AutoSizeText(
-                        (appBox.get('averagePeriod') ??
-                                AppLocalizations.of(context)!.nA)
-                            .toString(),
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 80.0,
-                          color: Theme.of(context).primaryColor,
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                ],
+                if (appBox.get('averagePeriod') != null) ...[
+                  Container(
+                    padding: const EdgeInsets.all(15.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          appBox.get('averagePeriod').toString(),
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 80.0,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
-                      ),
-                      AutoSizeText(
-                        AppLocalizations.of(context)!.averagePeriod,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
+                        AutoSizeText(
+                          AppLocalizations.of(context)!.averagePeriod,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                AutoSizeText(
-                  (appBox.get('averagePmsPerCycle') ??
-                          AppLocalizations.of(context)!.nA)
-                      .toString(),
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 80.0,
-                    color: Theme.of(context).primaryColor,
+                  const SizedBox(
+                    height: 30.0,
                   ),
-                ),
-                AutoSizeText(
-                  AppLocalizations.of(context)!.averagePmsPerCycle,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
+                ],
+                if (appBox.get('averagePmsPerCycle') != null) ...[
+                  AutoSizeText(
+                    appBox.get('averagePmsPerCycle').toString(),
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 80.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
+                  AutoSizeText(
+                    AppLocalizations.of(context)!.averagePmsPerCycle,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                ],
                 if (appBox.get('longestPeriod') != null) ...[
                   Container(
                     padding: const EdgeInsets.all(15.0),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      // TODO add a gradient
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20.0)),
                       color: Theme.of(context).primaryColor.withOpacity(0.2),
@@ -215,8 +196,6 @@ class _StatsViewState extends State<StatsView> {
                               ),
                             ],
                           ),
-                        ] else ...[
-                          printNA()
                         ],
                         AutoSizeText(
                           '${AppLocalizations.of(context)!.averageBleeding} $selectedPeriodDay',
@@ -232,7 +211,8 @@ class _StatsViewState extends State<StatsView> {
                   const SizedBox(
                     height: 30.0,
                   ),
-                ] else ...[
+                ] else if (appBox.get('averagePmsPerCycle') != null &&
+                    appBox.get('averageCycle') != null) ...[
                   const SizedBox(
                     width: 120,
                     child: Divider(
@@ -244,27 +224,27 @@ class _StatsViewState extends State<StatsView> {
                     height: 10.0,
                   ),
                 ],
-                AutoSizeText(
-                  (appBox.get('averageCycle') ??
-                          AppLocalizations.of(context)!.nA)
-                      .toString(),
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 80.0,
-                    color: Theme.of(context).primaryColor,
+                if (appBox.get('averageCycle') != null) ...[
+                  AutoSizeText(
+                    appBox.get('averageCycle').toString(),
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 80.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-                AutoSizeText(
-                  AppLocalizations.of(context)!.averageCycle,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
+                  AutoSizeText(
+                    AppLocalizations.of(context)!.averageCycle,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 50.0,
-                ),
+                  const SizedBox(
+                    height: 50.0,
+                  ),
+                ],
                 Container(
                   padding: const EdgeInsets.all(15.0),
                   width: MediaQuery.of(context).size.width,
@@ -395,6 +375,26 @@ class _StatsViewState extends State<StatsView> {
                     ],
                   ),
                 ),
+                if (appBox.get('lastPeriod') == null ||
+                    appBox.get('averagePeriod') == null ||
+                    appBox.get('averagePmsPerCycle') == null ||
+                    appBox.get('averageCycle') == null ||
+                    appBox.get('longestPeriod') == null) ...[
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.seeMoreStats,
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                ],
               ],
             ),
           ),
