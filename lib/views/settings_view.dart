@@ -88,7 +88,6 @@ class _SettingsViewState extends State<SettingsView> {
                       onToggle: (value) {
                         setState(() {
                           appBox.put('darkMode', value);
-                          var colorName = appBox.get('accentColorName');
                         });
                       },
                       initialValue: appBox.get('darkMode', defaultValue: false),
