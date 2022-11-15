@@ -289,7 +289,6 @@ class _HistoryViewState extends State<HistoryView> {
                       const SizedBox(
                         height: 15.0,
                       ),
-                      Text(AppLocalizations.of(context)!.medicationTaken),
                       for (var i = 0;
                           i < currDayData.periodMedsTaken.length + 1;
                           i++) ...[
@@ -500,7 +499,6 @@ class _HistoryViewState extends State<HistoryView> {
                           ], // for
                         ],
                       ),
-                      Text(AppLocalizations.of(context)!.medicationTaken),
                       for (var i = 0;
                           i < currDayData.pmsMedsTaken.length + 1;
                           i++) ...[
