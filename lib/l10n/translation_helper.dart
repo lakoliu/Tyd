@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tyd/helpers/constants.dart';
 
 String getTranslatedSanitaryItem(BuildContext context, String item) {
   switch (item) {
@@ -62,5 +63,22 @@ String getTranslatedSymptom(BuildContext context, String symptom) {
       return AppLocalizations.of(context)!.sadness;
     default:
       return symptom;
+  }
+}
+
+String getTranslatedColor(BuildContext context, String item) {
+  switch (item) {
+    case defaultColorName:
+      return AppLocalizations.of(context)!.purple;
+    case 'Green':
+      return AppLocalizations.of(context)!.green;
+    case 'Blue':
+      return AppLocalizations.of(context)!.blue;
+    case 'Teal':
+      return AppLocalizations.of(context)!.teal;
+    case 'Pink':
+      return AppLocalizations.of(context)!.pink;
+    default:
+      return AppLocalizations.of(context)!.custom;
   }
 }

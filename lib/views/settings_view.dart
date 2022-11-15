@@ -10,6 +10,8 @@ import 'package:tyd/helpers/import_helper.dart';
 import 'package:tyd/helpers/update_stats.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
 
+import '../l10n/translation_helper.dart';
+
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
 
@@ -98,7 +100,9 @@ class _SettingsViewState extends State<SettingsView> {
                       leading: const Icon(Icons.color_lens),
                       title: Text(AppLocalizations.of(context)!.accentColor),
                       value: Text(
-                          appBox.get('accentColorName') ?? defaultColorName),
+                        getTranslatedColor(context,
+                            appBox.get('accentColorName') ?? defaultColorName),
+                      ),
                       onPressed: (context) =>
                           Navigator.pushNamed(context, 'accentColorView'),
                     ),
