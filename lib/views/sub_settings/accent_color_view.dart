@@ -25,26 +25,26 @@ class _AccentColorViewState extends State<AccentColorView> {
       body: SafeArea(
         child: ListView(
           children: [
-            if (!appBox.get('darkMode', defaultValue: false)) ...[
-              ListTile(
-                title: Text(
-                  AppLocalizations.of(context)!.purple,
-                  style: const TextStyle(
-                    color: defaultColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                  ),
+            ListTile(
+              title: Text(
+                AppLocalizations.of(context)!.purple,
+                style: const TextStyle(
+                  color: defaultColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25.0,
                 ),
-                leading: appBox.get('accentColorName') == defaultColorName
-                    ? const Icon(Icons.check, color: defaultColor)
-                    : null,
-                onTap: () {
-                  setState(() {
-                    appBox.put('accentColor', defaultColor);
-                    appBox.put('accentColorName', defaultColorName);
-                  });
-                },
               ),
+              leading: appBox.get('accentColorName') == defaultColorName
+                  ? const Icon(Icons.check, color: defaultColor)
+                  : null,
+              onTap: () {
+                setState(() {
+                  appBox.put('accentColor', defaultColor);
+                  appBox.put('accentColorName', defaultColorName);
+                });
+              },
+            ),
+            if (!appBox.get('darkMode', defaultValue: false)) ...[
               ListTile(
                 title: Text(
                   AppLocalizations.of(context)!.green,
@@ -103,25 +103,6 @@ class _AccentColorViewState extends State<AccentColorView> {
                   });
                 },
               ),
-              // ListTile(
-              //   title: Text(
-              //     AppLocalizations.of(context)!.purple,
-              //     style: const TextStyle(
-              //       color: Colors.purpleAccent,
-              //       fontWeight: FontWeight.bold,
-              //       fontSize: 25.0,
-              //     ),
-              //   ),
-              //   leading: appBox.get('accentColorName') == 'Purple'
-              //       ? const Icon(Icons.check, color: Colors.purpleAccent)
-              //       : null,
-              //   onTap: () {
-              //     setState(() {
-              //       appBox.put('accentColor', Colors.purpleAccent);
-              //       appBox.put('accentColorName', 'Purple');
-              //     });
-              //   },
-              // ),
             ],
             ListTile(
               title: Text(
