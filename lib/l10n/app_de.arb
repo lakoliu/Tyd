@@ -345,9 +345,9 @@
   "@teal": {
     "description": "The color teal."
   },
-  "purple": "Lila",
+  "purple": "Tyd Lila",
   "@purple": {
-    "description": "The color purple."
+    "description": "The color purple, but Tyd's default. Don't translate Tyd."
   },
   "custom": "Benutzerdefiniert",
   "@custom": {

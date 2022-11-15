@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
+import 'package:tyd/helpers/constants.dart';
 
 class AccentColorView extends StatefulWidget {
   const AccentColorView({Key? key}) : super(key: key);
@@ -25,6 +26,25 @@ class _AccentColorViewState extends State<AccentColorView> {
         child: ListView(
           children: [
             if (!appBox.get('darkMode', defaultValue: false)) ...[
+              ListTile(
+                title: Text(
+                  AppLocalizations.of(context)!.purple,
+                  style: const TextStyle(
+                    color: defaultColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                ),
+                leading: appBox.get('accentColorName') == defaultColorName
+                    ? const Icon(Icons.check, color: defaultColor)
+                    : null,
+                onTap: () {
+                  setState(() {
+                    appBox.put('accentColor', defaultColor);
+                    appBox.put('accentColorName', defaultColorName);
+                  });
+                },
+              ),
               ListTile(
                 title: Text(
                   AppLocalizations.of(context)!.green,
@@ -83,25 +103,25 @@ class _AccentColorViewState extends State<AccentColorView> {
                   });
                 },
               ),
-              ListTile(
-                title: Text(
-                  AppLocalizations.of(context)!.purple,
-                  style: const TextStyle(
-                    color: Colors.purpleAccent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                  ),
-                ),
-                leading: appBox.get('accentColorName') == 'Purple'
-                    ? const Icon(Icons.check, color: Colors.purpleAccent)
-                    : null,
-                onTap: () {
-                  setState(() {
-                    appBox.put('accentColor', Colors.purpleAccent);
-                    appBox.put('accentColorName', 'Purple');
-                  });
-                },
-              ),
+              // ListTile(
+              //   title: Text(
+              //     AppLocalizations.of(context)!.purple,
+              //     style: const TextStyle(
+              //       color: Colors.purpleAccent,
+              //       fontWeight: FontWeight.bold,
+              //       fontSize: 25.0,
+              //     ),
+              //   ),
+              //   leading: appBox.get('accentColorName') == 'Purple'
+              //       ? const Icon(Icons.check, color: Colors.purpleAccent)
+              //       : null,
+              //   onTap: () {
+              //     setState(() {
+              //       appBox.put('accentColor', Colors.purpleAccent);
+              //       appBox.put('accentColorName', 'Purple');
+              //     });
+              //   },
+              // ),
             ],
             ListTile(
               title: Text(

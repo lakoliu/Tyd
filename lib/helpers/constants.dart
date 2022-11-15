@@ -1,3 +1,8 @@
+import 'dart:ui';
+
+const defaultColor = Color(0xFF8b8bb0);
+const defaultColorName = "Tyd Purple";
+
 final List<String> periodSymptoms = [
   'Anxious',
   'Back pain',

@@ -25,8 +25,8 @@ class _SettingsViewState extends State<SettingsView> {
 
   void resetAllSettings() {
     appBox.put('darkMode', false);
-    appBox.put('accentColorName', 'Green');
-    appBox.put('accentColor', const Color(0xFF225500));
+    appBox.put('accentColorName', defaultColorName);
+    appBox.put('accentColor', defaultColor);
     appBox.put('tamponTimer', 4.0);
     appBox.put('padTimer', 4.0);
     appBox.put('cupTimer', 4.0);
@@ -87,10 +87,6 @@ class _SettingsViewState extends State<SettingsView> {
                         setState(() {
                           appBox.put('darkMode', value);
                           var colorName = appBox.get('accentColorName');
-                          if (value && colorName == 'Green') {
-                            appBox.put('accentColor', Colors.pink[300]);
-                            appBox.put('accentColorName', 'Pink');
-                          }
                         });
                       },
                       initialValue: appBox.get('darkMode', defaultValue: false),
@@ -101,7 +97,8 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsTile.navigation(
                       leading: const Icon(Icons.color_lens),
                       title: Text(AppLocalizations.of(context)!.accentColor),
-                      value: Text(appBox.get('accentColorName') ?? 'Green'),
+                      value: Text(
+                          appBox.get('accentColorName') ?? defaultColorName),
                       onPressed: (context) =>
                           Navigator.pushNamed(context, 'accentColorView'),
                     ),
