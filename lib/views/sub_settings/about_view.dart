@@ -41,7 +41,7 @@ class _AboutViewState extends State<AboutView> {
                 height: 8.0,
               ),
               Text(
-                '${AppLocalizations.of(context)!.version} 1.1.0',
+                '${AppLocalizations.of(context)!.version} 1.1.1',
                 style: const TextStyle(
                   fontSize: 20.0,
                   fontStyle: FontStyle.italic,
