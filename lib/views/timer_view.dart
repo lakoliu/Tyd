@@ -169,7 +169,10 @@ class _TimerViewState extends State<TimerView> {
           );
 
       NotificationService().showTimedSanitaryChangeReminder(
-          context, stopwatchHelper.typeSelected, notifyDateTime);
+          notifyDateTime,
+          AppLocalizations.of(context)!.itsTime,
+          AppLocalizations.of(context)!
+              .changeYour(stopwatchHelper.typeSelected.toLowerCase()));
     }
   }
 

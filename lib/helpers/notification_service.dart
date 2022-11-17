@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -42,7 +41,8 @@ class NotificationService {
     //Handle notification tapped logic here
   }
 
-  void showSanitaryChangeReminder(String sanitaryItem) async {
+  void showSanitaryChangeReminder(
+      String sanitaryItem, String titleText, String subText) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails('tyd-timer', 'Tampon timer',
             channelDescription: 'Tampon Timer',
@@ -51,35 +51,31 @@ class NotificationService {
             ticker: 'ticker');
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0,
-        'It\'s time!',
-        'Time to change your ${sanitaryItem.toLowerCase()}.',
-        platformChannelSpecifics,
+    await flutterLocalNotificationsPlugin.show(0, titleText,
+        '$subText ${sanitaryItem.toLowerCase()}.', platformChannelSpecifics,
         payload: 'item x');
   }
 
   void showTimedSanitaryChangeReminder(
-      BuildContext context, String sanitaryItem, DateTime showTime) async {
+      DateTime showTime, String titleText, String subText) async {
     final String currentTimeZone =
         await FlutterNativeTimezone.getLocalTimezone();
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
-    // print('Logged for: ${tz.TZDateTime.from(showTime, tz.local)}');
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'It\'s time!',
-        'Time to change your ${sanitaryItem.toLowerCase()}.',
+        titleText,
+        subText,
         tz.TZDateTime.from(showTime, tz.local),
-        const NotificationDetails(
+        NotificationDetails(
           android: AndroidNotificationDetails(
             'tyd-timer',
             'Tampon timer',
             channelDescription: 'Tampon Timer',
             importance: Importance.max,
             priority: Priority.max,
-            ticker: 'Time to change!',
+            ticker: titleText,
           ),
         ),
         androidAllowWhileIdle: true,

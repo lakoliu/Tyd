@@ -547,5 +547,18 @@
   "seeMoreStats": "You will see more stats once you have recorded more data.",
   "@seeMoreStats": {
     "description": "Message on the stats view if there is not enough data to show all stats."
+  },
+  "itsTime": "It's time!",
+  "@itsTime": {
+    "description": "Notification title when time to change user's tampon/pad/cup/etc."
+  },
+  "changeYour": "Time to change your {item}.",
+  "@changeYour": {
+    "description": "Sub-text in notification when it's time to change the user's tampon/pad/cup/etc.",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
   }
 }
