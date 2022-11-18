@@ -32,11 +32,11 @@ void main() async {
   await Hive.openBox('app_box');
   await NotificationService().init();
   initializeDatabase();
-  runApp(const MyApp());
+  runApp(const Tyd());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Tyd extends StatelessWidget {
+  const Tyd({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -212,6 +212,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
+          debugShowCheckedModeBanner: false,
           initialRoute: 'homeView',
           routes: {
             'homeView': (context) => const HomeView(),
