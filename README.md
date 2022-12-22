@@ -1,5 +1,7 @@
 # Tyd
-Tyd is a period tracker for iOS and Android. Your data is only stored on your device, so there is no threat of it being captured or sold. There are no logins, no ads, and no subscriptions. Tyd costs $3.99, or you can build it from source for free.
+Period tracker for iOS and Android. 
+
+Your data is only stored on your device, so there is no threat of it being captured or sold. There are no logins, no ads, and no subscriptions. Tyd costs $3.99, or you can build it from source for free.
 
 ## Features
 - Track your period and PMS.
