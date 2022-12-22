@@ -12,7 +12,7 @@ Your data is only stored on your device, so there is no threat of it being captu
 
 
 ## Install
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://apps.apple.com/app/tyd-period-tracker/id6444418659?platform=iphone"><img width='240' alt="Download on the App Store" src="https://lakoliu.com/assets/badges/app_store_black.svg"/></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://apps.apple.com/app/tyd-period-tracker/id6444418659?platform=iphone"><img width='240' alt="Download on the App Store" src="https://lakoliu.com/assets/badges/app_store_black.svg"/></a>
 
 <a href='https://play.google.com/store/apps/details?id=com.lakoliu.tyd&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width='280' alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
