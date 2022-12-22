@@ -2,11 +2,12 @@
 Tyd is an open-source period tracker for iOS and Android. Your data is only stored on your device, so there is no threat of it being captured or sold. There are no logins, no ads, and no subscriptions. Tyd costs $3.99, or you can build it from source for free.
 
 ## Features
-- Tasks are saved in a database with an unlimited capacity. It can be backed up for security and portability.
-- Tasks are grouped by name and date.
-- Tasks can be edited after they are created (name, time, and date).
-- Settings to customize the view and defaults to your liking.
-- Features can be added! Just email your request or open an issue.
+- Track your period and PMS.
+- The information you input is analyzed (on your device) to offer you insights into themes and history.
+- Stored data is only saved on your device. It can be backed up for security and portability.
+- Settings to customize the appearance and defaults to your liking.
+- Features can be added! Just open an Issue.
+
 
 ## Install
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://apps.apple.com/app/tyd-period-tracker/id6444418659?platform=iphone"><img width='240' alt="Download on the App Store" src="https://lakoliu.com/assets/badges/app_store_black.svg"/></a>
