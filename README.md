@@ -14,7 +14,7 @@ Tyd is an open-source period tracker for iOS and Android. Your data is only stor
 <a href='https://play.google.com/store/apps/details?id=com.lakoliu.tyd&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width='280' alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 ## Build
-The easiest way to build Tyd is to open it in [Android Studio](https://developer.android.com/studio) and run/build it from there.
+The easiest way to build Tyd from source is to open it in [Android Studio](https://developer.android.com/studio) and run/build it from there.
 
 ## Project Details
 ### Built with
