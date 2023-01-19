@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:tyd/day_data.dart';
-import 'package:tyd/helpers/constants.dart';
 import 'package:tyd/views/components/bottom_nav_bar.dart';
 
 import '../helpers/update_stats.dart';
@@ -469,7 +468,7 @@ class _HistoryViewState extends State<HistoryView> {
                           Text(AppLocalizations.of(context)!.symptoms),
                           TextButton(
                             onPressed: () => openAddRemoveDialog(
-                                listData: pmsSymptoms,
+                                listData: appBox.get('pmsSymptoms'),
                                 selectedList: currDayData.pmsSymptoms,
                                 dataField: 'pmsSymptoms'),
                             child: Text(
