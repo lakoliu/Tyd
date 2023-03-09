@@ -155,8 +155,10 @@ void updateStats() {
       if (lastDate.isEmpty || daysBetween == 1) {
         if (!dayData.period) {
           // Not a period
-          endAtNextPeriod = true;
-          currInterval += 1;
+          if (cycleIntervals.isNotEmpty || endAtNextPeriod) {
+            endAtNextPeriod = true;
+            currInterval += 1;
+          }
         } else if (endAtNextPeriod) {
           // Found the next period and need to end
           cycleIntervals.add(currInterval);

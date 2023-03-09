@@ -7,7 +7,7 @@
   "@anyDayNow": {
     "description": "Shows when the user is at or over their normal number of days in cycle."
   },
-  "nDaysUntilPeriod": "~{count,plural, =1{{count} day until your next period} other{{count} days until your next period}",
+  "nDaysUntilPeriod": "~{count,plural, =1{{count} day until your next period} other{{count} days until your next period}}",
   "@nDaysUntilPeriod": {
     "description": "'~' means 'about' or 'approximately'. 'count' here cannot be less than one.",
     "placeholders": {
@@ -16,7 +16,7 @@
       }
     }
   },
-  "nDays": "{count,plural, =1{{count} day} other{{count} days}",
+  "nDays": "{count,plural, =1{{count} day} other{{count} days}}",
   "@nDays": {
     "description": "'count' is zero or greater days.",
     "placeholders": {
@@ -482,7 +482,7 @@
   "@averagePmsPerCycle": {
     "description": "Average number of PMS days recorded per cycle."
   },
-  "nHours": "{count,plural, =1{{count} hour} other{{count} hours}",
+  "nHours": "{count,plural, =1{{count} hour} other{{count} hours}}",
   "@nHours": {
     "description": "'count' is zero or greater days.",
     "placeholders": {
