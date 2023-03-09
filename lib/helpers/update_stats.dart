@@ -143,42 +143,47 @@ void updateStats() {
     var lastDate = '';
     var daysBetween = 0;
     var lastParsed = DateTime.now();
+    var hasBeenPeriod = false;
     for (var date in datesChronological.reversed) {
       DayData dayData = dateBox.get(date);
       var parsedDate = DateTime.parse(date);
 
-      if (lastDate.isNotEmpty) {
-        lastParsed = DateTime.parse(lastDate);
-        daysBetween = parsedDate.difference(lastParsed).inDays;
-      }
+      if (cycleIntervals.isNotEmpty || hasBeenPeriod || dayData.period) {
+        if (!hasBeenPeriod) {
+          hasBeenPeriod = true;
+        }
 
-      if (lastDate.isEmpty || daysBetween == 1) {
-        if (!dayData.period) {
-          // Not a period
-          if (cycleIntervals.isNotEmpty || endAtNextPeriod) {
+        if (lastDate.isNotEmpty) {
+          lastParsed = DateTime.parse(lastDate);
+          daysBetween = parsedDate.difference(lastParsed).inDays;
+        }
+
+        if (lastDate.isEmpty || daysBetween == 1) {
+          if (!dayData.period) {
+            // Not a period
             endAtNextPeriod = true;
             currInterval += 1;
+          } else if (endAtNextPeriod) {
+            // Found the next period and need to end
+            cycleIntervals.add(currInterval);
+            currInterval = 1;
+            endAtNextPeriod = false;
+          } else {
+            // Found the next period, but don't need to end
+            currInterval += 1;
           }
-        } else if (endAtNextPeriod) {
-          // Found the next period and need to end
-          cycleIntervals.add(currInterval);
-          currInterval = 1;
-          endAtNextPeriod = false;
         } else {
-          // Found the next period, but don't need to end
-          currInterval += 1;
+          currInterval += daysBetween - 1;
+          if (dayData.period) {
+            cycleIntervals.add(currInterval);
+            currInterval = 1;
+            endAtNextPeriod = false;
+          } else {
+            endAtNextPeriod = true;
+          }
         }
-      } else {
-        currInterval += daysBetween - 1;
-        if (dayData.period) {
-          cycleIntervals.add(currInterval);
-          currInterval = 1;
-          endAtNextPeriod = false;
-        } else {
-          endAtNextPeriod = true;
-        }
+        lastDate = date;
       }
-      lastDate = date;
     }
     if (cycleIntervals.length > 1) {
       var averageCycle = cycleIntervals.sum / cycleIntervals.length;
